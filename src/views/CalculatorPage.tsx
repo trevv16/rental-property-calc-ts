@@ -476,6 +476,7 @@ export default function CalculatorPage() {
 	// };
 
 	// UI Forms
+	
 	const PropertyForm = () => {
 		return (
 			<div className="mt-10 sm:mt-0">
@@ -630,6 +631,7 @@ export default function CalculatorPage() {
 												<input
 													type="number"
 													step="0.01"
+													min="0"
 													name="purchasePrice"
 													id="purchasePrice"
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -651,6 +653,7 @@ export default function CalculatorPage() {
 												<input
 													type="number"
 													step="0.01"
+													min="0"
 													name="closingCost"
 													id="closingCost"
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -672,6 +675,7 @@ export default function CalculatorPage() {
 												<input
 													type="number"
 													step="0.01"
+													min="0"
 													name="rehabCost"
 													id="rehabCost"
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -781,6 +785,7 @@ export default function CalculatorPage() {
 													name="loanAmount"
 													required={isCash !== false}
 													disabled={isCash === true}
+													min="0"
 													id="loanAmount"
 													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -802,6 +807,7 @@ export default function CalculatorPage() {
 													required={isCash !== false}
 													disabled={isCash === true}
 													step="0.01"
+													min="0"
 													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
 												/>
 												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
@@ -823,6 +829,7 @@ export default function CalculatorPage() {
 													name="pointsCharged"
 													id="pointsCharged"
 													step="0.01"
+													min="0"
 													required={isCash !== false}
 													disabled={isCash === true}
 													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
@@ -847,6 +854,7 @@ export default function CalculatorPage() {
 													id="loanTerm"
 													required={isCash !== false}
 													disabled={isCash === true}
+													min="0"
 													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
 												/>
 												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
@@ -908,6 +916,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="grossMonthlyRentalIncome"
 													id="grossMonthlyRentalIncome"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -930,6 +939,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="otherMonthlyRentalIncome"
 													id="otherMonthlyRentalIncome"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -948,6 +958,7 @@ export default function CalculatorPage() {
 													type="number"
 													name="annualIncomeGrowth"
 													id="annualIncomeGrowth"
+													min="0"
 													step="0.01"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
@@ -1014,6 +1025,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="propertyTaxes"
 													id="propertyTaxes"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1036,6 +1048,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="propertyInsurance"
 													id="propertyInsurance"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1054,6 +1067,7 @@ export default function CalculatorPage() {
 													type="number"
 													name="maintenancePercent"
 													id="maintenancePercent"
+													min="0"
 													step="0.01"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
@@ -1077,6 +1091,7 @@ export default function CalculatorPage() {
 													name="vacancyPercent"
 													id="vacancyPercent"
 													step="0.01"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
 												/>
@@ -1099,6 +1114,7 @@ export default function CalculatorPage() {
 													name="capexPercent"
 													id="capexPercent"
 													step="0.01"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
 												/>
@@ -1121,6 +1137,7 @@ export default function CalculatorPage() {
 													name="managementPercent"
 													id="managementPercent"
 													step="0.01"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
 												/>
@@ -1186,6 +1203,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="electricityExpense"
 													id="electricityExpense"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1208,6 +1226,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="gasExpense"
 													id="gasExpense"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1230,6 +1249,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="waterSewerExpense"
 													id="waterSewerExpense"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1252,6 +1272,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="hoaExpense"
 													id="hoaExpense"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1274,6 +1295,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="garbageExpense"
 													id="garbageExpense"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
@@ -1296,6 +1318,7 @@ export default function CalculatorPage() {
 													step="0.01"
 													name="otherExpense"
 													id="otherExpense"
+													min="0"
 													required
 													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
 												/>
