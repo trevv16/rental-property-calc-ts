@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# Rental Property Calculator
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1bdfbb0d-95f1-4d22-b844-bf0f4c370383/deploy-status)](https://app.netlify.com/sites/rental-calc/deploys)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
