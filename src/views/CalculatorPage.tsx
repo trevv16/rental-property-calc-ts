@@ -7,14 +7,13 @@ import {
 	mortgagePaymentCost,
 	annualizedReturn,
 	getTermBreakpoints,
-	getCompoundValue,
-	isInt
+	getCompoundValue
 } from "../utils/calc";
 
 import { Header } from "../components/index";
 
 interface infoI {
-	infoComplete: boolean,
+	complete: boolean,
 	name: string,
 	streetAddress: string,
 	city: string,
@@ -22,14 +21,14 @@ interface infoI {
 	zipCode: string,
 };
 type purchaseI = {
-	purchaseComplete: boolean,
+	complete: boolean,
 	purchasePrice: number,
 	closingCost: number,
 	rehabCost: number,
 	propertyValueGrowth: number,
 };
 type loanI = {
-	loanComplete: boolean,
+	complete: boolean,
 	isCashPurchase: boolean,
 	loanAmount: number,
 	interestRate: number,
@@ -37,13 +36,13 @@ type loanI = {
 	loanTerm: number,
 };
 type incomeI = {
-	incomeComplete: boolean,
+	complete: boolean,
 	grossMonthlyRentalIncome: number,
 	annualIncomeGrowth: number,
 	otherMonthlyRentalIncome: number,
 };
 type ownershipI = {
-	ownershipComplete: boolean,
+	complete: boolean,
 	propertyTaxes: number,
 	propertyInsurance: number,
 	maintenancePercent: number,
@@ -52,7 +51,7 @@ type ownershipI = {
 	managementPercent: number,
 };
 type utilityI = {
-	utilityComplete: boolean,
+	complete: boolean,
 	electricityExpense: number,
 	gasExpense: number,
 	waterSewerExpense: number,
@@ -65,7 +64,7 @@ type utilityI = {
 
 export default function CalculatorPage() {
 	const [info, setInfo] = useState<infoI>({
-		infoComplete: false,
+		complete: false,
 		name: "",
 		streetAddress: "",
 		city: "",
@@ -73,14 +72,14 @@ export default function CalculatorPage() {
 		zipCode: ""
 	});
 	const [purchase, setPurchase] = useState<purchaseI>({
-		purchaseComplete: false,
+		complete: false,
 		purchasePrice: 0.0,
 		closingCost: 0.0,
 		rehabCost: 0.0,
 		propertyValueGrowth: 0.0
 	});
 	const [loan, setLoan] = useState<loanI>({
-		loanComplete: false,
+		complete: false,
 		isCashPurchase: false,
 		loanAmount: 0.0,
 		interestRate: 0.0,
@@ -88,13 +87,13 @@ export default function CalculatorPage() {
 		loanTerm: 0.0
 	});
 	const [income, setIncome] = useState<incomeI>({
-		incomeComplete: false,
+		complete: false,
 		grossMonthlyRentalIncome: 0.0,
 		annualIncomeGrowth: 0.0,
 		otherMonthlyRentalIncome: 0.0
 	});
 	const [ownership, setOwnership] = useState<ownershipI>({
-		ownershipComplete: false,
+		complete: false,
 		propertyTaxes: 0.0,
 		propertyInsurance: 0.0,
 		maintenancePercent: 0.0,
@@ -103,7 +102,7 @@ export default function CalculatorPage() {
 		managementPercent: 0.0
 	});
 	const [utility, setUtility] = useState<utilityI>({
-		utilityComplete: false,
+		complete: false,
 		electricityExpense: 0.0,
 		gasExpense: 0.0,
 		waterSewerExpense: 0.0,
@@ -275,11 +274,11 @@ export default function CalculatorPage() {
 
 	const isComplete = (): boolean => {
 		return (
-			purchase.purchaseComplete &&
-			loan.loanComplete &&
-			income.incomeComplete &&
-			ownership.ownershipComplete &&
-			utility.utilityComplete
+			purchase.complete &&
+			loan.complete &&
+			income.complete &&
+			ownership.complete &&
+			utility.complete
 		);
 	};
 
@@ -295,9 +294,9 @@ export default function CalculatorPage() {
 		return loan.isCashPurchase ? "Yes" : "No";
 	};
 
-	const downPaymentAmount = (): number => {
-		return totalCost() - loan.loanAmount;
-	};
+	// const downPaymentAmount = (): number => {
+	// 	return totalCost() - loan.loanAmount;
+	// };
 
 	// const downPaymentPercentage = () => {
 	// 	return downPaymentAmount() / (totalCost() * 1.0);
@@ -1395,7 +1394,7 @@ export default function CalculatorPage() {
 		const { name, streetAddress, city, state, zipCode } = getFormData(e);
 
 		setInfo({
-			infoComplete: true,
+			complete: true,
 			name,
 			streetAddress,
 			city,
@@ -1418,7 +1417,7 @@ export default function CalculatorPage() {
 		propertyValueGrowth = parseFloat(propertyValueGrowth);
 
 		setPurchase({
-			purchaseComplete: true,
+			complete: true,
 			purchasePrice,
 			closingCost,
 			rehabCost,
@@ -1442,7 +1441,7 @@ export default function CalculatorPage() {
 		loanTerm = parseFloat(loanTerm);
 
 		setLoan({
-			loanComplete: true,
+			complete: true,
 			isCashPurchase,
 			loanAmount,
 			interestRate,
@@ -1463,7 +1462,7 @@ export default function CalculatorPage() {
 		otherMonthlyRentalIncome = parseFloat(otherMonthlyRentalIncome);
 
 		setIncome({
-			incomeComplete: true,
+			complete: true,
 			grossMonthlyRentalIncome,
 			annualIncomeGrowth,
 			otherMonthlyRentalIncome,
@@ -1488,7 +1487,7 @@ export default function CalculatorPage() {
 		managementPercent = parseFloat(managementPercent);
 
 		setOwnership({
-			ownershipComplete: true,
+			complete: true,
 			propertyTaxes,
 			propertyInsurance,
 			maintenancePercent,
@@ -1520,7 +1519,7 @@ export default function CalculatorPage() {
 		futureSalePercent = parseFloat(futureSalePercent);
 
 		setUtility({
-			utilityComplete: true,
+			complete: true,
 			electricityExpense,
 			gasExpense,
 			waterSewerExpense,
@@ -2126,7 +2125,7 @@ export default function CalculatorPage() {
 
 		return (
 			<React.Fragment>
-			{info.infoComplete && 
+			{info.complete && 
 				<React.Fragment>
 					<PropertyHeader />
 					<Divider />
@@ -2180,19 +2179,19 @@ export default function CalculatorPage() {
 				</div>
 				{inReview && (
 					<React.Fragment>
-						{info.infoComplete && <RenderInfoResult />}
+						{info.complete && <RenderInfoResult />}
 
-						{purchase.purchaseComplete && <RenderPurchaseResult />}
+						{purchase.complete && <RenderPurchaseResult />}
 
-						{loan.loanComplete && <RenderLoanResult />}
+						{loan.complete && <RenderLoanResult />}
 
-						{income.incomeComplete && <RenderIncomeResult />}
+						{income.complete && <RenderIncomeResult />}
 
-						{ownership.ownershipComplete && (
+						{ownership.complete && (
 							<RenderOwnershipResult />
 						)}
 
-						{utility.utilityComplete && <RenderUtilityResult />}
+						{utility.complete && <RenderUtilityResult />}
 					</React.Fragment>
 				)}
 			</div>
