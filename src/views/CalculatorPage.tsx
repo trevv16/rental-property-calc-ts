@@ -2191,7 +2191,7 @@ export default function CalculatorPage() {
 				</React.Fragment>
 			)}
 			</div>
-			<div className="container prose sm:prose-xl">
+			<div className="container sm:prose-xl">
 				<div>
 					<div className="flex-1 min-w-0">
 						<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
@@ -2221,7 +2221,7 @@ export default function CalculatorPage() {
 				)}
 			</div>
 			<Divider />
-			<div className="container prose sm:prose-xl">
+			<div className="container sm:prose-xl">
 				{isComplete() && <Results />}
 				<Results />
 			</div>

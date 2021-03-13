@@ -10,6 +10,8 @@ export default function Footer() {
 						<a
 							href="https://github.com/trevv16"
 							className="text-gray-400 hover:text-gray-500"
+							rel="noopener noreferrer"
+							target="_blank"
 						>
 							<span className="sr-only">GitHub</span>
 							<svg
@@ -29,6 +31,8 @@ export default function Footer() {
 						<a
 							href="https://instagram.com/trevva_"
 							className="text-gray-400 hover:text-gray-500"
+							rel="noopener noreferrer"
+							target="_blank"
 						>
 							<span className="sr-only">Instagram</span>
 							<svg
@@ -47,7 +51,12 @@ export default function Footer() {
 					</div>
 					<div className="mt-8 md:mt-0 md:order-1">
 						<p className="text-center text-base text-gray-400">
-							&copy; {`${new Date().getFullYear()} Trevor Njeru.`}
+							&copy; {`${new Date().getFullYear()} `}<a
+							href="https://trevornjeru.com"
+							className="text-indigo-300 hover:text-indigo-600"
+							rel="noopener noreferrer"
+							target="_blank"
+						>Trevor Njeru.</a>
 						</p>
 					</div>
 				</div>

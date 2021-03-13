@@ -9,7 +9,7 @@ export default function Header() {
 						<p className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
 							Rental Property Calculator
 						</p>
-						<h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase">
+						<h2 className="mt-3 text-base font-semibold text-indigo-600 tracking-wide uppercase">
 							Property Analysis
 						</h2>
 						<p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">
