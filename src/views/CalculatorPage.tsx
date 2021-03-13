@@ -2171,7 +2171,8 @@ export default function CalculatorPage() {
 	};
 
 	return (
-		<div className="container mx-auto">
+		<div className="container mx-auto p-6">
+			<div className="">
 			<Header />
 			{inReview && (
 				<React.Fragment>
@@ -2189,8 +2190,9 @@ export default function CalculatorPage() {
 					<Divider />
 				</React.Fragment>
 			)}
+			</div>
 			<div className="container prose sm:prose-xl">
-				<div className="">
+				<div>
 					<div className="flex-1 min-w-0">
 						<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
 							Review/Edit
@@ -2219,7 +2221,7 @@ export default function CalculatorPage() {
 				)}
 			</div>
 			<Divider />
-			<div className="prose sm:prose-xl">
+			<div className="container prose sm:prose-xl">
 				{isComplete() && <Results />}
 				<Results />
 			</div>
