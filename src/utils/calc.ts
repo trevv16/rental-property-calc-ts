@@ -7,7 +7,7 @@ export const getMonthlyFromAnnual = (value: number): number => {
 };
 
 export const percentOfRentalIncome = (rentalIncome: number, percentage: number): number => {
-	return rentalIncome * percentage;
+	return rentalIncome * (percentage / 100);
 };
 
 export const mortgagePaymentCost = (principal: number, rate: number, years: number): number => {

@@ -112,10 +112,10 @@ export default function CalculatorPage() {
 		annualExpenseGrowth: 0.0,
 		futureSalePercent: 0.0,
 	});
-	const [inReview, setInReview] = useState(true);
-	const [isCash, setIsCash] = useState(true);
-	// const [results, setResults] = useState({});
-	const [scheduleSummary, setScheduleSummary] = useState([]);
+	const [inReview, setInReview] = useState<boolean>(true);
+	const [isCash, setIsCash] = useState<boolean>(true);
+	// const [results, setResults] = useState<Object>({});
+	const [scheduleSummary, setScheduleSummary] = useState<any>([]);
 
 	useEffect(() => {
 		// Ammortization Functions
@@ -387,7 +387,7 @@ export default function CalculatorPage() {
 
 	const initialMonthlyCashflow = (): number => {
 		return (
-			totalMonthlyIncome() - (totalMonthlyExpense() + calculateMortgage())
+			totalMonthlyIncome() - totalMonthlyExpense()
 		);
 	};
 
@@ -1377,7 +1377,7 @@ export default function CalculatorPage() {
 		return data;
 	};
 
-	const handleInfo = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleInfo = (e: any) => {
 		const { name, streetAddress, city, state, zipCode } = getFormData(e);
 
 		setInfo({
@@ -1390,7 +1390,7 @@ export default function CalculatorPage() {
 		});
 	};
 
-	const handlePurchase = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handlePurchase = (e: any) => {
 		let {
 			purchasePrice,
 			closingCost,
@@ -1412,7 +1412,7 @@ export default function CalculatorPage() {
 		});
 	};
 
-	const handleLoan = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleLoan = (e: any) => {
 		let {
 			isCashPurchase,
 			loanAmount,
@@ -1437,7 +1437,7 @@ export default function CalculatorPage() {
 		});
 	};
 
-	const handleIncome = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleIncome = (e: any) => {
 		let {
 			grossMonthlyRentalIncome,
 			annualIncomeGrowth,
@@ -1456,7 +1456,7 @@ export default function CalculatorPage() {
 		});
 	};
 
-	const handleOwnership = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleOwnership = (e: any) => {
 		let {
 			propertyTaxes,
 			propertyInsurance,
@@ -1484,7 +1484,7 @@ export default function CalculatorPage() {
 		});
 	};
 
-	const handleUtility = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleUtility = (e: any) => {
 		let {
 			electricityExpense,
 			gasExpense,
@@ -1806,11 +1806,11 @@ export default function CalculatorPage() {
 										5-year Annualized Return
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${annualizedReturn(
+										{`${annualizedReturn(
 											totalCost(),
 											totalCost() * 2,
 											5
-										)}`}
+										).toFixed(2)}%`}
 									</dd>
 								</div>
 							</div>
@@ -1821,7 +1821,7 @@ export default function CalculatorPage() {
 										Mortgage Payement
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${calculateMortgage()}`}
+										{`$${calculateMortgage().toFixed(2)}`}
 									</dd>
 								</div>
 							</div>
