@@ -8,6 +8,7 @@ import {
 	annualizedReturn,
 	getTermBreakpoints,
 	getCompoundValue,
+	isInt
 } from "../utils/calc";
 
 import { Header } from "../components/index";
@@ -173,9 +174,9 @@ export default function CalculatorPage() {
 			monthlyInterestRate: number,
 			payment: number
 		): any => {
-			const interestPayment = currentPrincipal * monthlyInterestRate;
-			const principalPayment = payment - interestPayment;
-			const updatedPrincipal = currentPrincipal - principalPayment;
+			const interestPayment: number = currentPrincipal * monthlyInterestRate;
+			const principalPayment: number = payment - interestPayment;
+			const updatedPrincipal: number = currentPrincipal - principalPayment;
 
 			return {
 				updatedPrincipal,
@@ -190,8 +191,8 @@ export default function CalculatorPage() {
 			mortgagePayment: number,
 			years: number
 		): Object[] => {
-			const monthlyInterestRate = interestRate / 1200;
-			const numOfPayments = years * 12;
+			const monthlyInterestRate: number = interestRate / 1200;
+			const numOfPayments: number = years * 12;
 			let schedule = [];
 
 			const {
@@ -200,9 +201,9 @@ export default function CalculatorPage() {
 				interestPayment,
 			} = amortizeLoan(principal, monthlyInterestRate, mortgagePayment);
 			const initalMonth: number = 1/12;
-			const balance = totalBalance(initalMonth);
-			const propertyValue = purchase.purchasePrice;
-			const equity = totalEquity(propertyValue, balance);
+			const balance: number = totalBalance(initalMonth);
+			const propertyValue: number = purchase.purchasePrice;
+			const equity: number = totalEquity(propertyValue, balance);
 
 			schedule.push({
 				month: 0,
@@ -226,9 +227,9 @@ export default function CalculatorPage() {
 					monthlyInterestRate,
 					mortgagePayment
 				);
-				const balance = totalBalance(elapsedYears);
-				const propertyValue = compoundedPropertyValue(elapsedYears);
-				const equity = totalEquity(propertyValue, balance);
+				const balance: number = totalBalance(elapsedYears);
+				const propertyValue: number = compoundedPropertyValue(elapsedYears);
+				const equity: number = totalEquity(propertyValue, balance);
 
 				schedule.push({
 					month: i,
@@ -392,7 +393,14 @@ export default function CalculatorPage() {
 	};
 
 	const variableExpense = (): number => {
-		return monthlyOwnershipCost();
+		return (
+			utility.electricityExpense +
+			utility.gasExpense +
+			utility.waterSewerExpense +
+			utility.hoaExpense +
+			utility.garbageExpense +
+			utility.otherExpense
+		);
 	};
 
 	const fixedExpense = (): number => {
@@ -404,12 +412,18 @@ export default function CalculatorPage() {
 		);
 	};
 
-	const calculateNOI = (): number => {
+	const calculateMonthlyNOI = (): number => {
 		return totalMonthlyIncome() - totalMonthlyExpense();
 	};
 
+	const calculateAnnualNOI = (): number => {
+		const month = totalMonthlyIncome() - totalMonthlyExpense();
+
+		return month * 12;
+	};
+
 	const calculateCocROI = (): number => {
-		return calculateNOI() / (downPaymentAmount() * 1.0);
+		return calculateAnnualNOI() / (totalCost() * 1.0);
 	};
 
 	const calculateMortgage = (): number => {
@@ -423,11 +437,11 @@ export default function CalculatorPage() {
 	};
 
 	const proFormaCap = (): number => {
-		return calculateNOI() / (totalCost() * 1.0);
+		return calculateMonthlyNOI() / (totalCost() * 1.0);
 	};
 
 	const purchaseCap = (): number => {
-		return calculateNOI() / (purchase.purchasePrice * 1.0);
+		return calculateMonthlyNOI() / (purchase.purchasePrice * 1.0);
 	};
 
 	const halfPercentMonthlyExpense = (): number => {
@@ -1537,27 +1551,24 @@ export default function CalculatorPage() {
 	};
 
 	const RenderPurchaseResult = () => {
+		const cleanPurchasePrice = isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
+			purchase.purchasePrice, 2) : Humanize.formatNumber(0, 2);
+		const cleanClosingCost = isNaN(purchase.closingCost) ? Humanize.formatNumber(
+			purchase.closingCost, 2) : Humanize.formatNumber(0, 2);
+		const cleanRehabCost = isNaN(purchase.rehabCost) ? Humanize.formatNumber(
+			purchase.rehabCost, 2) : Humanize.formatNumber(0, 2);
+		const cleanValueGrowth = isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
+			purchase.propertyValueGrowth, 2) : Humanize.formatNumber(0, 2);
+
 		return (
 			<React.Fragment>
 				<div className="prose sm:prose-xl">
 					<div className="purchase">
 						<h3 className="m-2">Purchase</h3>
-						<h5>{`Purchase Price: $${Humanize.formatNumber(
-							purchase.purchasePrice,
-							2
-						)}`}</h5>
-						<h5>{`Closing Costs: $${Humanize.formatNumber(
-							purchase.closingCost,
-							2
-						)}`}</h5>
-						<h5>{`Rehab Costs: $${Humanize.formatNumber(
-							purchase.rehabCost,
-							2
-						)}`}</h5>
-						<h5>{`Property Value Growth: ${Humanize.formatNumber(
-							purchase.propertyValueGrowth,
-							2
-						)}%`}</h5>
+						<h5>{`Purchase Price: $${cleanPurchasePrice}`}</h5>
+						<h5>{`Closing Costs: $${cleanClosingCost}`}</h5>
+						<h5>{`Rehab Costs: $${cleanRehabCost}`}</h5>
+						<h5>{`Property Value Growth: ${cleanValueGrowth}%`}</h5>
 					</div>
 				</div>
 				<Divider />
@@ -1566,25 +1577,26 @@ export default function CalculatorPage() {
 	};
 
 	const RenderLoanResult = () => {
+		const cleanLoanAmount = isNaN(loan.loanAmount) ? Humanize.formatNumber(
+			loan.loanAmount, 2) : Humanize.formatNumber(0, 2);
+		const cleanInterestRate = isNaN(loan.interestRate) ? Humanize.formatNumber(
+			loan.interestRate, 2) : Humanize.formatNumber(0, 2);
+		const cleanPointsCharged = isNaN(loan.pointsCharged) ? Humanize.formatNumber(
+			loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
+		const cleanLoanTerm = isNaN(loan.loanTerm) ? 0 : Humanize.formatNumber(
+			loan.loanTerm, 2);
+			console.log(loan.loanTerm);
+
 		return (
 			<React.Fragment>
 				<div>
 					<div className="loan">
 						<h3 className="m-2">Loan</h3>
 						<h5>{`Cash Purchase?: ${isCashPurchase()}`}</h5>
-						<h5>{`Loan Amount: $${Humanize.formatNumber(
-							loan.loanAmount,
-							2
-						)}`}</h5>
-						<h5>{`Interest Rate: ${Humanize.formatNumber(
-							loan.interestRate,
-							2
-						)}%`}</h5>
-						<h5>{`Points Charged: ${Humanize.formatNumber(
-							loan.pointsCharged,
-							2
-						)}%`}</h5>
-						<h5>{`Loan Term: ${loan.loanTerm} Years`}</h5>
+						<h5>{`Loan Amount: $${cleanLoanAmount}`}</h5>
+						<h5>{`Interest Rate: ${cleanInterestRate}%`}</h5>
+						<h5>{`Points Charged: ${cleanPointsCharged}%`}</h5>
+						<h5>{`Loan Term: ${cleanLoanTerm} Years`}</h5>
 					</div>
 				</div>
 				<Divider />
@@ -1676,7 +1688,6 @@ export default function CalculatorPage() {
 						<h5>{`Future Sales Cost: ${utility.futureSalePercent}%`}</h5>
 					</div>
 				</div>
-				<Divider />
 			</React.Fragment>
 		);
 	};
@@ -1734,9 +1745,9 @@ export default function CalculatorPage() {
 		};
 
 		const MonthlyCashFlow = () => {
-			console.log("Cash Flow", initialMonthlyCashflow());
-			console.log("Income", totalMonthlyIncome());
-			console.log("Expenses", totalMonthlyExpense());
+			const cleanCashFlow = isNaN(initialMonthlyCashflow()) ? Humanize.formatNumber(initialMonthlyCashflow(), 2) : 0;
+			const cleanIncome = isNaN(totalMonthlyIncome()) ? Humanize.formatNumber(totalMonthlyIncome(), 2) : 0;
+			const cleanExpense = isNaN(totalMonthlyExpense()) ? Humanize.formatNumber(totalMonthlyExpense(), 2) : 0;
 
 			return (
 				<div>
@@ -1751,10 +1762,7 @@ export default function CalculatorPage() {
 										Monthly Cash Flow
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${Humanize.formatNumber(
-											initialMonthlyCashflow(),
-											2
-										)}`}
+										{`$${cleanCashFlow}`}
 									</dd>
 								</div>
 							</div>
@@ -1765,10 +1773,7 @@ export default function CalculatorPage() {
 										Income
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${Humanize.formatNumber(
-											totalMonthlyIncome(),
-											2
-										)}`}
+										{`$${cleanIncome}`}
 									</dd>
 								</div>
 							</div>
@@ -1779,10 +1784,7 @@ export default function CalculatorPage() {
 										Expenses
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${Humanize.formatNumber(
-											totalMonthlyExpense(),
-											2
-										)}`}
+										{`$${cleanExpense}`}
 									</dd>
 								</div>
 							</div>
@@ -1793,6 +1795,9 @@ export default function CalculatorPage() {
 		};
 
 		const AnnualizedAndMortgagePayment = () => {
+			const annualizedReturnValue = isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
+			const mortgagePaymentValue = isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
+			
 			return (
 				<div>
 					<div>
@@ -1806,11 +1811,7 @@ export default function CalculatorPage() {
 										5-year Annualized Return
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`${annualizedReturn(
-											totalCost(),
-											totalCost() * 2,
-											5
-										).toFixed(2)}%`}
+										{`${annualizedReturnValue}%`}
 									</dd>
 								</div>
 							</div>
@@ -1821,7 +1822,7 @@ export default function CalculatorPage() {
 										Mortgage Payement
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${calculateMortgage().toFixed(2)}`}
+										{`$${mortgagePaymentValue}`}
 									</dd>
 								</div>
 							</div>
@@ -1998,7 +1999,7 @@ export default function CalculatorPage() {
 									</dt>
 									<dd className="mt-1 text-3xl font-semibold text-gray-900">
 										{`$${Humanize.formatNumber(
-											calculateNOI(),
+											calculateMonthlyNOI(),
 											2
 										)}`}
 									</dd>
@@ -2119,26 +2120,30 @@ export default function CalculatorPage() {
 			);
 		};
 
-		// const Graph = () => {
-		// 	return <div></div>;
-		// };
+		const Graph = () => {
+			return <div></div>;
+		};
 
 		return (
 			<React.Fragment>
-				<PropertyHeader />
-				<Divider />
-				<MonthlyCashFlow />
-				<AnnualizedAndMortgagePayment />
+			{info.infoComplete && 
+				<React.Fragment>
+					<PropertyHeader />
+					<Divider />
+					<MonthlyCashFlow />
+					<AnnualizedAndMortgagePayment />
 
-				{/* <div className="container">
-					<RentalIncome />
-					<RentalExpenses />
-					<LoanDetails />
-				</div> */}
-				<MonthlyExpenseBreakdown />
-				<ROI />
-				<HalfPercentRule />
-				{/* <Graph />   */}
+					{/* <div className="container">
+						<RentalIncome />
+						<RentalExpenses />
+						<LoanDetails />
+					</div> */}
+					<MonthlyExpenseBreakdown />
+					<ROI />
+					<HalfPercentRule />
+					<Graph />  
+					</React.Fragment>
+			}
 			</React.Fragment>
 		);
 	};
