@@ -772,18 +772,6 @@ export default function CalculatorPage() {
 		const annualizedReturnValue = !isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
 		const mortgagePaymentValue = !isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
 
-		// const RentalIncome = () => {
-		// 	return <div></div>;
-		// };
-
-		// const RentalExpenses = () => {
-		// 	return <div></div>;
-		// };
-
-		// const LoanDetails = () => {
-		// 	return <div></div>;
-		// };
-
 		return (
 			<React.Fragment>
 			{info.complete && 
@@ -801,12 +789,6 @@ export default function CalculatorPage() {
 						annualizedReturnValue={annualizedReturnValue}
 						mortgagePaymentValue={mortgagePaymentValue}
 					/>
-
-					{/* <div className="container">
-						<RentalIncome />
-						<RentalExpenses />
-						<LoanDetails />
-					</div> */}
 
 					<MonthlyExpenseBreakdown 
 						totalMonthlyExpense={totalMonthlyExpense()}
@@ -847,35 +829,35 @@ export default function CalculatorPage() {
 	return (
 		<div className="container mx-auto p-6">
 			<div className="">
-			<Header />
-			{inReview && (
-				<React.Fragment>
-					<PropertyForm 
-						handleForm={(e: any) => handleInfo(e)}
-					/>
-					<Divider />
-					<PurchaseForm 
-						handleForm={(e: any) => handlePurchase(e)}
-					/>
-					<Divider />
-					<LoanForm 
-						handleForm={(e: any) => handleLoan(e)}
-					/>
-					<Divider />
-					<IncomeForm 
-						handleForm={(e: any) => handleIncome(e)}
-					/>
-					<Divider />
-					<OwnershipForm 
-						handleForm={(e: any) => handleOwnership(e)}
-					/>
-					<Divider />
-					<UtilityForm 
-						handleForm={(e: any) => handleUtility(e)}
-					/>
-					<Divider />
-				</React.Fragment>
-			)}
+				<Header />
+				{inReview && (
+					<React.Fragment>
+						<PropertyForm 
+							handleForm={(e: any) => handleInfo(e)}
+						/>
+						<Divider />
+						<PurchaseForm 
+							handleForm={(e: any) => handlePurchase(e)}
+						/>
+						<Divider />
+						<LoanForm 
+							handleForm={(e: any) => handleLoan(e)}
+						/>
+						<Divider />
+						<IncomeForm 
+							handleForm={(e: any) => handleIncome(e)}
+						/>
+						<Divider />
+						<OwnershipForm 
+							handleForm={(e: any) => handleOwnership(e)}
+						/>
+						<Divider />
+						<UtilityForm 
+							handleForm={(e: any) => handleUtility(e)}
+						/>
+						<Divider />
+					</React.Fragment>
+				)}
 			</div>
 			<div className="container sm:prose-xl">
 				<div>
@@ -893,47 +875,57 @@ export default function CalculatorPage() {
 				</div>
 				{inReview && (
 					<React.Fragment>
-						{info.complete && 
-							<ReviewInfo 
-								info={info}
-							/>
+						{info.complete &&
+							<>
+								<ReviewInfo 
+									info={info}
+								/>
+								<Divider />
+							</>
 						}
-						<Divider />
 
 						{purchase.complete && 
-							<ReviewPurchase 
-								cleanPurchasePrice={cleanPurchasePrice}
-								cleanClosingCost={cleanClosingCost}
-								cleanRehabCost={cleanRehabCost}
-								cleanValueGrowth={cleanValueGrowth}
-							/>
+							<>
+								<ReviewPurchase 
+									cleanPurchasePrice={cleanPurchasePrice}
+									cleanClosingCost={cleanClosingCost}
+									cleanRehabCost={cleanRehabCost}
+									cleanValueGrowth={cleanValueGrowth}
+								/>
+								<Divider />
+							</>
 						}
-						<Divider />
 
 						{loan.complete && 
-							<ReviewLoan 
-								isCashPurchase={isCashPurchase()}
-								cleanLoanAmount={cleanLoanAmount}
-								cleanInterestRate={cleanInterestRate}
-								cleanPointsCharged={cleanPointsCharged}
-								cleanLoanTerm={cleanLoanTerm}
-							/>
+							<>
+								<ReviewLoan 
+									isCashPurchase={isCashPurchase()}
+									cleanLoanAmount={cleanLoanAmount}
+									cleanInterestRate={cleanInterestRate}
+									cleanPointsCharged={cleanPointsCharged}
+									cleanLoanTerm={cleanLoanTerm}
+								/>
+								<Divider />
+							</>
 						}
-						<Divider />
 
 						{income.complete && 
-							<ReviewIncome 
-								income={income}
-							/>
+							<>
+								<ReviewIncome 
+									income={income}
+								/>
+								<Divider />
+							</>
 						}
-						<Divider />
 
-						{ownership.complete && (
-							<ReviewOwnership 
-								ownership={ownership}
-							/>
-						)}
-						<Divider />
+						{ownership.complete && 
+							<>
+								<ReviewOwnership 
+									ownership={ownership}
+								/>
+								<Divider />
+							</>
+						}
 
 						{utility.complete && 
 							<ReviewUtility 
