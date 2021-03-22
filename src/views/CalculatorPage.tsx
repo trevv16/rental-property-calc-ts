@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Humanize from "humanize-plus";
 
 import {
 	getMonthlyFromAnnual,
 	percentOfRentalIncome,
 	annualizedReturn,
-	// getTermBreakpoints,
-	// getCompoundValue,
+	getTermBreakpoints,
 	totalCost,
 	calculateCocROI,
 	calculateAnnualNOI,
@@ -19,7 +18,13 @@ import {
 	totalMonthlyExpense,
 	fixedExpense,
 	variableExpense,
-	monthlyCashFlow
+	monthlyCashFlow,
+	getValuesAtBreakpoint,
+	totalBalance,
+	totalEquity,
+	totalMortgagePaid,
+	totalMortgageDue,
+	compoundedPropertyValue
 } from "../utils/calc";
 
 import { 
@@ -153,162 +158,109 @@ export default function CalculatorPage() {
 	const [inReview, setInReview] = useState<boolean>(true);
 
 	// const [results, setResults] = useState<Object>({});
-	// const [scheduleSummary, setScheduleSummary] = useState<any>([]);
+	const [scheduleSummary, setScheduleSummary] = useState<any>([]);
 
-	// useEffect(() => {
+	useEffect(() => {
+		const mortgage = calculateMortgage(loan);
+		const loanTerm = loan?.loanTerm;
+		
 		// Ammortization Functions
+		const amortizeLoan = (
+			currentPrincipal: number,
+			monthlyInterestRate: number,
+			payment: number
+		): any => {
+			const interestPayment: number = currentPrincipal * monthlyInterestRate;
+			const principalPayment: number = payment - interestPayment;
+			const updatedPrincipal: number = currentPrincipal - principalPayment;
 
-		// const compoundedPropertyValue = (years: number): number => {
-		// 	return getCompoundValue(
-		// 		purchase.purchasePrice,
-		// 		purchase.propertyValueGrowth,
-		// 		years
-		// 	);
-		// };
+			return {
+				updatedPrincipal,
+				principalPayment,
+				interestPayment,
+			};
+		};
 
-		// const calculateMortgage(loan) = (): number => {
-		// 	const mortgage = mortgagePaymentCost(
-		// 		loan.loanAmount,
-		// 		loan.interestRate,
-		// 		loan.loanTerm
-		// 	);
+		const getAmortizationSchedule = (
+			principal: number,
+			interestRate: number,
+			mortgagePayment: number,
+			years: number
+		): Object[] => {
+			const monthlyInterestRate: number = interestRate / 1200;
+			const numOfPayments: number = years * 12;
+			let schedule = [];
 
-		// 	return mortgage;
-		// };
+			const {
+				updatedPrincipal,
+				principalPayment,
+				interestPayment,
+			} = amortizeLoan(principal, monthlyInterestRate, mortgagePayment);
+			const initalMonth: number = 1/12;
+			const mortgageDue: number = totalMortgageDue(mortgage, loan);
+			const mortgagePaid: number = totalMortgagePaid(initalMonth, mortgage);
+			const balance: number = totalBalance(mortgageDue, mortgagePaid);
+			const propertyValue: number = purchase.purchasePrice;
+			const equity: number = totalEquity(propertyValue, balance);
 
-		// const mortgagePaid = (elapsedYears: number): number => {
-		// 	return elapsedYears * 12 * calculateMortgage(loan);
-		// };
+			schedule.push({
+				month: 0,
+				propertyValue,
+				equity,
+				balance,
+				updatedPrincipal,
+				principalPayment,
+				interestPayment,
+			});
 
-		// const totalMortgageDue = (): number => {
-		// 	return calculateMortgage(loan) * (loan.loanTerm * 12);
-		// };
+			for (let i = 1; i < numOfPayments; i++) {
+				const previous = schedule[i - 1];
+				let elapsedYears = i / 12;
+				const {
+					updatedPrincipal,
+					principalPayment,
+					interestPayment,
+				} = amortizeLoan(
+					previous?.updatedPrincipal,
+					monthlyInterestRate,
+					mortgagePayment
+				);
+				const currentMortgagePaid: number = totalMortgagePaid(elapsedYears, mortgage);
+				const currentBalance: number = totalBalance(mortgageDue, currentMortgagePaid);
+				const currentPropertyValue: number = compoundedPropertyValue(elapsedYears, purchase);
+				const currentEquity: number = totalEquity(currentPropertyValue, currentBalance);
 
-		// const totalBalance = (elapsedYears: number): number => {
-		// 	return totalMortgageDue() - mortgagePaid(elapsedYears);
-		// };
+				schedule.push({
+					month: i,
+					propertyValue: currentPropertyValue,
+					equity: currentEquity,
+					balance: currentBalance,
+					updatedPrincipal,
+					principalPayment,
+					interestPayment,
+				});
+			}
+			return schedule;
+		};
 
-		// const totalEquity = (homeValue: number, totalBalance: number): number => {
-		// 	return homeValue - totalBalance;
-		// };
+		if (loanTerm > 0 && loanTerm !== undefined) {
+			const breakpoints: number[] = getTermBreakpoints(loanTerm);
 
-		// const propertySaleValue = (propertyValue: number): number => {
-		// 	const salePercent = utility.futureSalePercent / 100;
+			const loanSchedule: Object[] = getAmortizationSchedule(
+				loan.loanAmount,
+				loan.interestRate,
+				mortgage,
+				loan.loanTerm
+			);
 
-		// 	return propertyValue * (1 - salePercent);
-		// };
-
-		// const propertySaleProfit = (propertyValue: number): number => {
-		// 	return propertySaleValue(propertyValue) - purchase.purchasePrice;
-		// };
-
-		// const propertyProfit = (propertyValue: number): number => {
-		// 	return propertySaleProfit(propertyValue);
-		// };
-
-		// const amortizeLoan = (
-		// 	currentPrincipal: number,
-		// 	monthlyInterestRate: number,
-		// 	payment: number
-		// ): any => {
-		// 	const interestPayment: number = currentPrincipal * monthlyInterestRate;
-		// 	const principalPayment: number = payment - interestPayment;
-		// 	const updatedPrincipal: number = currentPrincipal - principalPayment;
-
-		// 	return {
-		// 		updatedPrincipal,
-		// 		principalPayment,
-		// 		interestPayment,
-		// 	};
-		// };
-
-		// const getAmortizationSchedule = (
-		// 	principal: number,
-		// 	interestRate: number,
-		// 	mortgagePayment: number,
-		// 	years: number
-		// ): Object[] => {
-		// 	const monthlyInterestRate: number = interestRate / 1200;
-		// 	const numOfPayments: number = years * 12;
-		// 	let schedule = [];
-
-		// 	const {
-		// 		updatedPrincipal,
-		// 		principalPayment,
-		// 		interestPayment,
-		// 	} = amortizeLoan(principal, monthlyInterestRate, mortgagePayment);
-		// 	const initalMonth: number = 1/12;
-		// 	const balance: number = totalBalance(initalMonth);
-		// 	const propertyValue: number = purchase.purchasePrice;
-		// 	const equity: number = totalEquity(propertyValue, balance);
-
-		// 	schedule.push({
-		// 		month: 0,
-		// 		propertyValue,
-		// 		equity,
-		// 		balance,
-		// 		updatedPrincipal,
-		// 		principalPayment,
-		// 		interestPayment,
-		// 	});
-
-		// 	for (let i = 1; i < numOfPayments; i++) {
-		// 		const previous = schedule[i - 1];
-		// 		let elapsedYears = i / 12;
-		// 		const {
-		// 			updatedPrincipal,
-		// 			principalPayment,
-		// 			interestPayment,
-		// 		} = amortizeLoan(
-		// 			previous?.updatedPrincipal,
-		// 			monthlyInterestRate,
-		// 			mortgagePayment
-		// 		);
-		// 		const balance: number = totalBalance(elapsedYears);
-		// 		const propertyValue: number = compoundedPropertyValue(elapsedYears);
-		// 		const equity: number = totalEquity(propertyValue, balance);
-
-		// 		schedule.push({
-		// 			month: i,
-		// 			propertyValue,
-		// 			equity,
-		// 			balance,
-		// 			updatedPrincipal,
-		// 			principalPayment,
-		// 			interestPayment,
-		// 		});
-		// 	}
-		// 	return schedule;
-		// };
-
-		// const getValuesAtBreakpoint = (schedule: Object[], pointArr: number[]): Object[] => {
-		// 	const values = pointArr.map((point) => {
-		// 		let index: number = point * 12;
-		// 		return schedule[index];
-		// 	});
-
-		// 	return values;
-		// };
-
-		// const loanTerm = loan?.loanTerm;
-
-		// if (loanTerm > 0 && loanTerm !== undefined) {
-			// const breakpoints: number[] = getTermBreakpoints(loanTerm);
-
-			// const loanSchedule: Object[] = getAmortizationSchedule(
-			// 	loan.loanAmount,
-			// 	loan.interestRate,
-			// 	calculateMortgage(loan),
-			// 	loan.loanTerm
-			// );
-
-			// const scheduleSummary: Object[] = getValuesAtBreakpoint(
-			// 	loanSchedule,
-			// 	breakpoints
-			// );
-			// setScheduleSummary(scheduleSummary);
-		// }
-	// }, [loan, purchase]);
+			const scheduleSummary: Object[] = getValuesAtBreakpoint(
+				loanSchedule,
+				breakpoints
+			);
+			
+			setScheduleSummary(scheduleSummary);
+		}
+	}, [loan, purchase]);
 
 	const isComplete = (): boolean => {
 		return (
