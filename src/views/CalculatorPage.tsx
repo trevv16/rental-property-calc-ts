@@ -10,9 +10,18 @@ import {
 	// getCompoundValue
 } from "../utils/calc";
 
-import { Header } from "../components/index";
+import { 
+	Header,
+	Divider,
+	PropertyForm,
+	PurchaseForm,
+	LoanForm,
+	IncomeForm,
+	OwnershipForm,
+	UtilityForm
+} from "../components/index";
 
-interface infoI {
+type infoI = {
 	complete: boolean,
 	name: string,
 	streetAddress: string,
@@ -476,944 +485,24 @@ export default function CalculatorPage() {
 	// };
 
 	// UI Forms
-	
-	const PropertyForm = () => {
-		return (
-			<div className="mt-10 sm:mt-0">
-				<div className="md:grid md:grid-cols-3 md:gap-6">
-					<div className="md:col-span-1">
-						<div className="px-4 sm:px-0">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
-								Property Information
-							</h3>
-							<p className="mt-1 text-sm text-gray-600">
-								Use a permanent address where you can receive
-								mail.
-							</p>
-						</div>
-					</div>
-					<div className="mt-5 md:mt-0 md:col-span-2">
-						<form id="purchaseForm" onSubmit={(e) => handleInfo(e)}>
-							<div className="shadow overflow-hidden sm:rounded-md">
-								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-6 gap-6">
-										<div className="col-span-6 sm:col-span-3">
-											<label
-												htmlFor="name"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Nickname
-											</label>
-											<input
-												type="text"
-												name="name"
-												id="name"
-												required
-												className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											/>
-										</div>
-
-										<div className="col-span-6">
-											<label
-												htmlFor="streetAddress"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Street address
-											</label>
-											<input
-												type="text"
-												name="streetAddress"
-												id="streetAddress"
-												required
-												autoComplete="street-address"
-												className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											/>
-										</div>
-
-										<div className="col-span-6 sm:col-span-6 lg:col-span-2">
-											<label
-												htmlFor="city"
-												className="block text-sm font-medium text-gray-700"
-											>
-												City
-											</label>
-											<input
-												type="text"
-												name="city"
-												id="city"
-												className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											/>
-										</div>
-
-										<div className="col-span-6 sm:col-span-3 lg:col-span-2">
-											<label
-												htmlFor="state"
-												className="block text-sm font-medium text-gray-700"
-											>
-												State / Province
-											</label>
-											<input
-												type="text"
-												name="state"
-												id="state"
-												className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											/>
-										</div>
-
-										<div className="col-span-6 sm:col-span-3 lg:col-span-2">
-											<label
-												htmlFor="zipCode"
-												className="block text-sm font-medium text-gray-700"
-											>
-												ZIP / Postal
-											</label>
-											<input
-												type="text"
-												name="zipCode"
-												id="zipCode"
-												required
-												autoComplete="postal-code"
-												className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											/>
-										</div>
-									</div>
-								</div>
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-									<button
-										type="submit"
-										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									>
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const PurchaseForm = () => {
-		return (
-			<div className="mt-10 sm:mt-">
-				<div className="md:grid md:grid-cols-3 md:gap-6">
-					<div className="md:col-span-1">
-						<div className="px-4 sm:px-0">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
-								Purchase
-							</h3>
-							<p className="mt-1 text-sm text-gray-600">
-								Use a permanent address where you can receive
-								mail.
-							</p>
-						</div>
-					</div>
-					<div className="mt-5 md:mt-0 md:col-span-2">
-						<form
-							id="purchaseForm"
-							onSubmit={(e) => handlePurchase(e)}
-						>
-							<div className="shadow overflow-hidden sm:rounded-md">
-								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-6 gap-6">
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="purchasePrice"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Purchase Price
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													min="0"
-													name="purchasePrice"
-													id="purchasePrice"
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="closingCost"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Closing Costs
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													min="0"
-													name="closingCost"
-													id="closingCost"
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="rehabCost"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Rehab Costs
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													min="0"
-													name="rehabCost"
-													id="rehabCost"
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="propertyValueGrowth"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Property Value Growth
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="propertyValueGrowth"
-													id="propertyValueGrowth"
-													step="0.01"
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-									<button
-										type="submit"
-										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									>
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const LoanForm = () => {
-		return (
-			<div className="mt-10 sm:mt-0">
-				<div className="md:grid md:grid-cols-3 md:gap-6">
-					<div className="md:col-span-1">
-						<div className="px-4 sm:px-0">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
-								Financing
-							</h3>
-							<p className="mt-1 text-sm text-gray-600">
-								Use a permanent address where you can receive
-								mail.
-							</p>
-						</div>
-					</div>
-					<div className="mt-5 md:mt-0 md:col-span-2">
-						<form id="loanForm" onSubmit={(e) => handleLoan(e)}>
-							<div className="shadow overflow-hidden sm:rounded-md">
-								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-6 gap-6">
-										<div className="flex items-start">
-											<div className="flex items-center h-5">
-												<input
-													checked={isCash}
-													onChange={() =>
-														setIsCash(!isCash)
-													}
-													type="checkbox"
-													name="isCashPurchase"
-													id="isCashPurchase"
-													className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-												/>
-											</div>
-											<div className="ml-3 text-sm">
-												<label
-													htmlFor="isCashPurchase"
-													className="font-medium text-gray-700"
-												>
-													Cash Purchase?
-												</label>
-												<p className="text-gray-500">
-													A loan is not being used to
-													make this purchase.
-												</p>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="loanAmount"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Loan Amount
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="loanAmount"
-													required={isCash !== false}
-													disabled={isCash === true}
-													min="0"
-													id="loanAmount"
-													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="interestRate"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Interest Rate
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="interestRate"
-													id="interestRate"
-													required={isCash !== false}
-													disabled={isCash === true}
-													step="0.01"
-													min="0"
-													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="pointsCharged"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Points Charged
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="pointsCharged"
-													id="pointsCharged"
-													step="0.01"
-													min="0"
-													required={isCash !== false}
-													disabled={isCash === true}
-													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="loanTerm"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Loan Term
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="loanTerm"
-													id="loanTerm"
-													required={isCash !== false}
-													disabled={isCash === true}
-													min="0"
-													className="disabled:opacity-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													Years
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-									<button
-										type="submit"
-										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									>
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const IncomeForm = () => {
-		return (
-			<div className="mt-10 sm:mt-0">
-				<div className="md:grid md:grid-cols-3 md:gap-6">
-					<div className="md:col-span-1">
-						<div className="px-4 sm:px-0">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
-								Rental Income
-							</h3>
-							<p className="mt-1 text-sm text-gray-600">
-								Use a permanent address where you can receive
-								mail.
-							</p>
-						</div>
-					</div>
-					<div className="mt-5 md:mt-0 md:col-span-2">
-						<form id="incomeForm" onSubmit={(e) => handleIncome(e)}>
-							<div className="shadow overflow-hidden sm:rounded-md">
-								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-6 gap-6">
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="grossMonthlyRentalIncome"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Gross Monthly Rental Income
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="grossMonthlyRentalIncome"
-													id="grossMonthlyRentalIncome"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="otherMonthlyRentalIncome"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Other Monthly Rental Income
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="otherMonthlyRentalIncome"
-													id="otherMonthlyRentalIncome"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="annualIncomeGrowth"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Annual Income Growth
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="annualIncomeGrowth"
-													id="annualIncomeGrowth"
-													min="0"
-													step="0.01"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-									<button
-										type="submit"
-										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									>
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const OwnershipForm = () => {
-		return (
-			<div className="mt-10 sm:mt-0">
-				<div className="md:grid md:grid-cols-3 md:gap-6">
-					<div className="md:col-span-1">
-						<div className="px-4 sm:px-0">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
-								Rental Expenses - Ownership
-							</h3>
-							<p className="mt-1 text-sm text-gray-600">
-								Use a permanent address where you can receive
-								mail.
-							</p>
-						</div>
-					</div>
-					<div className="mt-5 md:mt-0 md:col-span-2">
-						<form
-							id="ownershipExpenseForm"
-							onSubmit={(e) => handleOwnership(e)}
-						>
-							<div className="shadow overflow-hidden sm:rounded-md">
-								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-6 gap-6">
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="propertyTaxes"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Annual Property Taxes
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="propertyTaxes"
-													id="propertyTaxes"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="propertyInsurance"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Annual Property Insurance
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="propertyInsurance"
-													id="propertyInsurance"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="maintenancePercent"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Maintenance
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="maintenancePercent"
-													id="maintenancePercent"
-													min="0"
-													step="0.01"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="vacancyPercent"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Vacancy
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="vacancyPercent"
-													id="vacancyPercent"
-													step="0.01"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="capexPercent"
-												className="block text-sm font-medium text-gray-700"
-											>
-												CapEx
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="capexPercent"
-													id="capexPercent"
-													step="0.01"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="managementPercent"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Management
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													name="managementPercent"
-													id="managementPercent"
-													step="0.01"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-									<button
-										type="submit"
-										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									>
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const UtilityForm = () => {
-		return (
-			<div className="mt-10 sm:mt-0">
-				<div className="md:grid md:grid-cols-3 md:gap-6">
-					<div className="md:col-span-1">
-						<div className="px-4 sm:px-0">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">
-								Rental Expenses - Utilities
-							</h3>
-							<p className="mt-1 text-sm text-gray-600">
-								Use a permanent address where you can receive
-								mail.
-							</p>
-						</div>
-					</div>
-					<div className="mt-5 md:mt-0 md:col-span-2">
-						<form
-							id="ownershipExpenseForm"
-							onSubmit={(e) => handleUtility(e)}
-						>
-							<div className="shadow overflow-hidden sm:rounded-md">
-								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-6 gap-6">
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="electricityExpense"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Electricity
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="electricityExpense"
-													id="electricityExpense"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="gasExpense"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Gas
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="gasExpense"
-													id="gasExpense"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="waterSewerExpense"
-												className="block text-sm font-medium text-gray-700"
-											>
-												{"Water & Sewer"}
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="waterSewerExpense"
-													id="waterSewerExpense"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="hoaExpense"
-												className="block text-sm font-medium text-gray-700"
-											>
-												HOA
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="hoaExpense"
-													id="hoaExpense"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="garbageExpense"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Garbage
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="garbageExpense"
-													id="garbageExpense"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="otherExpense"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Other
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													$
-												</span>
-												<input
-													type="number"
-													step="0.01"
-													name="otherExpense"
-													id="otherExpense"
-													min="0"
-													required
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-												/>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="annualExpenseGrowth"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Annual Expense Growth
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													step="0.01"
-													name="annualExpenseGrowth"
-													id="annualExpenseGrowth"
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-
-										<div className="col-span-3 sm:col-span-2">
-											<label
-												htmlFor="futureSalePercent"
-												className="block text-sm font-medium text-gray-700"
-											>
-												Future Sales Expense
-											</label>
-											<div className="mt-1 flex rounded-md shadow-sm">
-												<input
-													type="number"
-													step="0.01"
-													name="futureSalePercent"
-													id="futureSalePercent"
-													className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-												/>
-												<span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-													%
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-									<button
-										type="submit"
-										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-									>
-										Save
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const Divider = () => {
-		return (
-			<div className="hidden sm:block m-2" aria-hidden="true">
-				<div className="py-5">
-					<div className="border-t border-gray-200"></div>
-				</div>
-			</div>
-		);
-	};
-
-	// Form Handlers
-	const getFormData = (e: any): any => {
-		// console.log("Form e:", e.target.elements.name.value);
-		e.preventDefault();
-
-		let data: any = {};
-		for (const field in e.target.elements) {
-			let unNeeded: boolean =
-				field === "length" || field === "item" || field === "namedItem";
-
-			if (isNaN(parseInt(field)) && !unNeeded) {
-				data[field] = e.target.elements[field].value;
-			}
-		}
-
-		return data;
-	};
 
 	const handleInfo = (e: any) => {
+		e.preventDefault();
+		// Form Handlers
+		const getFormData = (e: any): any => {
+			let data: any = {};
+			for (const field in e.target.elements) {
+				let unNeeded: boolean =
+					field === "length" || field === "item" || field === "namedItem";
+	
+				if (isNaN(parseInt(field)) && !unNeeded) {
+					data[field] = e.target.elements[field].value;
+				}
+			}
+	
+			return data;
+		};
+
 		const { name, streetAddress, city, state, zipCode } = getFormData(e);
 
 		setInfo({
@@ -1427,6 +516,22 @@ export default function CalculatorPage() {
 	};
 
 	const handlePurchase = (e: any) => {
+		e.preventDefault();
+		// Form Handlers
+		const getFormData = (e: any): any => {
+			let data: any = {};
+			for (const field in e.target.elements) {
+				let unNeeded: boolean =
+					field === "length" || field === "item" || field === "namedItem";
+	
+				if (isNaN(parseInt(field)) && !unNeeded) {
+					data[field] = e.target.elements[field].value;
+				}
+			}
+	
+			return data;
+		};
+		
 		let {
 			purchasePrice,
 			closingCost,
@@ -1449,6 +554,22 @@ export default function CalculatorPage() {
 	};
 
 	const handleLoan = (e: any) => {
+		e.preventDefault();
+		// Form Handlers
+		const getFormData = (e: any): any => {
+			let data: any = {};
+			for (const field in e.target.elements) {
+				let unNeeded: boolean =
+					field === "length" || field === "item" || field === "namedItem";
+	
+				if (isNaN(parseInt(field)) && !unNeeded) {
+					data[field] = e.target.elements[field].value;
+				}
+			}
+	
+			return data;
+		};
+		
 		let {
 			isCashPurchase,
 			loanAmount,
@@ -1474,6 +595,22 @@ export default function CalculatorPage() {
 	};
 
 	const handleIncome = (e: any) => {
+		e.preventDefault();
+		// Form Handlers
+		const getFormData = (e: any): any => {
+			let data: any = {};
+			for (const field in e.target.elements) {
+				let unNeeded: boolean =
+					field === "length" || field === "item" || field === "namedItem";
+	
+				if (isNaN(parseInt(field)) && !unNeeded) {
+					data[field] = e.target.elements[field].value;
+				}
+			}
+	
+			return data;
+		};
+		
 		let {
 			grossMonthlyRentalIncome,
 			annualIncomeGrowth,
@@ -1493,6 +630,22 @@ export default function CalculatorPage() {
 	};
 
 	const handleOwnership = (e: any) => {
+		e.preventDefault();
+		// Form Handlers
+		const getFormData = (e: any): any => {
+			let data: any = {};
+			for (const field in e.target.elements) {
+				let unNeeded: boolean =
+					field === "length" || field === "item" || field === "namedItem";
+	
+				if (isNaN(parseInt(field)) && !unNeeded) {
+					data[field] = e.target.elements[field].value;
+				}
+			}
+	
+			return data;
+		};
+		
 		let {
 			propertyTaxes,
 			propertyInsurance,
@@ -1521,6 +674,22 @@ export default function CalculatorPage() {
 	};
 
 	const handleUtility = (e: any) => {
+		e.preventDefault();
+		// Form Handlers
+		const getFormData = (e: any): any => {
+			let data: any = {};
+			for (const field in e.target.elements) {
+				let unNeeded: boolean =
+					field === "length" || field === "item" || field === "namedItem";
+	
+				if (isNaN(parseInt(field)) && !unNeeded) {
+					data[field] = e.target.elements[field].value;
+				}
+			}
+	
+			return data;
+		};
+		
 		let {
 			electricityExpense,
 			gasExpense,
@@ -1573,13 +742,13 @@ export default function CalculatorPage() {
 	};
 
 	const RenderPurchaseResult = () => {
-		const cleanPurchasePrice = isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
+		const cleanPurchasePrice = !isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
 			purchase.purchasePrice, 2) : Humanize.formatNumber(0, 2);
-		const cleanClosingCost = isNaN(purchase.closingCost) ? Humanize.formatNumber(
+		const cleanClosingCost = !isNaN(purchase.closingCost) ? Humanize.formatNumber(
 			purchase.closingCost, 2) : Humanize.formatNumber(0, 2);
-		const cleanRehabCost = isNaN(purchase.rehabCost) ? Humanize.formatNumber(
+		const cleanRehabCost = !isNaN(purchase.rehabCost) ? Humanize.formatNumber(
 			purchase.rehabCost, 2) : Humanize.formatNumber(0, 2);
-		const cleanValueGrowth = isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
+		const cleanValueGrowth = !isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
 			purchase.propertyValueGrowth, 2) : Humanize.formatNumber(0, 2);
 
 		return (
@@ -1599,13 +768,13 @@ export default function CalculatorPage() {
 	};
 
 	const RenderLoanResult = () => {
-		const cleanLoanAmount = isNaN(loan.loanAmount) ? Humanize.formatNumber(
+		const cleanLoanAmount = !isNaN(loan.loanAmount) ? Humanize.formatNumber(
 			loan.loanAmount, 2) : Humanize.formatNumber(0, 2);
-		const cleanInterestRate = isNaN(loan.interestRate) ? Humanize.formatNumber(
+		const cleanInterestRate = !isNaN(loan.interestRate) ? Humanize.formatNumber(
 			loan.interestRate, 2) : Humanize.formatNumber(0, 2);
-		const cleanPointsCharged = isNaN(loan.pointsCharged) ? Humanize.formatNumber(
+		const cleanPointsCharged = !isNaN(loan.pointsCharged) ? Humanize.formatNumber(
 			loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
-		const cleanLoanTerm = isNaN(loan.loanTerm) ? 0 : Humanize.formatNumber(
+		const cleanLoanTerm = !isNaN(loan.loanTerm) ? 0 : Humanize.formatNumber(
 			loan.loanTerm, 2);
 			console.log(loan.loanTerm);
 
@@ -1767,9 +936,9 @@ export default function CalculatorPage() {
 		};
 
 		const MonthlyCashFlow = () => {
-			const cleanCashFlow = isNaN(initialMonthlyCashflow()) ? Humanize.formatNumber(initialMonthlyCashflow(), 2) : 0;
-			const cleanIncome = isNaN(totalMonthlyIncome()) ? Humanize.formatNumber(totalMonthlyIncome(), 2) : 0;
-			const cleanExpense = isNaN(totalMonthlyExpense()) ? Humanize.formatNumber(totalMonthlyExpense(), 2) : 0;
+			const cleanCashFlow = !isNaN(initialMonthlyCashflow()) ? Humanize.formatNumber(initialMonthlyCashflow(), 2) : 0;
+			const cleanIncome = !isNaN(totalMonthlyIncome()) ? Humanize.formatNumber(totalMonthlyIncome(), 2) : 0;
+			const cleanExpense = !isNaN(totalMonthlyExpense()) ? Humanize.formatNumber(totalMonthlyExpense(), 2) : 0;
 
 			return (
 				<div>
@@ -1817,8 +986,8 @@ export default function CalculatorPage() {
 		};
 
 		const AnnualizedAndMortgagePayment = () => {
-			const annualizedReturnValue = isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
-			const mortgagePaymentValue = isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
+			const annualizedReturnValue = !isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
+			const mortgagePaymentValue = !isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
 			
 			return (
 				<div>
@@ -2176,17 +1345,29 @@ export default function CalculatorPage() {
 			<Header />
 			{inReview && (
 				<React.Fragment>
-					<PropertyForm />
+					<PropertyForm 
+						handleForm={(e: any) => handleInfo(e)}
+					/>
 					<Divider />
-					<PurchaseForm />
+					<PurchaseForm 
+						handleForm={(e: any) => handlePurchase(e)}
+					/>
 					<Divider />
-					<LoanForm />
+					<LoanForm 
+						handleForm={(e: any) => handleLoan(e)}
+					/>
 					<Divider />
-					<IncomeForm />
+					<IncomeForm 
+						handleForm={(e: any) => handleIncome(e)}
+					/>
 					<Divider />
-					<OwnershipForm />
+					<OwnershipForm 
+						handleForm={(e: any) => handleOwnership(e)}
+					/>
 					<Divider />
-					<UtilityForm />
+					<UtilityForm 
+						handleForm={(e: any) => handleUtility(e)}
+					/>
 					<Divider />
 				</React.Fragment>
 			)}
