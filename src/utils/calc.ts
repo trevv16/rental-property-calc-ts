@@ -251,3 +251,48 @@ export const halfPercentMonthlyExpense = (monthlyIncome: number): number => {
 export const halfPercentRuleCashFlow = (monthlyIncome: number, mortgageExpense: number): number => {
 	return (monthlyIncome - ((monthlyIncome * 0.5) + mortgageExpense));
 };
+
+// ------------------------LOAN SCHEDULE FUNCTIONS----------------------------------------
+
+export const totalMortgagePaid = (elapsedYears: number, mortgagePayment: number): number => {
+	return elapsedYears * 12 * mortgagePayment;
+};
+
+export const totalMortgageDue = (mortgage: number, loan: loanI): number => {
+	return mortgage * (loan.loanTerm * 12);
+};
+
+export const totalBalance = (mortgageDue: number, mortgagePaid: number): number => {
+	return mortgageDue - mortgagePaid;
+};
+
+export const totalEquity = (homeValue: number, totalBalance: number): number => {
+	return homeValue - totalBalance;
+};
+
+export const propertySaleGrossValue = (propertyValue: number, utility: utilityI): number => {
+	const salePercent = utility.futureSalePercent / 100;
+
+	return propertyValue * (1 - salePercent);
+};
+
+export const propertySaleProfit = (propertyGrossValue: number, purchase: purchaseI): number => {
+	return propertyGrossValue - purchase.purchasePrice;
+};
+
+export const getValuesAtBreakpoint = (schedule: Object[], pointArr: number[]): Object[] => {
+	const values = pointArr.map((point) => {
+		let index: number = point * 12;
+		return schedule[index];
+	});
+
+	return values;
+};
+
+export const compoundedPropertyValue = (years: number, purchase: purchaseI): number => {
+	return getCompoundValue(
+		purchase.purchasePrice,
+		purchase.propertyValueGrowth,
+		years
+	);
+};
