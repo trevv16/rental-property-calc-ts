@@ -759,8 +759,7 @@ export default function CalculatorPage() {
 		loan.interestRate, 2) : Humanize.formatNumber(0, 2);
 	const cleanPointsCharged = !isNaN(loan.pointsCharged) ? Humanize.formatNumber(
 		loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
-	const cleanLoanTerm = !isNaN(loan.loanTerm) ? 0 : Humanize.formatNumber(
-		loan.loanTerm, 2);
+	const cleanLoanTerm = isNaN(loan.loanTerm) ? 0 : loan.loanTerm;
 
 	const Results = () => {
 		// MonthlyCashFlow props
