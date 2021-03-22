@@ -13,6 +13,7 @@ import {
 import { 
 	Header,
 	Divider,
+	ReviewToggle,
 	PropertyForm,
 	PurchaseForm,
 	LoanForm,
@@ -20,6 +21,23 @@ import {
 	OwnershipForm,
 	UtilityForm
 } from "../components/index";
+
+
+import { 
+	Graph,
+	ROI,
+	HalfPercentRule,
+	MonthlyCashFlow,
+	MonthlyExpenseBreakdown,
+	PropertyHeader,
+	AnnualizedAndMortgagePayment,
+	ReviewInfo,
+	ReviewPurchase,
+	ReviewLoan,
+	ReviewIncome,
+	ReviewOwnership,
+	ReviewUtility
+} from "./index";
 
 type infoI = {
 	complete: boolean,
@@ -122,7 +140,7 @@ export default function CalculatorPage() {
 		futureSalePercent: 0.0,
 	});
 	const [inReview, setInReview] = useState<boolean>(true);
-	const [isCash, setIsCash] = useState<boolean>(true);
+
 	// const [results, setResults] = useState<Object>({});
 	// const [scheduleSummary, setScheduleSummary] = useState<any>([]);
 
@@ -723,305 +741,36 @@ export default function CalculatorPage() {
 		});
 	};
 
-	const RenderInfoResult = () => {
-		return (
-			<React.Fragment>
-				<div className="prose sm:prose-xl">
-					<div className="info">
-						<h3 className="m-2">Info</h3>
-						<h5>{`Property Name: ${info.name}`}</h5>
-						<h5>{`Street Address: ${info.streetAddress}`}</h5>
-						<h5>{`City: ${info.city}`}</h5>
-						<h5>{`State: ${info.state}`}</h5>
-						<h5>{`Zip Code: ${info.zipCode}`}</h5>
-					</div>
-				</div>
-				<Divider />
-			</React.Fragment>
-		);
-	};
+	// ReviewPurchase props
+	const cleanPurchasePrice = !isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
+		purchase.purchasePrice, 2) : Humanize.formatNumber(0, 2);
+	const cleanClosingCost = !isNaN(purchase.closingCost) ? Humanize.formatNumber(
+		purchase.closingCost, 2) : Humanize.formatNumber(0, 2);
+	const cleanRehabCost = !isNaN(purchase.rehabCost) ? Humanize.formatNumber(
+		purchase.rehabCost, 2) : Humanize.formatNumber(0, 2);
+	const cleanValueGrowth = !isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
+		purchase.propertyValueGrowth, 2) : Humanize.formatNumber(0, 2);
+	
 
-	const RenderPurchaseResult = () => {
-		const cleanPurchasePrice = !isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
-			purchase.purchasePrice, 2) : Humanize.formatNumber(0, 2);
-		const cleanClosingCost = !isNaN(purchase.closingCost) ? Humanize.formatNumber(
-			purchase.closingCost, 2) : Humanize.formatNumber(0, 2);
-		const cleanRehabCost = !isNaN(purchase.rehabCost) ? Humanize.formatNumber(
-			purchase.rehabCost, 2) : Humanize.formatNumber(0, 2);
-		const cleanValueGrowth = !isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
-			purchase.propertyValueGrowth, 2) : Humanize.formatNumber(0, 2);
-
-		return (
-			<React.Fragment>
-				<div className="prose sm:prose-xl">
-					<div className="purchase">
-						<h3 className="m-2">Purchase</h3>
-						<h5>{`Purchase Price: $${cleanPurchasePrice}`}</h5>
-						<h5>{`Closing Costs: $${cleanClosingCost}`}</h5>
-						<h5>{`Rehab Costs: $${cleanRehabCost}`}</h5>
-						<h5>{`Property Value Growth: ${cleanValueGrowth}%`}</h5>
-					</div>
-				</div>
-				<Divider />
-			</React.Fragment>
-		);
-	};
-
-	const RenderLoanResult = () => {
-		const cleanLoanAmount = !isNaN(loan.loanAmount) ? Humanize.formatNumber(
-			loan.loanAmount, 2) : Humanize.formatNumber(0, 2);
-		const cleanInterestRate = !isNaN(loan.interestRate) ? Humanize.formatNumber(
-			loan.interestRate, 2) : Humanize.formatNumber(0, 2);
-		const cleanPointsCharged = !isNaN(loan.pointsCharged) ? Humanize.formatNumber(
-			loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
-		const cleanLoanTerm = !isNaN(loan.loanTerm) ? 0 : Humanize.formatNumber(
-			loan.loanTerm, 2);
-			console.log(loan.loanTerm);
-
-		return (
-			<React.Fragment>
-				<div>
-					<div className="loan">
-						<h3 className="m-2">Loan</h3>
-						<h5>{`Cash Purchase?: ${isCashPurchase()}`}</h5>
-						<h5>{`Loan Amount: $${cleanLoanAmount}`}</h5>
-						<h5>{`Interest Rate: ${cleanInterestRate}%`}</h5>
-						<h5>{`Points Charged: ${cleanPointsCharged}%`}</h5>
-						<h5>{`Loan Term: ${cleanLoanTerm} Years`}</h5>
-					</div>
-				</div>
-				<Divider />
-			</React.Fragment>
-		);
-	};
-
-	const RenderIncomeResult = () => {
-		return (
-			<React.Fragment>
-				<div>
-					<div className="income">
-						<h3 className="m-2">Income</h3>
-						<h5>{`Gross Monthly Rental Income: $${Humanize.formatNumber(
-							income.grossMonthlyRentalIncome,
-							2
-						)}`}</h5>
-						<h5>{`Other Monthly Rental Income: $${Humanize.formatNumber(
-							income.otherMonthlyRentalIncome,
-							2
-						)}`}</h5>
-						<h5>{`Annual Income Growth: ${Humanize.formatNumber(
-							income.annualIncomeGrowth,
-							2
-						)}%`}</h5>
-					</div>
-				</div>
-				<Divider />
-			</React.Fragment>
-		);
-	};
-
-	const RenderOwnershipResult = () => {
-		return (
-			<React.Fragment>
-				<div>
-					<div className="ownership">
-						<h3 className="m-2">Ownership</h3>
-						<h5>{`Annual Property Taxes: $${Humanize.formatNumber(
-							ownership.propertyTaxes,
-							2
-						)}`}</h5>
-						<h5>{`Annual Property Insurance: $${Humanize.formatNumber(
-							ownership.propertyInsurance,
-							2
-						)}`}</h5>
-						<h5>{`Maintenace: ${ownership.maintenancePercent}%`}</h5>
-						<h5>{`Vacancy: ${ownership.vacancyPercent}%`}</h5>
-						<h5>{`CapEx: ${ownership.capexPercent}%`}</h5>
-						<h5>{`Management: ${ownership.managementPercent}%`}</h5>
-					</div>
-				</div>
-				<Divider />
-			</React.Fragment>
-		);
-	};
-
-	const RenderUtilityResult = () => {
-		return (
-			<React.Fragment>
-				<div>
-					<div className="utility">
-						<h3 className="m-2">Utilities</h3>
-						<h5>{`Electricity: $${Humanize.formatNumber(
-							utility.electricityExpense,
-							2
-						)}`}</h5>
-						<h5>{`Gas: $${Humanize.formatNumber(
-							utility.gasExpense,
-							2
-						)}`}</h5>
-						<h5>{`Water & Sewer: $${Humanize.formatNumber(
-							utility.waterSewerExpense,
-							2
-						)}`}</h5>
-						<h5>{`HOA: $${Humanize.formatNumber(
-							utility.hoaExpense,
-							2
-						)}`}</h5>
-						<h5>{`Garbage: $${Humanize.formatNumber(
-							utility.garbageExpense,
-							2
-						)}`}</h5>
-						<h5>{`Other: $${Humanize.formatNumber(
-							utility.otherExpense,
-							2
-						)}`}</h5>
-						<h5>{`Annual Expense Growth: ${utility.annualExpenseGrowth}%`}</h5>
-						<h5>{`Future Sales Cost: ${utility.futureSalePercent}%`}</h5>
-					</div>
-				</div>
-			</React.Fragment>
-		);
-	};
-
-	const ReviewToggle = () => {
-		return (
-			<div className="flex items-center">
-				<button
-					onClick={() => setInReview(!inReview)}
-					type="button"
-					className={`${
-						inReview ? "bg-indigo-600" : "bg-gray-200"
-					} relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
-					aria-pressed="false"
-					aria-labelledby="annual-billing-label"
-				>
-					<span className="sr-only">Use setting</span>
-					<span
-						aria-hidden="true"
-						className={`${
-							inReview ? "translate-x-5" : "translate-x-0"
-						} pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}
-					></span>
-				</button>
-				<span className="ml-3" id="annual-billing-label">
-					<span className="text-sm font-medium text-gray-900">
-						In Review{" "}
-					</span>
-					<span className="text-sm text-gray-500">
-						(Toggle to show edit mode)
-					</span>
-				</span>
-			</div>
-		);
-	};
+	// ReviewLoan
+	const cleanLoanAmount = !isNaN(loan.loanAmount) ? Humanize.formatNumber(
+		loan.loanAmount, 2) : Humanize.formatNumber(0, 2);
+	const cleanInterestRate = !isNaN(loan.interestRate) ? Humanize.formatNumber(
+		loan.interestRate, 2) : Humanize.formatNumber(0, 2);
+	const cleanPointsCharged = !isNaN(loan.pointsCharged) ? Humanize.formatNumber(
+		loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
+	const cleanLoanTerm = !isNaN(loan.loanTerm) ? 0 : Humanize.formatNumber(
+		loan.loanTerm, 2);
 
 	const Results = () => {
-		const PropertyHeader = () => {
-			return (
-				<div>
-					<div className="md:flex md:items-center md:justify-between">
-						<div className="flex-1 min-w-0">
-							<h2 className="text-2xl font-bold leading-7 text-white sm:text-3xl sm:truncate">
-								{info.name}
-							</h2>
-						</div>
-						<div className="mt-4 flex md:mt-0 md:ml-4">
-							<h4 className="text-2xl font-bold leading-7 text-white sm:text-3xl sm:truncate">
-								{`${info.streetAddress} ${info.city}, ${info.state} ${info.zipCode}`}
-							</h4>
-						</div>
-					</div>
-				</div>
-			);
-		};
+		// MonthlyCashFlow props
+		const cleanCashFlow = !isNaN(initialMonthlyCashflow()) ? Humanize.formatNumber(initialMonthlyCashflow(), 2) : 0;
+		const cleanIncome = !isNaN(totalMonthlyIncome()) ? Humanize.formatNumber(totalMonthlyIncome(), 2) : 0;
+		const cleanExpense = !isNaN(totalMonthlyExpense()) ? Humanize.formatNumber(totalMonthlyExpense(), 2) : 0;
 
-		const MonthlyCashFlow = () => {
-			const cleanCashFlow = !isNaN(initialMonthlyCashflow()) ? Humanize.formatNumber(initialMonthlyCashflow(), 2) : 0;
-			const cleanIncome = !isNaN(totalMonthlyIncome()) ? Humanize.formatNumber(totalMonthlyIncome(), 2) : 0;
-			const cleanExpense = !isNaN(totalMonthlyExpense()) ? Humanize.formatNumber(totalMonthlyExpense(), 2) : 0;
-
-			return (
-				<div>
-					<div>
-						<h2 className="text-lg leading-6 font-medium text-gray-900">
-							Cash Flow
-						</h2>
-						<dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Monthly Cash Flow
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${cleanCashFlow}`}
-									</dd>
-								</div>
-							</div>
-
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Income
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${cleanIncome}`}
-									</dd>
-								</div>
-							</div>
-
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Expenses
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${cleanExpense}`}
-									</dd>
-								</div>
-							</div>
-						</dl>
-					</div>
-				</div>
-			);
-		};
-
-		const AnnualizedAndMortgagePayment = () => {
-			const annualizedReturnValue = !isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
-			const mortgagePaymentValue = !isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
-			
-			return (
-				<div>
-					<div>
-						<h2 className="text-lg leading-6 font-medium text-gray-900">
-							KPIs
-						</h2>
-						<dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										5-year Annualized Return
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`${annualizedReturnValue}%`}
-									</dd>
-								</div>
-							</div>
-
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Mortgage Payement
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${mortgagePaymentValue}`}
-									</dd>
-								</div>
-							</div>
-						</dl>
-					</div>
-				</div>
-			);
-		};
+		// AnnualizedAndMortgagePayment props
+		const annualizedReturnValue = !isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
+		const mortgagePaymentValue = !isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
 
 		// const RentalIncome = () => {
 		// 	return <div></div>;
@@ -1035,305 +784,61 @@ export default function CalculatorPage() {
 		// 	return <div></div>;
 		// };
 
-		const MonthlyExpenseBreakdown = () => {
-			return (
-				<div>
-					<h2>Monthly Expense Breakdown</h2>
-					<div className="grid md:grid-cols-3 gap-3">
-						<div className="totalExpense mr-4">
-							<h3>
-								<strong>{`Total expenses $${Humanize.formatNumber(
-									totalMonthlyExpense(),
-									2
-								)}`}</strong>
-							</h3>
-							<p>
-								<strong>Mortgage</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									calculateMortgage(),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Taxes</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									getMonthlyFromAnnual(
-										ownership.propertyTaxes
-									),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Insurance</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									getMonthlyFromAnnual(
-										ownership.propertyInsurance
-									),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Variable expenses</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									variableExpense(),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Fixed expenses</strong>&emsp;
-								{`$${Humanize.formatNumber(fixedExpense(), 2)}`}
-							</p>
-						</div>
-						<div className="fixedExpense mr-4">
-							<h3>
-								<strong>{`Fixed expenses $${Humanize.formatNumber(
-									fixedExpense(),
-									2
-								)}`}</strong>
-							</h3>
-							<p>
-								<strong>Vacancy</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									vacancyMonthlyCost(),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Maintenance</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									maintenanceMonthlyCost(),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>CapEx</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									capexMonthlyCost(),
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Management fees</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									managementMonthlyCost(),
-									2
-								)}`}
-							</p>
-						</div>
-						<div className="variableExpense">
-							<h3>
-								<strong>{`Variable expenses $${Humanize.formatNumber(
-									variableExpense(),
-									2
-								)}`}</strong>
-							</h3>
-							<p>
-								<strong>Electricity</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									utility.electricityExpense,
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Gas</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									utility.gasExpense,
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>{"Water & Sewer"}</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									utility.waterSewerExpense,
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>HOA Fees</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									utility.hoaExpense,
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Garbage</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									utility.garbageExpense,
-									2
-								)}`}
-							</p>
-							<p>
-								<strong>Other</strong>&emsp;
-								{`$${Humanize.formatNumber(
-									utility.otherExpense,
-									2
-								)}`}
-							</p>
-						</div>
-					</div>
-				</div>
-			);
-		};
-
-		const ROI = () => {
-			return (
-				<div>
-					<div>
-						<h2 className="text-lg leading-6 font-medium text-gray-900">
-							Returns
-						</h2>
-						<dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Net Operating Income (NOI)
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`$${Humanize.formatNumber(
-											calculateMonthlyNOI(),
-											2
-										)}`}
-									</dd>
-								</div>
-							</div>
-
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Cash on Cash ROI
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`${Humanize.formatNumber(
-											calculateCocROI(),
-											2
-										)}%`}
-									</dd>
-								</div>
-							</div>
-
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Pro forma cap
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`${Humanize.formatNumber(
-											proFormaCap(),
-											2
-										)}%`}
-									</dd>
-								</div>
-							</div>
-
-							<div className="bg-white overflow-hidden shadow rounded-lg">
-								<div className="px-4 py-5 sm:p-6">
-									<dt className="text-sm font-medium text-gray-500 truncate">
-										Purchase cap
-									</dt>
-									<dd className="mt-1 text-3xl font-semibold text-gray-900">
-										{`${Humanize.formatNumber(
-											purchaseCap(),
-											2
-										)}%`}
-									</dd>
-								</div>
-							</div>
-						</dl>
-					</div>
-				</div>
-			);
-		};
-
-		const HalfPercentRule = () => {
-			return (
-				<div>
-					<h2 className="text-lg leading-6 font-medium text-gray-900">
-						50% Rule
-					</h2>
-					<dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
-						<div className="bg-white overflow-hidden shadow rounded-lg">
-							<div className="px-4 py-5 sm:p-6">
-								<dt className="text-sm font-medium text-gray-500 truncate">
-									Total Monthly Income
-								</dt>
-								<dd className="mt-1 text-3xl font-semibold text-gray-900">
-									{`$${Humanize.formatNumber(
-										totalMonthlyIncome(),
-										2
-									)}`}
-								</dd>
-							</div>
-						</div>
-
-						<div className="bg-white overflow-hidden shadow rounded-lg">
-							<div className="px-4 py-5 sm:p-6">
-								<dt className="text-sm font-medium text-gray-500 truncate">
-									50% for expenses
-								</dt>
-								<dd className="mt-1 text-3xl font-semibold text-gray-900">
-									{`$${Humanize.formatNumber(
-										halfPercentMonthlyExpense(),
-										2
-									)}`}
-								</dd>
-							</div>
-						</div>
-
-						<div className="bg-white overflow-hidden shadow rounded-lg">
-							<div className="px-4 py-5 sm:p-6">
-								<dt className="text-sm font-medium text-gray-500 truncate">
-									{"Monthly Mortgage (P&I)"}
-								</dt>
-								<dd className="mt-1 text-3xl font-semibold text-gray-900">
-									{`$${Humanize.formatNumber(
-										calculateMortgage(),
-										2
-									)}`}
-								</dd>
-							</div>
-						</div>
-
-						<div className="bg-white overflow-hidden shadow rounded-lg">
-							<div className="px-4 py-5 sm:p-6">
-								<dt className="text-sm font-medium text-gray-500 truncate">
-									50% Rule Cash Flow
-								</dt>
-								<dd className="mt-1 text-3xl font-semibold text-gray-900">
-									{`$${Humanize.formatNumber(
-										halfPercentRuleCashFlow(),
-										2
-									)}`}
-								</dd>
-							</div>
-						</div>
-					</dl>
-				</div>
-			);
-		};
-
-		const Graph = () => {
-			return <div></div>;
-		};
-
 		return (
 			<React.Fragment>
 			{info.complete && 
 				<React.Fragment>
-					<PropertyHeader />
+					<PropertyHeader 
+						info={info}
+					/>
 					<Divider />
-					<MonthlyCashFlow />
-					<AnnualizedAndMortgagePayment />
+					<MonthlyCashFlow 
+						cleanCashFlow={cleanCashFlow}
+						cleanIncome={cleanIncome}
+						cleanExpense={cleanExpense}
+					/>
+					<AnnualizedAndMortgagePayment 
+						annualizedReturnValue={annualizedReturnValue}
+						mortgagePaymentValue={mortgagePaymentValue}
+					/>
 
 					{/* <div className="container">
 						<RentalIncome />
 						<RentalExpenses />
 						<LoanDetails />
 					</div> */}
-					<MonthlyExpenseBreakdown />
-					<ROI />
-					<HalfPercentRule />
+
+					<MonthlyExpenseBreakdown 
+						totalMonthlyExpense={totalMonthlyExpense()}
+						calculateMortgage={calculateMortgage()}
+						propertyTaxes={getMonthlyFromAnnual(
+							ownership.propertyTaxes
+						)}
+						propertyInsurance={getMonthlyFromAnnual(
+							ownership.propertyInsurance
+						)}
+						variableExpense={variableExpense()}
+						fixedExpense={fixedExpense()}
+						vacancyMonthlyCost={vacancyMonthlyCost()}
+						maintenanceMonthlyCost={maintenanceMonthlyCost()}
+						capexMonthlyCost={capexMonthlyCost()}
+						managementMonthlyCost={managementMonthlyCost()}
+						utility={utility}
+					/>
+					<ROI 
+						calculateMonthlyNOI={calculateMonthlyNOI()}
+						calculateCocROI={calculateCocROI()}
+						proFormaCap={proFormaCap()}
+						purchaseCap={purchaseCap()}
+					/>
+					<HalfPercentRule 
+						totalMonthlyIncome={totalMonthlyIncome()}
+						halfPercentMonthlyExpense={halfPercentMonthlyExpense()}
+						calculateMortgage={calculateMortgage()}
+						halfPercentRuleCashFlow={halfPercentRuleCashFlow()}
+					/>
 					<Graph />  
-					</React.Fragment>
+				</React.Fragment>
 			}
 			</React.Fragment>
 		);
@@ -1380,24 +885,61 @@ export default function CalculatorPage() {
 						</h2>
 					</div>
 					<div className="mt-4 flex md:mt-0 md:ml-4">
-						<ReviewToggle />
+						<ReviewToggle 
+							inReview={inReview}
+							setInReview={setInReview}
+						/>
 					</div>
 				</div>
 				{inReview && (
 					<React.Fragment>
-						{info.complete && <RenderInfoResult />}
+						{info.complete && 
+							<ReviewInfo 
+								info={info}
+							/>
+						}
+						<Divider />
 
-						{purchase.complete && <RenderPurchaseResult />}
+						{purchase.complete && 
+							<ReviewPurchase 
+								cleanPurchasePrice={cleanPurchasePrice}
+								cleanClosingCost={cleanClosingCost}
+								cleanRehabCost={cleanRehabCost}
+								cleanValueGrowth={cleanValueGrowth}
+							/>
+						}
+						<Divider />
 
-						{loan.complete && <RenderLoanResult />}
+						{loan.complete && 
+							<ReviewLoan 
+								isCashPurchase={isCashPurchase()}
+								cleanLoanAmount={cleanLoanAmount}
+								cleanInterestRate={cleanInterestRate}
+								cleanPointsCharged={cleanPointsCharged}
+								cleanLoanTerm={cleanLoanTerm}
+							/>
+						}
+						<Divider />
 
-						{income.complete && <RenderIncomeResult />}
+						{income.complete && 
+							<ReviewIncome 
+								income={income}
+							/>
+						}
+						<Divider />
 
 						{ownership.complete && (
-							<RenderOwnershipResult />
+							<ReviewOwnership 
+								ownership={ownership}
+							/>
 						)}
+						<Divider />
 
-						{utility.complete && <RenderUtilityResult />}
+						{utility.complete && 
+							<ReviewUtility 
+								utility={utility}
+							/>
+						}
 					</React.Fragment>
 				)}
 			</div>
