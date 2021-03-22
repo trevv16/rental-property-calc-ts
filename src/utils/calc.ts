@@ -1,11 +1,3 @@
-type infoI = {
-	complete: boolean,
-	name: string,
-	streetAddress: string,
-	city: string,
-	state: string,
-	zipCode: string,
-};
 type purchaseI = {
 	complete: boolean,
 	purchasePrice: number,
@@ -26,15 +18,6 @@ type incomeI = {
 	grossMonthlyRentalIncome: number,
 	annualIncomeGrowth: number,
 	otherMonthlyRentalIncome: number,
-};
-type ownershipI = {
-	complete: boolean,
-	propertyTaxes: number,
-	propertyInsurance: number,
-	maintenancePercent: number,
-	vacancyPercent: number,
-	capexPercent: number,
-	managementPercent: number,
 };
 type utilityI = {
 	complete: boolean,
