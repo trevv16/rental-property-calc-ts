@@ -17,7 +17,7 @@ export default function ROI(props: any) {
                             </dt>
                             <dd className="mt-1 text-3xl font-semibold text-gray-900">
                                 {`$${Humanize.formatNumber(
-                                    props.calculateMonthlyNOI,
+                                    props.calculateAnnualNOI,
                                     2
                                 )}`}
                             </dd>
