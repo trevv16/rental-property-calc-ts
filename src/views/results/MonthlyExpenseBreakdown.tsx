@@ -5,7 +5,7 @@ export default function MonthlyExpenseBreakdown(props: any) {
 
 	return (
         <div>
-            <h2>Monthly Expense Breakdown</h2>
+            <h2 className="my-8"><strong>Monthly Expense Breakdown</strong></h2>
             <div className="grid md:grid-cols-3 gap-3">
                 <div className="totalExpense mr-4">
                     <h3>

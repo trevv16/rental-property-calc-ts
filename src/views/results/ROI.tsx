@@ -6,8 +6,8 @@ export default function ROI(props: any) {
 	return (
         <div>
             <div>
-                <h2 className="text-lg leading-6 font-medium text-gray-900">
-                    Returns
+                <h2 className="my-8 text-lg leading-6 font-medium text-gray-900">
+                    <strong>Returns</strong>
                 </h2>
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
                     <div className="bg-white overflow-hidden shadow rounded-lg">
