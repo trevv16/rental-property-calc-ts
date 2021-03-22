@@ -471,7 +471,7 @@ export default function CalculatorPage() {
 	};
 
 	const halfPercentMonthlyExpense = (): number => {
-		return totalMonthlyExpense() * 0.5;
+		return totalMonthlyIncome() * 0.5;
 	};
 
 	const halfPercentRuleCashFlow = (): number => {
