@@ -449,7 +449,7 @@ export default function CalculatorPage() {
 	};
 
 	const calculateCocROI = (): number => {
-		return calculateAnnualNOI() / (totalCost() * 1.0);
+		return (calculateAnnualNOI() / totalCost()) * 100.0;
 	};
 
 	const calculateMortgage = (): number => {
@@ -463,11 +463,11 @@ export default function CalculatorPage() {
 	};
 
 	const proFormaCap = (): number => {
-		return calculateMonthlyNOI() / (totalCost() * 1.0);
+		return (calculateMonthlyNOI() / totalCost()) * 100.0;
 	};
 
 	const purchaseCap = (): number => {
-		return calculateMonthlyNOI() / (purchase.purchasePrice * 1.0);
+		return (calculateMonthlyNOI() / purchase.purchasePrice) * 100.0;
 	};
 
 	const halfPercentMonthlyExpense = (): number => {
@@ -744,10 +744,13 @@ export default function CalculatorPage() {
 	// ReviewPurchase props
 	const cleanPurchasePrice = !isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
 		purchase.purchasePrice, 2) : Humanize.formatNumber(0, 2);
+		
 	const cleanClosingCost = !isNaN(purchase.closingCost) ? Humanize.formatNumber(
 		purchase.closingCost, 2) : Humanize.formatNumber(0, 2);
+
 	const cleanRehabCost = !isNaN(purchase.rehabCost) ? Humanize.formatNumber(
 		purchase.rehabCost, 2) : Humanize.formatNumber(0, 2);
+
 	const cleanValueGrowth = !isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
 		purchase.propertyValueGrowth, 2) : Humanize.formatNumber(0, 2);
 	
@@ -755,10 +758,13 @@ export default function CalculatorPage() {
 	// ReviewLoan
 	const cleanLoanAmount = !isNaN(loan.loanAmount) ? Humanize.formatNumber(
 		loan.loanAmount, 2) : Humanize.formatNumber(0, 2);
+
 	const cleanInterestRate = !isNaN(loan.interestRate) ? Humanize.formatNumber(
 		loan.interestRate, 2) : Humanize.formatNumber(0, 2);
+
 	const cleanPointsCharged = !isNaN(loan.pointsCharged) ? Humanize.formatNumber(
 		loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
+
 	const cleanLoanTerm = isNaN(loan.loanTerm) ? 0 : loan.loanTerm;
 
 	const Results = () => {
@@ -807,7 +813,7 @@ export default function CalculatorPage() {
 						utility={utility}
 					/>
 					<ROI 
-						calculateMonthlyNOI={calculateMonthlyNOI()}
+						calculateAnnualNOI={calculateAnnualNOI()}
 						calculateCocROI={calculateCocROI()}
 						proFormaCap={proFormaCap()}
 						purchaseCap={purchaseCap()}
