@@ -22,7 +22,7 @@ export default function ReviewLoan(props: any) {
         <div>
             <div className="loan">
                 <h3 className="m-2">Loan</h3>
-                <h5>{`Cash Purchase?: ${isCashPurchase}`}</h5>
+                <h5>{`Cash Purchase?: ${isCashPurchase()}`}</h5>
                 <h5>{`Loan Amount: $${cleanLoanAmount}`}</h5>
                 <h5>{`Interest Rate: ${cleanInterestRate}%`}</h5>
                 <h5>{`Points Charged: ${cleanPointsCharged}%`}</h5>
