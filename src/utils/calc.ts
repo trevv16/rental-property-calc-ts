@@ -1,3 +1,53 @@
+type infoI = {
+	complete: boolean,
+	name: string,
+	streetAddress: string,
+	city: string,
+	state: string,
+	zipCode: string,
+};
+type purchaseI = {
+	complete: boolean,
+	purchasePrice: number,
+	closingCost: number,
+	rehabCost: number,
+	propertyValueGrowth: number,
+};
+type loanI = {
+	complete: boolean,
+	isCashPurchase: boolean,
+	loanAmount: number,
+	interestRate: number,
+	pointsCharged: number,
+	loanTerm: number,
+};
+type incomeI = {
+	complete: boolean,
+	grossMonthlyRentalIncome: number,
+	annualIncomeGrowth: number,
+	otherMonthlyRentalIncome: number,
+};
+type ownershipI = {
+	complete: boolean,
+	propertyTaxes: number,
+	propertyInsurance: number,
+	maintenancePercent: number,
+	vacancyPercent: number,
+	capexPercent: number,
+	managementPercent: number,
+};
+type utilityI = {
+	complete: boolean,
+	electricityExpense: number,
+	gasExpense: number,
+	waterSewerExpense: number,
+	hoaExpense: number,
+	garbageExpense: number,
+	otherExpense: number,
+	annualExpenseGrowth: number,
+	futureSalePercent: number,
+};
+
 /** Takes an annual price and converts to a monthly price
  * 
  * @param {number} value annual price of subject
@@ -104,4 +154,117 @@ export const getCompoundValue = (principal: number, rate: number, years: number)
 	const final: number = principal * (secondary * 1.0);
 
 	return Math.round(final * 100) / 100;
+};
+
+
+// ------------------------CALCULATOR FUNCTIONS----------------------------------------
+
+export const totalCost = (purchase: purchaseI): number => {
+	return (
+		purchase.purchasePrice +
+		purchase.closingCost +
+		purchase.rehabCost
+	);
+};
+
+export const isCashPurchase = (loan: loanI): string => {
+	return loan.isCashPurchase ? "Yes" : "No";
+};
+
+// const downPaymentAmount = (): number => {
+// 	return totalCost() - loan.loanAmount;
+// };
+
+// const downPaymentPercentage = () => {
+// 	return downPaymentAmount() / (totalCost() * 1.0);
+// };
+
+export const totalMonthlyIncome = (income: incomeI): number => {
+	return (income.grossMonthlyRentalIncome + income.otherMonthlyRentalIncome);
+};
+
+// const compoundedAnnualIncome = (): number => {
+// 	const annualIncome: number = totalMonthlyIncome() * 12;
+
+// 	return getCompoundValue(annualIncome, income.annualIncomeGrowth, 1);
+// };
+
+// const annualOwnershipCost = (): number => {
+// 	return getAnnualFromMonthly(monthlyOwnershipCost());
+// };
+
+// const annualUtilitiesCost = (): number => {
+// 	return getAnnualFromMonthly(monthlyUtilitiesCost());
+// };
+
+export const totalMonthlyExpense = (ownershipCost: number, utiltityCost: number, mortgage: number): number => {
+	return (ownershipCost + utiltityCost + mortgage);
+};
+
+// const compoundedAnnualExpense = (years): number => {
+// 	const annualExpense: number = totalMonthlyExpense() * 12;
+
+// 	return getCompoundValue(
+// 		annualExpense,
+// 		utility.annualExpenseGrowth,
+// 		years
+// 	);
+// };
+
+export const monthlyCashFlow = (monthlyIncome: number, monthlyExpense: number): number => {
+	return (
+		monthlyIncome - monthlyExpense
+	);
+};
+
+export const variableExpense = (utility: utilityI): number => {
+	return (
+		utility.electricityExpense +
+		utility.gasExpense +
+		utility.waterSewerExpense +
+		utility.hoaExpense +
+		utility.garbageExpense +
+		utility.otherExpense
+	);
+};
+
+export const fixedExpense = (maintenanceCost: number, vacancyCost: number, capexCost: number, managementCost: number): number => {
+	return (maintenanceCost + vacancyCost + capexCost + managementCost);
+};
+
+export const calculateAnnualNOI = (monthlyIncome: number, monthlyExpense: number): number => {
+	const month = monthlyIncome - monthlyExpense;
+
+	return month * 12;
+};
+
+export const calculateCocROI = (annualNOI: number, totalCost: number): number => {
+	return (annualNOI / totalCost) * 100.0;
+};
+
+export const calculateMortgage = (loan: loanI): number => {
+	const principal: number = loan.loanAmount;
+	const monthlyRate: number = loan.interestRate / 1200;
+	const months: number = loan.loanTerm * 12;
+
+	return (
+		(principal * (monthlyRate * (1 + monthlyRate) ** months)) /
+		((1 + monthlyRate) ** months - 1)
+	);
+};
+
+export const proFormaCap = (annualNOI: number, totalCost: number): number => {
+	return (annualNOI / totalCost) * 100.0;
+};
+
+export const purchaseCap = (annualNOI: number, purchase: purchaseI): number => {
+	return (annualNOI / purchase.purchasePrice) * 100.0;
+};
+
+export const halfPercentMonthlyExpense = (monthlyIncome: number): number => {
+	return monthlyIncome * 0.5;
+};
+
+export const halfPercentRuleCashFlow = (monthlyIncome: number, mortgageExpense: number): number => {
+	return (monthlyIncome - ((monthlyIncome * 0.5) + mortgageExpense));
 };

@@ -4,10 +4,22 @@ import Humanize from "humanize-plus";
 import {
 	getMonthlyFromAnnual,
 	percentOfRentalIncome,
-	mortgagePaymentCost,
 	annualizedReturn,
 	// getTermBreakpoints,
-	// getCompoundValue
+	// getCompoundValue,
+	totalCost,
+	calculateCocROI,
+	calculateAnnualNOI,
+	calculateMortgage,
+	proFormaCap,
+	purchaseCap,
+	halfPercentMonthlyExpense,
+	halfPercentRuleCashFlow,
+	totalMonthlyIncome,
+	totalMonthlyExpense,
+	fixedExpense,
+	variableExpense,
+	monthlyCashFlow
 } from "../utils/calc";
 
 import { 
@@ -21,7 +33,6 @@ import {
 	OwnershipForm,
 	UtilityForm
 } from "../components/index";
-
 
 import { 
 	Graph,
@@ -155,7 +166,7 @@ export default function CalculatorPage() {
 		// 	);
 		// };
 
-		// const calculateMortgage = (): number => {
+		// const calculateMortgage(loan) = (): number => {
 		// 	const mortgage = mortgagePaymentCost(
 		// 		loan.loanAmount,
 		// 		loan.interestRate,
@@ -166,11 +177,11 @@ export default function CalculatorPage() {
 		// };
 
 		// const mortgagePaid = (elapsedYears: number): number => {
-		// 	return elapsedYears * 12 * calculateMortgage();
+		// 	return elapsedYears * 12 * calculateMortgage(loan);
 		// };
 
 		// const totalMortgageDue = (): number => {
-		// 	return calculateMortgage() * (loan.loanTerm * 12);
+		// 	return calculateMortgage(loan) * (loan.loanTerm * 12);
 		// };
 
 		// const totalBalance = (elapsedYears: number): number => {
@@ -287,7 +298,7 @@ export default function CalculatorPage() {
 			// const loanSchedule: Object[] = getAmortizationSchedule(
 			// 	loan.loanAmount,
 			// 	loan.interestRate,
-			// 	calculateMortgage(),
+			// 	calculateMortgage(loan),
 			// 	loan.loanTerm
 			// );
 
@@ -309,181 +320,11 @@ export default function CalculatorPage() {
 		);
 	};
 
-	const totalCost = (): number => {
-		return (
-			purchase.purchasePrice +
-			purchase.closingCost +
-			purchase.rehabCost
-		);
-	};
-
-	const isCashPurchase = (): string => {
-		return loan.isCashPurchase ? "Yes" : "No";
-	};
-
-	// const downPaymentAmount = (): number => {
-	// 	return totalCost() - loan.loanAmount;
-	// };
-
-	// const downPaymentPercentage = () => {
-	// 	return downPaymentAmount() / (totalCost() * 1.0);
-	// };
-
-	const totalMonthlyIncome = (): number => {
-		return (
-			income.grossMonthlyRentalIncome + income.otherMonthlyRentalIncome
-		);
-	};
-
-	// const compoundedAnnualIncome = (): number => {
-	// 	const annualIncome: number = totalMonthlyIncome() * 12;
-
-	// 	return getCompoundValue(annualIncome, income.annualIncomeGrowth, 1);
-	// };
-
-	const maintenanceMonthlyCost = (): number => {
-		return percentOfRentalIncome(totalMonthlyIncome(), ownership.maintenancePercent);
-	};
-
-	const vacancyMonthlyCost = (): number => {
-		return percentOfRentalIncome(totalMonthlyIncome(), ownership.vacancyPercent);
-	};
-
-	const capexMonthlyCost = (): number => {
-		return percentOfRentalIncome(totalMonthlyIncome(), ownership.capexPercent);
-	};
-
-	const managementMonthlyCost = (): number => {
-		return percentOfRentalIncome(totalMonthlyIncome(), ownership.managementPercent);
-	};
-
-	const monthlyOwnershipCost = (): number => {
-		const monthlyPropertyTax: number = getMonthlyFromAnnual(
-			ownership.propertyTaxes
-		);
-		const monthlyPropertyInsurance: number = getMonthlyFromAnnual(
-			ownership.propertyInsurance
-		);
-
-		return (
-			monthlyPropertyTax +
-			monthlyPropertyInsurance +
-			maintenanceMonthlyCost() +
-			vacancyMonthlyCost() +
-			capexMonthlyCost() +
-			managementMonthlyCost()
-		);
-	};
-
-	// const annualOwnershipCost = (): number => {
-	// 	return getAnnualFromMonthly(monthlyOwnershipCost());
-	// };
-
-	const monthlyUtilitiesCost = (): number => {
-		return (
-			utility.electricityExpense +
-			utility.gasExpense +
-			utility.waterSewerExpense +
-			utility.hoaExpense +
-			utility.garbageExpense +
-			utility.otherExpense
-		);
-	};
-
-	// const annualUtilitiesCost = (): number => {
-	// 	return getAnnualFromMonthly(monthlyUtilitiesCost());
-	// };
-
-	const totalMonthlyExpense = (): number => {
-		return (
-			monthlyOwnershipCost() +
-			monthlyUtilitiesCost() +
-			calculateMortgage()
-		);
-	};
-
-	// const compoundedAnnualExpense = (years): number => {
-	// 	const annualExpense: number = totalMonthlyExpense() * 12;
-
-	// 	return getCompoundValue(
-	// 		annualExpense,
-	// 		utility.annualExpenseGrowth,
-	// 		years
-	// 	);
-	// };
-
-	const initialMonthlyCashflow = (): number => {
-		return (
-			totalMonthlyIncome() - totalMonthlyExpense()
-		);
-	};
-
-	const variableExpense = (): number => {
-		return (
-			utility.electricityExpense +
-			utility.gasExpense +
-			utility.waterSewerExpense +
-			utility.hoaExpense +
-			utility.garbageExpense +
-			utility.otherExpense
-		);
-	};
-
-	const fixedExpense = (): number => {
-		return (
-			maintenanceMonthlyCost() +
-			vacancyMonthlyCost() +
-			capexMonthlyCost() +
-			managementMonthlyCost()
-		);
-	};
-
-	const calculateMonthlyNOI = (): number => {
-		return totalMonthlyIncome() - totalMonthlyExpense();
-	};
-
-	const calculateAnnualNOI = (): number => {
-		const month = totalMonthlyIncome() - totalMonthlyExpense();
-
-		return month * 12;
-	};
-
-	const calculateCocROI = (): number => {
-		return (calculateAnnualNOI() / totalCost()) * 100.0;
-	};
-
-	const calculateMortgage = (): number => {
-		const mortgage: number = mortgagePaymentCost(
-			loan.loanAmount,
-			loan.interestRate,
-			loan.loanTerm
-		);
-
-		return mortgage;
-	};
-
-	const proFormaCap = (): number => {
-		return (calculateMonthlyNOI() / totalCost()) * 100.0;
-	};
-
-	const purchaseCap = (): number => {
-		return (calculateMonthlyNOI() / purchase.purchasePrice) * 100.0;
-	};
-
-	const halfPercentMonthlyExpense = (): number => {
-		return totalMonthlyIncome() * 0.5;
-	};
-
-	const halfPercentRuleCashFlow = (): number => {
-		return (
-			totalMonthlyIncome() -
-			(halfPercentMonthlyExpense() + calculateMortgage())
-		);
-	};
-
 	// const getProperty = (): Object => {
 	// 	return {
-	// 		...info,
+	// 		info: {
+	// 			...info,
+	// 		},
 	// 		purchase: {
 	// 			...purchase,
 	// 		},
@@ -502,8 +343,7 @@ export default function CalculatorPage() {
 	// 	};
 	// };
 
-	// UI Forms
-
+	// Handle Forms
 	const handleInfo = (e: any) => {
 		e.preventDefault();
 		// Form Handlers
@@ -532,7 +372,6 @@ export default function CalculatorPage() {
 			zipCode,
 		});
 	};
-
 	const handlePurchase = (e: any) => {
 		e.preventDefault();
 		// Form Handlers
@@ -570,7 +409,6 @@ export default function CalculatorPage() {
 			propertyValueGrowth,
 		});
 	};
-
 	const handleLoan = (e: any) => {
 		e.preventDefault();
 		// Form Handlers
@@ -611,7 +449,6 @@ export default function CalculatorPage() {
 			loanTerm,
 		});
 	};
-
 	const handleIncome = (e: any) => {
 		e.preventDefault();
 		// Form Handlers
@@ -646,7 +483,6 @@ export default function CalculatorPage() {
 			otherMonthlyRentalIncome,
 		});
 	};
-
 	const handleOwnership = (e: any) => {
 		e.preventDefault();
 		// Form Handlers
@@ -690,7 +526,6 @@ export default function CalculatorPage() {
 			managementPercent,
 		});
 	};
-
 	const handleUtility = (e: any) => {
 		e.preventDefault();
 		// Form Handlers
@@ -741,41 +576,40 @@ export default function CalculatorPage() {
 		});
 	};
 
-	// ReviewPurchase props
-	const cleanPurchasePrice = !isNaN(purchase.purchasePrice) ? Humanize.formatNumber(
-		purchase.purchasePrice, 2) : Humanize.formatNumber(0, 2);
-		
-	const cleanClosingCost = !isNaN(purchase.closingCost) ? Humanize.formatNumber(
-		purchase.closingCost, 2) : Humanize.formatNumber(0, 2);
-
-	const cleanRehabCost = !isNaN(purchase.rehabCost) ? Humanize.formatNumber(
-		purchase.rehabCost, 2) : Humanize.formatNumber(0, 2);
-
-	const cleanValueGrowth = !isNaN(purchase.propertyValueGrowth) ? Humanize.formatNumber(
-		purchase.propertyValueGrowth, 2) : Humanize.formatNumber(0, 2);
-	
-
-	// ReviewLoan
-	const cleanLoanAmount = !isNaN(loan.loanAmount) ? Humanize.formatNumber(
-		loan.loanAmount, 2) : Humanize.formatNumber(0, 2);
-
-	const cleanInterestRate = !isNaN(loan.interestRate) ? Humanize.formatNumber(
-		loan.interestRate, 2) : Humanize.formatNumber(0, 2);
-
-	const cleanPointsCharged = !isNaN(loan.pointsCharged) ? Humanize.formatNumber(
-		loan.pointsCharged, 2) : Humanize.formatNumber(0, 2);
-
-	const cleanLoanTerm = isNaN(loan.loanTerm) ? 0 : loan.loanTerm;
-
 	const Results = () => {
-		// MonthlyCashFlow props
-		const cleanCashFlow = !isNaN(initialMonthlyCashflow()) ? Humanize.formatNumber(initialMonthlyCashflow(), 2) : 0;
-		const cleanIncome = !isNaN(totalMonthlyIncome()) ? Humanize.formatNumber(totalMonthlyIncome(), 2) : 0;
-		const cleanExpense = !isNaN(totalMonthlyExpense()) ? Humanize.formatNumber(totalMonthlyExpense(), 2) : 0;
+		const totalCostVal = totalCost(purchase);
+		const mortgageVal = calculateMortgage(loan);
+
+		const monthlyIncomeVal = totalMonthlyIncome(income);
+		const taxesVal = getMonthlyFromAnnual(ownership.propertyTaxes);
+		const insuranceVal = getMonthlyFromAnnual(ownership.propertyInsurance);
+		const vacancyVal = percentOfRentalIncome(monthlyIncomeVal, ownership.vacancyPercent);
+		const maintenanceVal = percentOfRentalIncome(monthlyIncomeVal, ownership.maintenancePercent);
+		const capexVal = percentOfRentalIncome(monthlyIncomeVal, ownership.capexPercent);
+		const managementVal = percentOfRentalIncome(monthlyIncomeVal, ownership.managementPercent);
+
+		const fixedExpenseVal = fixedExpense(maintenanceVal, vacancyVal, capexVal, managementVal);
+		const variableExpenseVal = variableExpense(utility);
+
+		// MonthlyCashFlow props 
+		const monthlyUtilityVal = variableExpenseVal;
+		const monthlyOwnershipVal = taxesVal + insuranceVal + fixedExpenseVal;
+		const monthlyExpenseVal = totalMonthlyExpense(monthlyOwnershipVal, monthlyUtilityVal, mortgageVal);
+		const monthlyCashFlowVal = monthlyCashFlow(monthlyIncomeVal, monthlyExpenseVal);
+		const cleanCashFlow = !isNaN(monthlyCashFlowVal) ? Humanize.formatNumber(monthlyCashFlowVal, 2) : 0;
+		const cleanIncome = !isNaN(monthlyIncomeVal) ? Humanize.formatNumber(monthlyIncomeVal, 2) : 0;
+		const cleanExpense = !isNaN(monthlyExpenseVal) ? Humanize.formatNumber(monthlyExpenseVal, 2) : 0;
 
 		// AnnualizedAndMortgagePayment props
-		const annualizedReturnValue = !isNaN(annualizedReturn(totalCost(), totalCost() * 2, 5)) ? annualizedReturn(totalCost(), totalCost() * 2, 5).toFixed(2) : 0;
-		const mortgagePaymentValue = !isNaN(calculateMortgage()) ? calculateMortgage().toFixed(2) : 0;
+		const annualizedReturnValue = !isNaN(annualizedReturn(totalCostVal, totalCostVal * 2, 5)) ? annualizedReturn(totalCostVal, totalCostVal * 2, 5).toFixed(2) : 0;
+		const mortgagePaymentValue = !isNaN(mortgageVal) ? mortgageVal.toFixed(2) : 0;
+
+		const annualNOIVal = calculateAnnualNOI(monthlyIncomeVal, monthlyExpenseVal);
+		const cocROIVal = calculateCocROI(annualNOIVal, totalCostVal);
+		const proFormaCapVal = proFormaCap(annualNOIVal, totalCostVal);
+		const purchaseCapVal = purchaseCap(annualNOIVal, purchase);
+		const halfPercentExpenseVal = halfPercentMonthlyExpense(monthlyIncomeVal);
+		const halfPercentCashFlowVal = halfPercentRuleCashFlow(monthlyIncomeVal, mortgageVal);
 
 		return (
 			<React.Fragment>
@@ -796,33 +630,29 @@ export default function CalculatorPage() {
 					/>
 
 					<MonthlyExpenseBreakdown 
-						totalMonthlyExpense={totalMonthlyExpense()}
-						calculateMortgage={calculateMortgage()}
-						propertyTaxes={getMonthlyFromAnnual(
-							ownership.propertyTaxes
-						)}
-						propertyInsurance={getMonthlyFromAnnual(
-							ownership.propertyInsurance
-						)}
-						variableExpense={variableExpense()}
-						fixedExpense={fixedExpense()}
-						vacancyMonthlyCost={vacancyMonthlyCost()}
-						maintenanceMonthlyCost={maintenanceMonthlyCost()}
-						capexMonthlyCost={capexMonthlyCost()}
-						managementMonthlyCost={managementMonthlyCost()}
+						totalMonthlyExpense={monthlyExpenseVal}
+						calculateMortgage={mortgageVal}
+						propertyTaxes={taxesVal}
+						propertyInsurance={insuranceVal}
+						variableExpense={variableExpenseVal}
+						fixedExpense={fixedExpenseVal}
+						vacancyMonthlyCost={vacancyVal}
+						maintenanceMonthlyCost={maintenanceVal}
+						capexMonthlyCost={capexVal}
+						managementMonthlyCost={managementVal}
 						utility={utility}
 					/>
 					<ROI 
-						calculateAnnualNOI={calculateAnnualNOI()}
-						calculateCocROI={calculateCocROI()}
-						proFormaCap={proFormaCap()}
-						purchaseCap={purchaseCap()}
+						calculateAnnualNOI={annualNOIVal}
+						calculateCocROI={cocROIVal}
+						proFormaCap={proFormaCapVal}
+						purchaseCap={purchaseCapVal}
 					/>
 					<HalfPercentRule 
-						totalMonthlyIncome={totalMonthlyIncome()}
-						halfPercentMonthlyExpense={halfPercentMonthlyExpense()}
-						calculateMortgage={calculateMortgage()}
-						halfPercentRuleCashFlow={halfPercentRuleCashFlow()}
+						totalMonthlyIncome={monthlyIncomeVal}
+						halfPercentMonthlyExpense={halfPercentExpenseVal}
+						calculateMortgage={mortgageVal}
+						halfPercentRuleCashFlow={halfPercentCashFlowVal}
 					/>
 					<Graph />  
 				</React.Fragment>
@@ -892,10 +722,7 @@ export default function CalculatorPage() {
 						{purchase.complete && 
 							<>
 								<ReviewPurchase 
-									cleanPurchasePrice={cleanPurchasePrice}
-									cleanClosingCost={cleanClosingCost}
-									cleanRehabCost={cleanRehabCost}
-									cleanValueGrowth={cleanValueGrowth}
+									purchase={purchase}
 								/>
 								<Divider />
 							</>
@@ -904,11 +731,7 @@ export default function CalculatorPage() {
 						{loan.complete && 
 							<>
 								<ReviewLoan 
-									isCashPurchase={isCashPurchase()}
-									cleanLoanAmount={cleanLoanAmount}
-									cleanInterestRate={cleanInterestRate}
-									cleanPointsCharged={cleanPointsCharged}
-									cleanLoanTerm={cleanLoanTerm}
+									loan={loan}
 								/>
 								<Divider />
 							</>
