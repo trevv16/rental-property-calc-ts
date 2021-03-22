@@ -720,7 +720,6 @@ export default function CalculatorPage() {
 			<Divider />
 			<div className="container sm:prose-xl">
 				{isComplete() && <Results />}
-				<Results />
 			</div>
 		</div>
 	);
