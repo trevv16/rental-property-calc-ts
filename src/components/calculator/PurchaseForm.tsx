@@ -10,8 +10,7 @@ export default function PurchaseForm(props: any) {
                             Purchase
                         </h3>
                         <p className="mt-1 text-sm text-gray-600">
-                            Use a permanent address where you can receive
-                            mail.
+                            Enter information about the asking price of the deal.
                         </p>
                     </div>
                 </div>

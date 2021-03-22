@@ -10,8 +10,7 @@ export default function IncomeForm(props: any) {
                             Rental Income
                         </h3>
                         <p className="mt-1 text-sm text-gray-600">
-                            Use a permanent address where you can receive
-                            mail.
+                            Enter information about the potential income of the deal.
                         </p>
                     </div>
                 </div>

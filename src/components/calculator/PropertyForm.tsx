@@ -10,8 +10,7 @@ export default function PropertyForm(props: any) {
                             Property Information
                         </h3>
                         <p className="mt-1 text-sm text-gray-600">
-                            Use a permanent address where you can receive
-                            mail.
+                            Enter basic information about the property.
                         </p>
                     </div>
                 </div>

@@ -10,8 +10,7 @@ export default function OwnershipForm(props: any) {
                             Rental Expenses - Ownership
                         </h3>
                         <p className="mt-1 text-sm text-gray-600">
-                            Use a permanent address where you can receive
-                            mail.
+                            Enter information about the fixed expenses.
                         </p>
                     </div>
                 </div>
