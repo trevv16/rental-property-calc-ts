@@ -253,12 +253,12 @@ export default function CalculatorPage() {
 				loan.loanTerm
 			);
 
-			const scheduleSummary: Object[] = getValuesAtBreakpoint(
+			const scheduleSummaryVal: Object[] = getValuesAtBreakpoint(
 				loanSchedule,
 				breakpoints
 			);
 			
-			setScheduleSummary(scheduleSummary);
+			setScheduleSummary(scheduleSummaryVal);
 		}
 	}, [loan, purchase]);
 
@@ -606,7 +606,9 @@ export default function CalculatorPage() {
 						calculateMortgage={mortgageVal}
 						halfPercentRuleCashFlow={halfPercentCashFlowVal}
 					/>
-					<Graph />  
+					<Graph 
+						scheduleSummary={scheduleSummary}
+					/>  
 				</React.Fragment>
 			}
 			</React.Fragment>
