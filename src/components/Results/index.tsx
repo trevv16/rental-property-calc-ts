@@ -16,7 +16,7 @@ import {
   ROI,
   HalfPercentRule,
   Graph,
-} from "../../views";
+} from "../";
 import Divider from "../calculator/Divider";
 
 type ResultProps = {
