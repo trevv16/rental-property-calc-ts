@@ -1,30 +1,4 @@
-import { useState, useEffect } from "react";
-
-import {
-  getMonthlyFromAnnual,
-  percentOfRentalIncome,
-  annualizedReturn,
-  getTermBreakpoints,
-  totalCost,
-  calculateCocROI,
-  calculateAnnualNOI,
-  calculateMortgage,
-  proFormaCap,
-  purchaseCap,
-  halfPercentMonthlyExpense,
-  halfPercentRuleCashFlow,
-  totalMonthlyIncome,
-  totalMonthlyExpense,
-  fixedExpense,
-  variableExpense,
-  monthlyCashFlow,
-  getValuesAtBreakpoint,
-  totalBalance,
-  totalEquity,
-  totalMortgagePaid,
-  totalMortgageDue,
-  compoundedPropertyValue,
-} from "../utils/calc";
+import { useState } from "react";
 
 import {
   Header,
@@ -39,22 +13,6 @@ import {
 } from "../components/index";
 
 import {
-  Graph,
-  ROI,
-  HalfPercentRule,
-  MonthlyCashFlow,
-  MonthlyExpenseBreakdown,
-  PropertyHeader,
-  AnnualizedAndMortgagePayment,
-  ReviewInfo,
-  ReviewPurchase,
-  ReviewLoan,
-  ReviewIncome,
-  ReviewOwnership,
-  ReviewUtility,
-} from "./index";
-import { formatNumberAsCurrency } from "../utils/helpers";
-import {
   IncomeInput,
   InfoInput,
   LoanInput,
@@ -62,9 +20,10 @@ import {
   PurchaseInput,
   UtilityInput,
 } from "../utils/types";
+import { Results } from "../components/Results";
+import Review from "../components/Review";
 
 export default function CalculatorPage() {
-  const [scheduleSummary, setScheduleSummary] = useState<any>([]);
   const [info, setInfo] = useState<InfoInput>({
     complete: false,
     name: "",
@@ -115,114 +74,6 @@ export default function CalculatorPage() {
     futureSalePercent: 0.0,
   });
   const [inReview, setInReview] = useState<boolean>(true);
-
-  useEffect(() => {
-    const mortgage = calculateMortgage(loan);
-    const loanTerm = loan?.loanTerm;
-
-    // Ammortization Functions
-    const amortizeLoan = (
-      currentPrincipal: number,
-      monthlyInterestRate: number,
-      payment: number
-    ): any => {
-      const interestPayment: number = currentPrincipal * monthlyInterestRate;
-      const principalPayment: number = payment - interestPayment;
-      const updatedPrincipal: number = currentPrincipal - principalPayment;
-
-      return {
-        updatedPrincipal,
-        principalPayment,
-        interestPayment,
-      };
-    };
-
-    const getAmortizationSchedule = (
-      principal: number,
-      interestRate: number,
-      mortgagePayment: number,
-      years: number
-    ): Object[] => {
-      const monthlyInterestRate: number = interestRate / 1200;
-      const numOfPayments: number = years * 12;
-      let schedule = [];
-
-      const { updatedPrincipal, principalPayment, interestPayment } =
-        amortizeLoan(principal, monthlyInterestRate, mortgagePayment);
-      const initalMonth: number = 1 / 12;
-      const mortgageDue: number = totalMortgageDue(mortgage, loan);
-      const mortgagePaid: number = totalMortgagePaid(initalMonth, mortgage);
-      const balance: number = totalBalance(mortgageDue, mortgagePaid);
-      const propertyValue: number = purchase.purchasePrice;
-      const equity: number = totalEquity(propertyValue, balance);
-
-      schedule.push({
-        month: 0,
-        propertyValue,
-        equity,
-        balance,
-        updatedPrincipal,
-        principalPayment,
-        interestPayment,
-      });
-
-      for (let i = 1; i < numOfPayments; i++) {
-        const previous = schedule[i - 1];
-        let elapsedYears = i / 12;
-        const { updatedPrincipal, principalPayment, interestPayment } =
-          amortizeLoan(
-            previous?.updatedPrincipal,
-            monthlyInterestRate,
-            mortgagePayment
-          );
-        const currentMortgagePaid: number = totalMortgagePaid(
-          elapsedYears,
-          mortgage
-        );
-        const currentBalance: number = totalBalance(
-          mortgageDue,
-          currentMortgagePaid
-        );
-        const currentPropertyValue: number = compoundedPropertyValue(
-          elapsedYears,
-          purchase
-        );
-        const currentEquity: number = totalEquity(
-          currentPropertyValue,
-          currentBalance
-        );
-
-        schedule.push({
-          month: i,
-          propertyValue: currentPropertyValue,
-          equity: currentEquity,
-          balance: currentBalance,
-          updatedPrincipal,
-          principalPayment,
-          interestPayment,
-        });
-      }
-      return schedule;
-    };
-
-    if (loanTerm > 0 && loanTerm !== undefined) {
-      const breakpoints: number[] = getTermBreakpoints(loanTerm);
-
-      const loanSchedule: Object[] = getAmortizationSchedule(
-        loan.loanAmount,
-        loan.interestRate,
-        mortgage,
-        loan.loanTerm
-      );
-
-      const scheduleSummaryVal: Object[] = getValuesAtBreakpoint(
-        loanSchedule,
-        breakpoints
-      );
-
-      setScheduleSummary(scheduleSummaryVal);
-    }
-  }, [loan, purchase]);
 
   const isComplete = (): boolean => {
     return (
@@ -386,131 +237,6 @@ export default function CalculatorPage() {
     });
   };
 
-  const Results = () => {
-    const totalCostVal = totalCost(purchase);
-    const mortgageVal = calculateMortgage(loan);
-
-    const monthlyIncomeVal = totalMonthlyIncome(income);
-    const taxesVal = getMonthlyFromAnnual(ownership.propertyTaxes);
-    const insuranceVal = getMonthlyFromAnnual(ownership.propertyInsurance);
-    const vacancyVal = percentOfRentalIncome(
-      monthlyIncomeVal,
-      ownership.vacancyPercent
-    );
-    const maintenanceVal = percentOfRentalIncome(
-      monthlyIncomeVal,
-      ownership.maintenancePercent
-    );
-    const capexVal = percentOfRentalIncome(
-      monthlyIncomeVal,
-      ownership.capexPercent
-    );
-    const managementVal = percentOfRentalIncome(
-      monthlyIncomeVal,
-      ownership.managementPercent
-    );
-
-    const fixedExpenseVal = fixedExpense(
-      maintenanceVal,
-      vacancyVal,
-      capexVal,
-      managementVal
-    );
-    const variableExpenseVal = variableExpense(utility);
-
-    // MonthlyCashFlow props
-    const monthlyUtilityVal = variableExpenseVal;
-    const monthlyOwnershipVal = taxesVal + insuranceVal + fixedExpenseVal;
-    const monthlyExpenseVal = totalMonthlyExpense(
-      monthlyOwnershipVal,
-      monthlyUtilityVal,
-      mortgageVal
-    );
-    const monthlyCashFlowVal = monthlyCashFlow(
-      monthlyIncomeVal,
-      monthlyExpenseVal
-    );
-    const cleanCashFlow = !isNaN(monthlyCashFlowVal)
-      ? formatNumberAsCurrency(monthlyCashFlowVal)
-      : 0;
-    const cleanIncome = !isNaN(monthlyIncomeVal)
-      ? formatNumberAsCurrency(monthlyIncomeVal)
-      : 0;
-    const cleanExpense = !isNaN(monthlyExpenseVal)
-      ? formatNumberAsCurrency(monthlyExpenseVal)
-      : 0;
-
-    // AnnualizedAndMortgagePayment props
-    const annualizedReturnValue = !isNaN(
-      annualizedReturn(totalCostVal, totalCostVal * 2, 5)
-    )
-      ? annualizedReturn(totalCostVal, totalCostVal * 2, 5).toFixed(2)
-      : 0;
-    const mortgagePaymentValue = !isNaN(mortgageVal)
-      ? mortgageVal.toFixed(2)
-      : 0;
-
-    const annualNOIVal = calculateAnnualNOI(
-      monthlyIncomeVal,
-      monthlyExpenseVal
-    );
-    const cocROIVal = calculateCocROI(annualNOIVal, totalCostVal);
-    const proFormaCapVal = proFormaCap(annualNOIVal, totalCostVal);
-    const purchaseCapVal = purchaseCap(annualNOIVal, purchase);
-    const halfPercentExpenseVal = halfPercentMonthlyExpense(monthlyIncomeVal);
-    const halfPercentCashFlowVal = halfPercentRuleCashFlow(
-      monthlyIncomeVal,
-      mortgageVal
-    );
-
-    return (
-      <>
-        {info.complete && (
-          <>
-            <PropertyHeader info={info} />
-            <Divider />
-            <MonthlyCashFlow
-              cleanCashFlow={cleanCashFlow}
-              cleanIncome={cleanIncome}
-              cleanExpense={cleanExpense}
-            />
-            <AnnualizedAndMortgagePayment
-              annualizedReturnValue={annualizedReturnValue}
-              mortgagePaymentValue={mortgagePaymentValue}
-            />
-
-            <MonthlyExpenseBreakdown
-              totalMonthlyExpense={monthlyExpenseVal}
-              calculateMortgage={mortgageVal}
-              propertyTaxes={taxesVal}
-              propertyInsurance={insuranceVal}
-              variableExpense={variableExpenseVal}
-              fixedExpense={fixedExpenseVal}
-              vacancyMonthlyCost={vacancyVal}
-              maintenanceMonthlyCost={maintenanceVal}
-              capexMonthlyCost={capexVal}
-              managementMonthlyCost={managementVal}
-              utility={utility}
-            />
-            <ROI
-              calculateAnnualNOI={annualNOIVal}
-              calculateCocROI={cocROIVal}
-              proFormaCap={proFormaCapVal}
-              purchaseCap={purchaseCapVal}
-            />
-            <HalfPercentRule
-              totalMonthlyIncome={monthlyIncomeVal}
-              halfPercentMonthlyExpense={halfPercentExpenseVal}
-              calculateMortgage={mortgageVal}
-              halfPercentRuleCashFlow={halfPercentCashFlowVal}
-            />
-            <Graph scheduleSummary={scheduleSummary} />
-          </>
-        )}
-      </>
-    );
-  };
-
   return (
     <div className="container mx-auto p-6">
       <div className="">
@@ -544,48 +270,29 @@ export default function CalculatorPage() {
           </div>
         </div>
         {inReview && (
-          <>
-            {info.complete && (
-              <>
-                <ReviewInfo info={info} />
-                <Divider />
-              </>
-            )}
-
-            {purchase.complete && (
-              <>
-                <ReviewPurchase purchase={purchase} />
-                <Divider />
-              </>
-            )}
-
-            {loan.complete && (
-              <>
-                <ReviewLoan loan={loan} />
-                <Divider />
-              </>
-            )}
-
-            {income.complete && (
-              <>
-                <ReviewIncome income={income} />
-                <Divider />
-              </>
-            )}
-
-            {ownership.complete && (
-              <>
-                <ReviewOwnership ownership={ownership} />
-                <Divider />
-              </>
-            )}
-
-            {utility.complete && <ReviewUtility utility={utility} />}
-          </>
+          <Review
+            info={info}
+            purchase={purchase}
+            loan={loan}
+            ownership={ownership}
+            income={income}
+            utility={utility}
+          />
         )}
       </div>
       <Divider />
-      <div className="container sm:prose-xl">{isComplete() && <Results />}</div>
+      <div className="container sm:prose-xl">
+        {isComplete() && (
+          <Results
+            info={info}
+            purchase={purchase}
+            loan={loan}
+            ownership={ownership}
+            income={income}
+            utility={utility}
+          />
+        )}
+      </div>
     </div>
   );
 }
