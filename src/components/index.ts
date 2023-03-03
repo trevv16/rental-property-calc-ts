@@ -13,3 +13,10 @@ export { default as LoanForm } from "./calculator/LoanForm";
 export { default as IncomeForm } from "./calculator/IncomeForm";
 export { default as OwnershipForm } from "./calculator/OwnershipForm";
 export { default as UtilityForm } from "./calculator/UtilityForm";
+
+export { default as ReviewInfo } from "./Review/ReviewInfo";
+export { default as ReviewPurchase } from "./Review/ReviewPurchase";
+export { default as ReviewLoan } from "./Review/ReviewLoan";
+export { default as ReviewIncome } from "./Review/ReviewIncome";
+export { default as ReviewOwnership } from "./Review/ReviewOwnership";
+export { default as ReviewUtility } from "./Review/ReviewUtility";

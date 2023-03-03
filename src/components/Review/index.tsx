@@ -13,7 +13,7 @@ import {
   ReviewIncome,
   ReviewOwnership,
   ReviewUtility,
-} from "../../views";
+} from "../index";
 import Divider from "../calculator/Divider";
 
 type ReviewProps = {
