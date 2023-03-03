@@ -1,4 +1,4 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function HalfPercentRule(props: any) {
   return (
@@ -13,7 +13,7 @@ export default function HalfPercentRule(props: any) {
               Total Monthly Income
             </dt>
             <dd className="mt-1 text-3xl font-semibold text-gray-900">
-              {`$${Humanize.formatNumber(props.totalMonthlyIncome, 2)}`}
+              {`$${formatNumberAsCurrency(props.totalMonthlyIncome)}`}
             </dd>
           </div>
         </div>
@@ -24,7 +24,7 @@ export default function HalfPercentRule(props: any) {
               50% for expenses
             </dt>
             <dd className="mt-1 text-3xl font-semibold text-gray-900">
-              {`$${Humanize.formatNumber(props.halfPercentMonthlyExpense, 2)}`}
+              {`$${formatNumberAsCurrency(props.halfPercentMonthlyExpense)}`}
             </dd>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function HalfPercentRule(props: any) {
               {"Monthly Mortgage (P&I)"}
             </dt>
             <dd className="mt-1 text-3xl font-semibold text-gray-900">
-              {`$${Humanize.formatNumber(props.calculateMortgage, 2)}`}
+              {`$${formatNumberAsCurrency(props.calculateMortgage)}`}
             </dd>
           </div>
         </div>
@@ -46,7 +46,7 @@ export default function HalfPercentRule(props: any) {
               50% Rule Cash Flow
             </dt>
             <dd className="mt-1 text-3xl font-semibold text-gray-900">
-              {`$${Humanize.formatNumber(props.halfPercentRuleCashFlow, 2)}`}
+              {`$${formatNumberAsCurrency(props.halfPercentRuleCashFlow)}`}
             </dd>
           </div>
         </div>

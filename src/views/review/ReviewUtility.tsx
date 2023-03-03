@@ -1,27 +1,23 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function ReviewUtility(props: any) {
   return (
     <div>
       <div className="utility">
         <h3 className="m-2">Utilities</h3>
-        <h5>{`Electricity: $${Humanize.formatNumber(
-          props.utility.electricityExpense,
-          2
+        <h5>{`Electricity: $${formatNumberAsCurrency(
+          props.utility.electricityExpense
         )}`}</h5>
-        <h5>{`Gas: $${Humanize.formatNumber(props.utility.gasExpense, 2)}`}</h5>
-        <h5>{`Water & Sewer: $${Humanize.formatNumber(
-          props.utility.waterSewerExpense,
-          2
+        <h5>{`Gas: $${formatNumberAsCurrency(props.utility.gasExpense)}`}</h5>
+        <h5>{`Water & Sewer: $${formatNumberAsCurrency(
+          props.utility.waterSewerExpense
         )}`}</h5>
-        <h5>{`HOA: $${Humanize.formatNumber(props.utility.hoaExpense, 2)}`}</h5>
-        <h5>{`Garbage: $${Humanize.formatNumber(
-          props.utility.garbageExpense,
-          2
+        <h5>{`HOA: $${formatNumberAsCurrency(props.utility.hoaExpense)}`}</h5>
+        <h5>{`Garbage: $${formatNumberAsCurrency(
+          props.utility.garbageExpense
         )}`}</h5>
-        <h5>{`Other: $${Humanize.formatNumber(
-          props.utility.otherExpense,
-          2
+        <h5>{`Other: $${formatNumberAsCurrency(
+          props.utility.otherExpense
         )}`}</h5>
         <h5>{`Annual Expense Growth: ${props.utility.annualExpenseGrowth}%`}</h5>
         <h5>{`Future Sales Cost: ${props.utility.futureSalePercent}%`}</h5>

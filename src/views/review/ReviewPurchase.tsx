@@ -1,22 +1,22 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function ReviewPurchase(props: any) {
   // ReviewPurchase
   const cleanPurchasePrice = !isNaN(props.purchase.purchasePrice)
-    ? Humanize.formatNumber(props.purchase.purchasePrice, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.purchase.purchasePrice)
+    : formatNumberAsCurrency(0);
 
   const cleanClosingCost = !isNaN(props.purchase.closingCost)
-    ? Humanize.formatNumber(props.purchase.closingCost, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.purchase.closingCost)
+    : formatNumberAsCurrency(0);
 
   const cleanRehabCost = !isNaN(props.purchase.rehabCost)
-    ? Humanize.formatNumber(props.purchase.rehabCost, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.purchase.rehabCost)
+    : formatNumberAsCurrency(0);
 
   const cleanValueGrowth = !isNaN(props.purchase.propertyValueGrowth)
-    ? Humanize.formatNumber(props.purchase.propertyValueGrowth, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.purchase.propertyValueGrowth)
+    : formatNumberAsCurrency(0);
 
   return (
     <div>

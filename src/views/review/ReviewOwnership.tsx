@@ -1,17 +1,15 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function ReviewOwnership(props: any) {
   return (
     <div>
       <div className="ownership">
         <h3 className="m-2">Ownership</h3>
-        <h5>{`Annual Property Taxes: $${Humanize.formatNumber(
-          props.ownership.propertyTaxes,
-          2
+        <h5>{`Annual Property Taxes: $${formatNumberAsCurrency(
+          props.ownership.propertyTaxes
         )}`}</h5>
-        <h5>{`Annual Property Insurance: $${Humanize.formatNumber(
-          props.ownership.propertyInsurance,
-          2
+        <h5>{`Annual Property Insurance: $${formatNumberAsCurrency(
+          props.ownership.propertyInsurance
         )}`}</h5>
         <h5>{`Maintenace: ${props.ownership.maintenancePercent}%`}</h5>
         <h5>{`Vacancy: ${props.ownership.vacancyPercent}%`}</h5>

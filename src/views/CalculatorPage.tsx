@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Humanize from "humanize-plus";
 
 import {
   getMonthlyFromAnnual,
@@ -54,6 +53,7 @@ import {
   ReviewOwnership,
   ReviewUtility,
 } from "./index";
+import { formatNumberAsCurrency } from "../utils/helpers";
 
 export default function CalculatorPage() {
   const [scheduleSummary, setScheduleSummary] = useState<any>([]);
@@ -423,13 +423,13 @@ export default function CalculatorPage() {
       monthlyExpenseVal
     );
     const cleanCashFlow = !isNaN(monthlyCashFlowVal)
-      ? Humanize.formatNumber(monthlyCashFlowVal, 2)
+      ? formatNumberAsCurrency(monthlyCashFlowVal)
       : 0;
     const cleanIncome = !isNaN(monthlyIncomeVal)
-      ? Humanize.formatNumber(monthlyIncomeVal, 2)
+      ? formatNumberAsCurrency(monthlyIncomeVal)
       : 0;
     const cleanExpense = !isNaN(monthlyExpenseVal)
-      ? Humanize.formatNumber(monthlyExpenseVal, 2)
+      ? formatNumberAsCurrency(monthlyExpenseVal)
       : 0;
 
     // AnnualizedAndMortgagePayment props

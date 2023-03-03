@@ -1,4 +1,4 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function MonthlyExpenseBreakdown(props: any) {
   return (
@@ -9,86 +9,85 @@ export default function MonthlyExpenseBreakdown(props: any) {
       <div className="grid md:grid-cols-3 gap-3">
         <div className="totalExpense mr-4">
           <h3>
-            <strong>{`Total expenses $${Humanize.formatNumber(
+            <strong>{`Total expenses $${formatNumberAsCurrency(
               props.totalMonthlyExpense,
               2
             )}`}</strong>
           </h3>
           <p>
             <strong>Mortgage</strong>&emsp;
-            {`$${Humanize.formatNumber(props.calculateMortgage, 2)}`}
+            {`$${formatNumberAsCurrency(props.calculateMortgage)}`}
           </p>
           <p>
             <strong>Taxes</strong>&emsp;
-            {`$${Humanize.formatNumber(props.propertyTaxes, 2)}`}
+            {`$${formatNumberAsCurrency(props.propertyTaxes)}`}
           </p>
           <p>
             <strong>Insurance</strong>&emsp;
-            {`$${Humanize.formatNumber(props.propertyInsurance, 2)}`}
+            {`$${formatNumberAsCurrency(props.propertyInsurance)}`}
           </p>
           <p>
             <strong>Variable expenses</strong>&emsp;
-            {`$${Humanize.formatNumber(props.variableExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.variableExpense)}`}
           </p>
           <p>
             <strong>Fixed expenses</strong>&emsp;
-            {`$${Humanize.formatNumber(props.fixedExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.fixedExpense)}`}
           </p>
         </div>
         <div className="fixedExpense mr-4">
           <h3>
-            <strong>{`Fixed expenses $${Humanize.formatNumber(
-              props.fixedExpense,
-              2
+            <strong>{`Fixed expenses $${formatNumberAsCurrency(
+              props.fixedExpense
             )}`}</strong>
           </h3>
           <p>
             <strong>Vacancy</strong>&emsp;
-            {`$${Humanize.formatNumber(props.vacancyMonthlyCost, 2)}`}
+            {`$${formatNumberAsCurrency(props.vacancyMonthlyCost)}`}
           </p>
           <p>
             <strong>Maintenance</strong>&emsp;
-            {`$${Humanize.formatNumber(props.maintenanceMonthlyCost, 2)}`}
+            {`$${formatNumberAsCurrency(props.maintenanceMonthlyCost)}`}
           </p>
           <p>
             <strong>CapEx</strong>&emsp;
-            {`$${Humanize.formatNumber(props.capexMonthlyCost, 2)}`}
+            {`$${formatNumberAsCurrency(props.capexMonthlyCost)}`}
           </p>
           <p>
             <strong>Management fees</strong>&emsp;
-            {`$${Humanize.formatNumber(props.managementMonthlyCost, 2)}`}
+            {`$${formatNumberAsCurrency(props.managementMonthlyCost)}`}
           </p>
         </div>
         <div className="variableExpense">
           <h3>
-            <strong>{`Variable expenses $${Humanize.formatNumber(
+            <strong>{`Variable expenses $${formatNumberAsCurrency(
               props.variableExpense,
               2
             )}`}</strong>
           </h3>
           <p>
             <strong>Electricity</strong>&emsp;
-            {`$${Humanize.formatNumber(props.utility.electricityExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.utility.electricityExpense)}`}
           </p>
           <p>
             <strong>Gas</strong>&emsp;
-            {`$${Humanize.formatNumber(props.utility.gasExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.utility.gasExpense)}`}
           </p>
           <p>
             <strong>{"Water & Sewer"}</strong>&emsp;
-            {`$${Humanize.formatNumber(props.utility.waterSewerExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.utility.waterSewerExpense)}`}
           </p>
           <p>
             <strong>HOA Fees</strong>&emsp;
-            {`$${Humanize.formatNumber(props.utility.hoaExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.utility.hoaExpense)}`}
           </p>
           <p>
             <strong>Garbage</strong>&emsp;
-            {`$${Humanize.formatNumber(props.utility.garbageExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.utility.garbageExpense)}`}
           </p>
           <p>
             <strong>Other</strong>&emsp;
-            {`$${Humanize.formatNumber(props.utility.otherExpense, 2)}`}
+            {`$${formatNumberAsCurrency(props.utility.otherExpense)}`}
           </p>
         </div>
       </div>

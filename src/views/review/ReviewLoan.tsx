@@ -1,18 +1,18 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function ReviewLoan(props: any) {
   // ReviewLoan
   const cleanLoanAmount = !isNaN(props.loan.loanAmount)
-    ? Humanize.formatNumber(props.loan.loanAmount, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.loan.loanAmount)
+    : formatNumberAsCurrency(0);
 
   const cleanInterestRate = !isNaN(props.loan.interestRate)
-    ? Humanize.formatNumber(props.loan.interestRate, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.loan.interestRate)
+    : formatNumberAsCurrency(0);
 
   const cleanPointsCharged = !isNaN(props.loan.pointsCharged)
-    ? Humanize.formatNumber(props.loan.pointsCharged, 2)
-    : Humanize.formatNumber(0, 2);
+    ? formatNumberAsCurrency(props.loan.pointsCharged)
+    : formatNumberAsCurrency(0);
 
   const cleanLoanTerm = isNaN(props.loan.loanTerm) ? 0 : props.loan.loanTerm;
 

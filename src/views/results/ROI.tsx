@@ -1,4 +1,4 @@
-import Humanize from "humanize-plus";
+import { formatNumberAsCurrency } from "../../utils/helpers";
 
 export default function ROI(props: any) {
   return (
@@ -14,7 +14,7 @@ export default function ROI(props: any) {
                 Net Operating Income (NOI)
               </dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {`$${Humanize.formatNumber(props.calculateAnnualNOI, 2)}`}
+                {`$${formatNumberAsCurrency(props.calculateAnnualNOI, 2)}`}
               </dd>
             </div>
           </div>
@@ -25,7 +25,7 @@ export default function ROI(props: any) {
                 Cash on Cash ROI
               </dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {`${Humanize.formatNumber(props.calculateCocROI, 2)}%`}
+                {`${formatNumberAsCurrency(props.calculateCocROI, 2)}%`}
               </dd>
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function ROI(props: any) {
                 Pro forma cap
               </dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {`${Humanize.formatNumber(props.proFormaCap, 2)}%`}
+                {`${formatNumberAsCurrency(props.proFormaCap, 2)}%`}
               </dd>
             </div>
           </div>
@@ -47,7 +47,7 @@ export default function ROI(props: any) {
                 Purchase cap
               </dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {`${Humanize.formatNumber(props.purchaseCap, 2)}%`}
+                {`${formatNumberAsCurrency(props.purchaseCap, 2)}%`}
               </dd>
             </div>
           </div>
