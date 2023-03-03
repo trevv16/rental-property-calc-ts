@@ -2,9 +2,9 @@ export default function MonthlyCashFlow(props: any) {
   return (
     <div>
       <div>
-        <h2 className="my-8 text-lg leading-6 font-medium text-gray-900">
-          <strong>Cash Flow</strong>
-        </h2>
+        <h5 className="mt-4 text-md text-gray-500">
+          <strong>Calculated</strong>
+        </h5>
         <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">

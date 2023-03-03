@@ -51,16 +51,30 @@ export const Results = ({
         <>
           <PropertyHeader info={info} />
           <Divider />
+          <ROI
+            calculateAnnualNOI={calcResult.annualNOIVal}
+            calculateCocROI={calcResult.cocROIVal}
+            proFormaCap={calcResult.proFormaCapVal}
+            purchaseCap={calcResult.purchaseCapVal}
+          />
+          <h2 className="my-2 text-lg leading-6 font-medium text-gray-900">
+            <strong>Cash Flow</strong>
+          </h2>
           <MonthlyCashFlow
             cleanCashFlow={calcResult.cleanCashFlow}
             cleanIncome={calcResult.cleanIncome}
             cleanExpense={calcResult.cleanExpense}
           />
+          <HalfPercentRule
+            totalMonthlyIncome={calcResult.monthlyIncomeVal}
+            halfPercentMonthlyExpense={calcResult.halfPercentExpenseVal}
+            calculateMortgage={calcResult.mortgageVal}
+            halfPercentRuleCashFlow={calcResult.halfPercentCashFlowVal}
+          />
           <AnnualizedAndMortgagePayment
             annualizedReturnValue={calcResult.annualizedReturnValue}
             mortgagePaymentValue={calcResult.mortgagePaymentValue}
           />
-
           <MonthlyExpenseBreakdown
             totalMonthlyExpense={calcResult.monthlyExpenseVal}
             calculateMortgage={calcResult.mortgageVal}
@@ -73,18 +87,6 @@ export const Results = ({
             capexMonthlyCost={calcResult.capexVal}
             managementMonthlyCost={calcResult.managementVal}
             utility={utility}
-          />
-          <ROI
-            calculateAnnualNOI={calcResult.annualNOIVal}
-            calculateCocROI={calcResult.cocROIVal}
-            proFormaCap={calcResult.proFormaCapVal}
-            purchaseCap={calcResult.purchaseCapVal}
-          />
-          <HalfPercentRule
-            totalMonthlyIncome={calcResult.monthlyIncomeVal}
-            halfPercentMonthlyExpense={calcResult.halfPercentExpenseVal}
-            calculateMortgage={calcResult.mortgageVal}
-            halfPercentRuleCashFlow={calcResult.halfPercentCashFlowVal}
           />
           <Graph scheduleSummary={scheduleSummary} />
         </>
