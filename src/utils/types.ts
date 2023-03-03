@@ -1,4 +1,4 @@
-type infoI = {
+export type InfoInput = {
   complete: boolean;
   name: string;
   streetAddress: string;
@@ -6,14 +6,16 @@ type infoI = {
   state: string;
   zipCode: string;
 };
-type purchaseI = {
+
+export type PurchaseInput = {
   complete: boolean;
   purchasePrice: number;
   closingCost: number;
   rehabCost: number;
   propertyValueGrowth: number;
 };
-type loanI = {
+
+export type LoanInput = {
   complete: boolean;
   isCashPurchase: boolean;
   loanAmount: number;
@@ -21,13 +23,15 @@ type loanI = {
   pointsCharged: number;
   loanTerm: number;
 };
-type incomeI = {
+
+export type IncomeInput = {
   complete: boolean;
   grossMonthlyRentalIncome: number;
   annualIncomeGrowth: number;
   otherMonthlyRentalIncome: number;
 };
-type ownershipI = {
+
+export type OwnershipInput = {
   complete: boolean;
   propertyTaxes: number;
   propertyInsurance: number;
@@ -36,7 +40,8 @@ type ownershipI = {
   capexPercent: number;
   managementPercent: number;
 };
-type utilityI = {
+
+export type UtilityInput = {
   complete: boolean;
   electricityExpense: number;
   gasExpense: number;

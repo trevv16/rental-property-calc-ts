@@ -54,10 +54,18 @@ import {
   ReviewUtility,
 } from "./index";
 import { formatNumberAsCurrency } from "../utils/helpers";
+import {
+  IncomeInput,
+  InfoInput,
+  LoanInput,
+  OwnershipInput,
+  PurchaseInput,
+  UtilityInput,
+} from "../utils/types";
 
 export default function CalculatorPage() {
   const [scheduleSummary, setScheduleSummary] = useState<any>([]);
-  const [info, setInfo] = useState<infoI>({
+  const [info, setInfo] = useState<InfoInput>({
     complete: false,
     name: "",
     streetAddress: "",
@@ -65,14 +73,14 @@ export default function CalculatorPage() {
     state: "",
     zipCode: "",
   });
-  const [purchase, setPurchase] = useState<purchaseI>({
+  const [purchase, setPurchase] = useState<PurchaseInput>({
     complete: false,
     purchasePrice: 0.0,
     closingCost: 0.0,
     rehabCost: 0.0,
     propertyValueGrowth: 0.0,
   });
-  const [loan, setLoan] = useState<loanI>({
+  const [loan, setLoan] = useState<LoanInput>({
     complete: false,
     isCashPurchase: false,
     loanAmount: 0.0,
@@ -80,13 +88,13 @@ export default function CalculatorPage() {
     pointsCharged: 0.0,
     loanTerm: 0.0,
   });
-  const [income, setIncome] = useState<incomeI>({
+  const [income, setIncome] = useState<IncomeInput>({
     complete: false,
     grossMonthlyRentalIncome: 0.0,
     annualIncomeGrowth: 0.0,
     otherMonthlyRentalIncome: 0.0,
   });
-  const [ownership, setOwnership] = useState<ownershipI>({
+  const [ownership, setOwnership] = useState<OwnershipInput>({
     complete: false,
     propertyTaxes: 0.0,
     propertyInsurance: 0.0,
@@ -95,7 +103,7 @@ export default function CalculatorPage() {
     capexPercent: 0.0,
     managementPercent: 0.0,
   });
-  const [utility, setUtility] = useState<utilityI>({
+  const [utility, setUtility] = useState<UtilityInput>({
     complete: false,
     electricityExpense: 0.0,
     gasExpense: 0.0,
