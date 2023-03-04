@@ -1,5 +1,13 @@
 import { useState } from "react";
 import {
+  DEFAULT_INCOME,
+  DEFAULT_INFO,
+  DEFAULT_LOAN,
+  DEFAULT_OWNERSHIP,
+  DEFAULT_PURCHASE,
+  DEFAULT_UTILITY,
+} from "../utils/constants";
+import {
   InfoInput,
   PurchaseInput,
   LoanInput,
@@ -67,6 +75,16 @@ export default function useForm() {
     ownership.complete &&
     utility.complete;
 
+  const populateForm = () => {
+    setInfo(DEFAULT_INFO);
+    setPurchase(DEFAULT_PURCHASE);
+    setLoan(DEFAULT_LOAN);
+    setIncome(DEFAULT_INCOME);
+    setOwnership(DEFAULT_OWNERSHIP);
+    setUtility(DEFAULT_UTILITY);
+    setInReview(false);
+  };
+
   return {
     isComplete,
     info,
@@ -83,5 +101,6 @@ export default function useForm() {
     setUtility,
     inReview,
     setInReview,
+    populateForm,
   };
 }

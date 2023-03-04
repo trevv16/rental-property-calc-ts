@@ -26,7 +26,7 @@ export default function CalculatorPage() {
       </div>
       <div className="container sm:prose-xl">
         <div>
-          <div className="flex-1 min-w-0">
+          <div className="mt-4 flex-1 min-w-0">
             <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
               Review/Edit
             </h2>
@@ -36,6 +36,15 @@ export default function CalculatorPage() {
               inReview={calculatorForm.inReview}
               setInReview={calculatorForm.setInReview}
             />
+          </div>
+          <div className="mt-8 flex">
+            <button
+              type="button"
+              onClick={() => calculatorForm.populateForm()}
+              className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Populate Form
+            </button>
           </div>
         </div>
         {calculatorForm.inReview && (
