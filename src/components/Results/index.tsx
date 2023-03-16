@@ -1,5 +1,4 @@
 import useCalculator from "../../hooks/useCalculator";
-import { useScheduleSummary } from "../../hooks/useScheduleSummary";
 import {
   IncomeInput,
   InfoInput,
@@ -18,6 +17,7 @@ import {
   Graph,
 } from "../";
 import Divider from "../calculator/Divider";
+import { useMortgageAmmortization } from "../../hooks/useMortgageAmmortization";
 
 type ResultProps = {
   info: InfoInput;
@@ -36,7 +36,7 @@ export const Results = ({
   income,
   utility,
 }: ResultProps) => {
-  const scheduleSummary = useScheduleSummary({ purchase, loan });
+  const schedule = useMortgageAmmortization(loan, purchase);
   const calcResult = useCalculator({
     purchase,
     loan,
@@ -88,7 +88,7 @@ export const Results = ({
             managementMonthlyCost={calcResult.managementVal}
             utility={utility}
           />
-          <Graph scheduleSummary={scheduleSummary} />
+          <Graph scheduleSummary={schedule} />
         </>
       )}
     </>

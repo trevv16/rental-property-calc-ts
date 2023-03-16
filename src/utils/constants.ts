@@ -26,7 +26,7 @@ export const DEFAULT_LOAN = {
 
 export const DEFAULT_INCOME = {
   complete: true,
-  grossMonthlyRentalIncome: 1800.0,
+  grossMonthlyRentalIncome: 2400.0,
   annualIncomeGrowth: 1.0,
   otherMonthlyRentalIncome: 100.0,
 };
