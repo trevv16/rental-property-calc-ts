@@ -1,6 +1,7 @@
 import { getCapRate, halfPercentRuleCashFlow } from "../utils/formulas";
 import { Mortgage } from "../mortgage";
 import {
+  BreakdownItem,
   IDeal,
   Income,
   Loan,
@@ -209,7 +210,7 @@ export class Deal implements IDeal {
   }
 
   getIncomeBreakdown(units: TimeUnits) {
-    const income = [
+    const income: BreakdownItem[] = [
       {
         name: "Rental Income",
         amount: this.income.grossMonthlyRentalIncome,
@@ -256,11 +257,11 @@ export class Deal implements IDeal {
         name: "Capex",
         amount: this.getCapexExpense(units),
       },
-    ];
+    ] as BreakdownItem[];
   }
 
   getVariableExpenseBreakdown(units: TimeUnits) {
-    const variableExpenses = [];
+    let variableExpenses: BreakdownItem[] = [];
 
     if (this.utilityExpense.monthlyElectricityExpense > 0) {
       variableExpenses.push({

@@ -53,7 +53,7 @@ export type UtilityExpense = {
 
 export type TimeUnits = "monthly" | "annual";
 
-type BreakdownItem = {
+export type BreakdownItem = {
   name: string;
   amount: number;
 };
