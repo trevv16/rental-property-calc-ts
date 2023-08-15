@@ -1,3 +1,4 @@
+import React from "react";
 import { Header, Divider, ReviewToggle } from "../components/index";
 import { Results } from "../components/Results";
 import Review from "../components/Review";
