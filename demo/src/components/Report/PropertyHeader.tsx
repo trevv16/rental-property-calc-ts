@@ -16,7 +16,9 @@ export default function PropertyHeader({ property }: PropertyHeaderProps) {
         </div>
         <div className="">
           <h4 className="text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
-            {`${property.address} ${property.address2} ${property.city}, ${property.state} ${property.zip}`}
+            {`${property.address} ${
+              property.address2 ? property.address2 : ""
+            } ${property.city}, ${property.state} ${property.zip}`}
           </h4>
         </div>
       </div>
