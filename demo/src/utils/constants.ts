@@ -1,10 +1,10 @@
 export const DEFAULT_INFO = {
   complete: true,
-  name: "Deal #1",
-  streetAddress: "123 Main St",
+  nickname: "Deal #1",
+  address: "123 Main St",
   city: "Memphis",
   state: "TN",
-  zipCode: "123456",
+  zip: "123456",
 };
 
 export const DEFAULT_PURCHASE = {
@@ -20,35 +20,35 @@ export const DEFAULT_LOAN = {
   isCashPurchase: false,
   loanAmount: 193000.0,
   interestRate: 7.0,
-  pointsCharged: 0.1,
+  pmi: 0.1,
   loanTerm: 30,
 };
 
 export const DEFAULT_INCOME = {
   complete: true,
   grossMonthlyRentalIncome: 2400.0,
-  annualIncomeGrowth: 1.0,
-  otherMonthlyRentalIncome: 100.0,
+  annualIncomeGrowthPercent: 1.0,
+  grossMonthlyOtherIncome: 100.0,
 };
 
 export const DEFAULT_OWNERSHIP = {
   complete: true,
-  propertyTaxes: 2000.0,
-  propertyInsurance: 1500.0,
-  maintenancePercent: 5.0,
-  vacancyPercent: 5.0,
-  capexPercent: 5.0,
-  managementPercent: 8.0,
+  annualPropertyTaxExpense: 2000.0,
+  annualPropertyInsuranceExpense: 1500.0,
+  maintenancePercentage: 5.0,
+  vacancyPercentage: 5.0,
+  capexPercentage: 5.0,
+  managementPercentage: 8.0,
 };
 
 export const DEFAULT_UTILITY = {
   complete: true,
-  electricityExpense: 0.0,
-  gasExpense: 0.0,
-  waterSewerExpense: 100.0,
+  monthlyElectricityExpense: 0.0,
+  monthlyGasExpense: 0.0,
+  monthlyWaterAndSewerExpense: 100.0,
   hoaExpense: 100.0,
-  garbageExpense: 0.0,
-  otherExpense: 100.0,
-  annualExpenseGrowth: 1.0,
+  monthlyGarbageExpense: 0.0,
+  monthlyOtherExpense: 100.0,
+  annualExpenseGrowthPercent: 1.0,
   futureSalePercent: 6.0,
 };

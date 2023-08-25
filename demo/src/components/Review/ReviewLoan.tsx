@@ -10,8 +10,8 @@ export default function ReviewLoan(props: any) {
     ? formatNumberAsCurrency(props.loan.interestRate)
     : formatNumberAsCurrency(0);
 
-  const cleanPointsCharged = !isNaN(props.loan.pointsCharged)
-    ? formatNumberAsCurrency(props.loan.pointsCharged)
+  const cleanPointsCharged = !isNaN(props.loan.pmi)
+    ? formatNumberAsCurrency(props.loan.pmi)
     : formatNumberAsCurrency(0);
 
   const cleanLoanTerm = isNaN(props.loan.loanTerm) ? 0 : props.loan.loanTerm;

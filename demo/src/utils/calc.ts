@@ -142,13 +142,13 @@ export const isCashPurchase = (loan: LoanInput): string => {
 // };
 
 export const totalMonthlyIncome = (income: IncomeInput): number => {
-  return income.grossMonthlyRentalIncome + income.otherMonthlyRentalIncome;
+  return income.grossMonthlyRentalIncome + income.grossMonthlyOtherIncome;
 };
 
 // const compoundedAnnualIncome = (): number => {
 // 	const annualIncome: number = totalMonthlyIncome() * 12;
 
-// 	return getCompoundValue(annualIncome, income.annualIncomeGrowth, 1);
+// 	return getCompoundValue(annualIncome, income.annualIncomeGrowthPercent, 1);
 // };
 
 // const annualOwnershipCost = (): number => {
@@ -172,7 +172,7 @@ export const totalMonthlyExpense = (
 
 // 	return getCompoundValue(
 // 		annualExpense,
-// 		utility.annualExpenseGrowth,
+// 		utility.annualExpenseGrowthPercent,
 // 		years
 // 	);
 // };
@@ -186,12 +186,12 @@ export const monthlyCashFlow = (
 
 export const variableExpense = (utility: UtilityInput): number => {
   return (
-    utility.electricityExpense +
-    utility.gasExpense +
-    utility.waterSewerExpense +
+    utility.monthlyElectricityExpense +
+    utility.monthlyGasExpense +
+    utility.monthlyWaterAndSewerExpense +
     utility.hoaExpense +
-    utility.garbageExpense +
-    utility.otherExpense
+    utility.monthlyGarbageExpense +
+    utility.monthlyOtherExpense
   );
 };
 

@@ -28,3 +28,6 @@ export { default as MonthlyCashFlow } from "./Results/MonthlyCashFlow";
 export { default as MonthlyExpenseBreakdown } from "./Results/MonthlyExpenseBreakdown";
 export { default as PropertyHeader } from "./Results/PropertyHeader";
 export { default as AnnualizedAndMortgagePayment } from "./Results/AnnualizedAndMortgagePayment";
+
+export * from "./common/ResultCard";
+export * from "./common/Divider";

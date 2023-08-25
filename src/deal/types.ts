@@ -32,7 +32,7 @@ export type Income = {
 };
 
 export type OwnersExpense = {
-  annualPropertyTaxPercent: number;
+  annualPropertyTaxExpense: number;
   annualPropertyInsuranceExpense: number;
   monthlyHOAExpense: number;
   maintenancePercentage: number;
@@ -101,7 +101,6 @@ export interface IDeal {
   getOtherExpenses(units: TimeUnits): number;
   getUtilityExpense(units: TimeUnits): number;
   getExpenses(units: TimeUnits): number;
-  getCashFlowBreakdown(units: TimeUnits): CashFlowBreakdown;
   getIncomeBreakdown(units: TimeUnits): BreakdownItem[];
   getFixedExpenseBreakdown(units: TimeUnits): BreakdownItem[];
   getVariableExpenseBreakdown(units: TimeUnits): BreakdownItem[];

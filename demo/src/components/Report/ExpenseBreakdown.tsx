@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Switch } from "@headlessui/react";
 
 import { formatNumberAsCurrency } from "../../utils/helpers";
+import { Deal, TimeUnits } from "../../lib/deal";
 
 type Expense = {
   name: string;
@@ -21,63 +22,17 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function MonthlyExpenseBreakdown(props: any) {
-  const fixedExpenseGroup = [
-    {
-      name: "Mortgage",
-      amount: props.calculateMortgage,
-    },
-    {
-      name: "Taxes",
-      amount: props.annualPropertyTaxExpense,
-    },
-    {
-      name: "Insurance",
-      amount: props.annualPropertyInsuranceExpense,
-    },
-    {
-      name: "HOA",
-      amount: props.utility.hoaExpense,
-    },
-    {
-      name: "Maintenance",
-      amount: props.maintenanceMonthlyCost,
-    },
-    {
-      name: "CapEx",
-      amount: props.capexMonthlyCost,
-    },
-    {
-      name: "Vacancy",
-      amount: props.vacancyMonthlyCost,
-    },
-    {
-      name: "Management",
-      amount: props.managementMonthlyCost,
-    },
-  ];
-  const variableExpenseGroup = [
-    {
-      name: "Water & Sewer",
-      amount: props.utility.monthlyWaterAndSewerExpense,
-    },
-    {
-      name: "Electricity",
-      amount: props.utility.monthlyElectricityExpense,
-    },
-    {
-      name: "Gas",
-      amount: props.utility.monthlyGasExpense,
-    },
-    {
-      name: "Garbage",
-      amount: props.utility.monthlyGarbageExpense,
-    },
-    {
-      name: "Other",
-      amount: props.utility.monthlyOtherExpense,
-    },
-  ];
+type ExpenseBreakdownProps = {
+  deal: Deal;
+  units: TimeUnits;
+};
+
+export default function ExpenseBreakdown({
+  deal,
+  units,
+}: ExpenseBreakdownProps) {
+  const fixedExpenseGroup = deal.getFixedExpenseBreakdown(units);
+  const variableExpenseGroup = deal.getVariableExpenseBreakdown(units);
   const expenses: ExpenseGroup[] = [
     {
       groupName: "Fixed Expenses",

@@ -2,8 +2,10 @@ import React from "react";
 import { Header, Divider, ReviewToggle } from "../components/index";
 import { Results } from "../components/Results";
 import Review from "../components/Review";
+import Report from "../components/Report";
 import CalculatorForm from "../components/CalculatorForm";
 import useForm from "../hooks/useForm";
+import { Deal } from "../lib/deal";
 
 export default function CalculatorPage() {
   const calculatorForm = useForm();
@@ -62,14 +64,31 @@ export default function CalculatorPage() {
       <Divider />
       <div className="container sm:prose-xl">
         {calculatorForm.isComplete && (
-          <Results
-            info={calculatorForm.info}
-            purchase={calculatorForm.purchase}
-            loan={calculatorForm.loan}
-            ownership={calculatorForm.ownership}
-            income={calculatorForm.income}
-            utility={calculatorForm.utility}
-          />
+          <>
+            <Results
+              info={calculatorForm.info}
+              purchase={calculatorForm.purchase}
+              loan={calculatorForm.loan}
+              ownership={calculatorForm.ownership}
+              income={calculatorForm.income}
+              utility={calculatorForm.utility}
+            />
+            <Report
+              deal={
+                new Deal(
+                  calculatorForm.info,
+                  calculatorForm.purchase,
+                  calculatorForm.loan,
+                  calculatorForm.income,
+                  {
+                    ...calculatorForm.ownership,
+                    monthlyHOAExpense: 0,
+                  },
+                  calculatorForm.utility
+                )
+              }
+            />
+          </>
         )}
       </div>
     </div>

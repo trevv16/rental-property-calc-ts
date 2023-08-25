@@ -19,11 +19,11 @@ import {
 export default function useForm() {
   const [info, setInfo] = useState<InfoInput>({
     complete: false,
-    name: "",
-    streetAddress: "",
+    nickname: "",
+    address: "",
     city: "",
     state: "",
-    zipCode: "",
+    zip: "",
   });
   const [purchase, setPurchase] = useState<PurchaseInput>({
     complete: false,
@@ -37,33 +37,33 @@ export default function useForm() {
     isCashPurchase: false,
     loanAmount: 0.0,
     interestRate: 0.0,
-    pointsCharged: 0.0,
+    pmi: 0.0,
     loanTerm: 0.0,
   });
   const [income, setIncome] = useState<IncomeInput>({
     complete: false,
     grossMonthlyRentalIncome: 0.0,
-    annualIncomeGrowth: 0.0,
-    otherMonthlyRentalIncome: 0.0,
+    grossMonthlyOtherIncome: 0.0,
+    annualIncomeGrowthPercent: 0.0,
   });
   const [ownership, setOwnership] = useState<OwnershipInput>({
     complete: false,
-    propertyTaxes: 0.0,
-    propertyInsurance: 0.0,
-    maintenancePercent: 0.0,
-    vacancyPercent: 0.0,
-    capexPercent: 0.0,
-    managementPercent: 0.0,
+    annualPropertyTaxExpense: 0.0,
+    annualPropertyInsuranceExpense: 0.0,
+    maintenancePercentage: 0.0,
+    vacancyPercentage: 0.0,
+    capexPercentage: 0.0,
+    managementPercentage: 0.0,
   });
   const [utility, setUtility] = useState<UtilityInput>({
     complete: false,
-    electricityExpense: 0.0,
-    gasExpense: 0.0,
-    waterSewerExpense: 0.0,
+    monthlyElectricityExpense: 0.0,
+    monthlyGasExpense: 0.0,
+    monthlyWaterAndSewerExpense: 0.0,
     hoaExpense: 0.0,
-    garbageExpense: 0.0,
-    otherExpense: 0.0,
-    annualExpenseGrowth: 0.0,
+    monthlyGarbageExpense: 0.0,
+    monthlyOtherExpense: 0.0,
+    annualExpenseGrowthPercent: 0.0,
     futureSalePercent: 0.0,
   });
   const [inReview, setInReview] = useState<boolean>(true);

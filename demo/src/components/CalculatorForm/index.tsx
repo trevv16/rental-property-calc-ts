@@ -40,15 +40,15 @@ export default function CalculatorForm({
   const handleInfo = (e: any) => {
     e.preventDefault();
     // Form Handlers
-    const { name, streetAddress, city, state, zipCode } = getFormData(e);
+    const { nickname, address, city, state, zip } = getFormData(e);
 
     setInfo({
       complete: true,
-      name,
-      streetAddress,
+      nickname,
+      address,
       city,
       state,
-      zipCode,
+      zip,
     });
   };
   const handlePurchase = (e: any) => {
@@ -74,13 +74,13 @@ export default function CalculatorForm({
   const handleLoan = (e: any) => {
     e.preventDefault();
     // Form Handlers
-    let { isCashPurchase, loanAmount, interestRate, pointsCharged, loanTerm } =
+    let { isCashPurchase, loanAmount, interestRate, pmi, loanTerm } =
       getFormData(e);
 
     isCashPurchase = isCashPurchase === "on";
     loanAmount = parseFloat(loanAmount);
     interestRate = parseFloat(interestRate);
-    pointsCharged = parseFloat(pointsCharged);
+    pmi = parseFloat(pmi);
     loanTerm = parseFloat(loanTerm);
 
     setLoan({
@@ -88,7 +88,7 @@ export default function CalculatorForm({
       isCashPurchase,
       loanAmount,
       interestRate,
-      pointsCharged,
+      pmi,
       loanTerm,
     });
   };
@@ -98,19 +98,19 @@ export default function CalculatorForm({
     // Form Handlers
     let {
       grossMonthlyRentalIncome,
-      annualIncomeGrowth,
-      otherMonthlyRentalIncome,
+      annualIncomeGrowthPercent,
+      grossMonthlyOtherIncome,
     } = getFormData(e);
 
     grossMonthlyRentalIncome = parseFloat(grossMonthlyRentalIncome);
-    annualIncomeGrowth = parseFloat(annualIncomeGrowth);
-    otherMonthlyRentalIncome = parseFloat(otherMonthlyRentalIncome);
+    annualIncomeGrowthPercent = parseFloat(annualIncomeGrowthPercent);
+    grossMonthlyOtherIncome = parseFloat(grossMonthlyOtherIncome);
 
     setIncome({
       complete: true,
       grossMonthlyRentalIncome,
-      annualIncomeGrowth,
-      otherMonthlyRentalIncome,
+      annualIncomeGrowthPercent,
+      grossMonthlyOtherIncome,
     });
   };
 
@@ -118,29 +118,29 @@ export default function CalculatorForm({
     e.preventDefault();
     // Form Handlers
     let {
-      propertyTaxes,
-      propertyInsurance,
-      maintenancePercent,
-      vacancyPercent,
-      capexPercent,
-      managementPercent,
+      annualPropertyTaxExpense,
+      annualPropertyInsuranceExpense,
+      maintenancePercentage,
+      vacancyPercentage,
+      capexPercentage,
+      managementPercentage,
     } = getFormData(e);
 
-    propertyTaxes = parseFloat(propertyTaxes);
-    propertyInsurance = parseFloat(propertyInsurance);
-    maintenancePercent = parseFloat(maintenancePercent);
-    vacancyPercent = parseFloat(vacancyPercent);
-    capexPercent = parseFloat(capexPercent);
-    managementPercent = parseFloat(managementPercent);
+    annualPropertyTaxExpense = parseFloat(annualPropertyTaxExpense);
+    annualPropertyInsuranceExpense = parseFloat(annualPropertyInsuranceExpense);
+    maintenancePercentage = parseFloat(maintenancePercentage);
+    vacancyPercentage = parseFloat(vacancyPercentage);
+    capexPercentage = parseFloat(capexPercentage);
+    managementPercentage = parseFloat(managementPercentage);
 
     setOwnership({
       complete: true,
-      propertyTaxes,
-      propertyInsurance,
-      maintenancePercent,
-      vacancyPercent,
-      capexPercent,
-      managementPercent,
+      annualPropertyTaxExpense,
+      annualPropertyInsuranceExpense,
+      maintenancePercentage,
+      vacancyPercentage,
+      capexPercentage,
+      managementPercentage,
     });
   };
 
@@ -148,34 +148,34 @@ export default function CalculatorForm({
     e.preventDefault();
     // Form Handlers
     let {
-      electricityExpense,
-      gasExpense,
-      waterSewerExpense,
+      monthlyElectricityExpense,
+      monthlyGasExpense,
+      monthlyWaterAndSewerExpense,
       hoaExpense,
-      garbageExpense,
-      otherExpense,
-      annualExpenseGrowth,
+      monthlyGarbageExpense,
+      monthlyOtherExpense,
+      annualExpenseGrowthPercent,
       futureSalePercent,
     } = getFormData(e);
 
-    electricityExpense = parseFloat(electricityExpense);
-    gasExpense = parseFloat(gasExpense);
-    waterSewerExpense = parseFloat(waterSewerExpense);
+    monthlyElectricityExpense = parseFloat(monthlyElectricityExpense);
+    monthlyGasExpense = parseFloat(monthlyGasExpense);
+    monthlyWaterAndSewerExpense = parseFloat(monthlyWaterAndSewerExpense);
     hoaExpense = parseFloat(hoaExpense);
-    garbageExpense = parseFloat(garbageExpense);
-    otherExpense = parseFloat(otherExpense);
-    annualExpenseGrowth = parseFloat(annualExpenseGrowth);
+    monthlyGarbageExpense = parseFloat(monthlyGarbageExpense);
+    monthlyOtherExpense = parseFloat(monthlyOtherExpense);
+    annualExpenseGrowthPercent = parseFloat(annualExpenseGrowthPercent);
     futureSalePercent = parseFloat(futureSalePercent);
 
     setUtility({
       complete: true,
-      electricityExpense,
-      gasExpense,
-      waterSewerExpense,
+      monthlyElectricityExpense,
+      monthlyGasExpense,
+      monthlyWaterAndSewerExpense,
       hoaExpense,
-      garbageExpense,
-      otherExpense,
-      annualExpenseGrowth,
+      monthlyGarbageExpense,
+      monthlyOtherExpense,
+      annualExpenseGrowthPercent,
       futureSalePercent,
     });
   };

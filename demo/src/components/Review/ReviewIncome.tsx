@@ -9,10 +9,10 @@ export default function ReviewIncome(props: any) {
           props.income.grossMonthlyRentalIncome
         )}`}</h5>
         <h5>{`Other Monthly Rental Income: $${formatNumberAsCurrency(
-          props.income.otherMonthlyRentalIncome
+          props.income.grossMonthlyOtherIncome
         )}`}</h5>
         <h5>{`Annual Income Growth: ${formatNumberAsCurrency(
-          props.income.annualIncomeGrowth
+          props.income.annualIncomeGrowthPercent
         )}%`}</h5>
       </div>
     </div>

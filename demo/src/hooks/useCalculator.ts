@@ -44,23 +44,25 @@ export default function useCalculator({
   const mortgageVal = calculateMortgage(loan);
 
   const monthlyIncomeVal = totalMonthlyIncome(income);
-  const taxesVal = getMonthlyFromAnnual(ownership.propertyTaxes);
-  const insuranceVal = getMonthlyFromAnnual(ownership.propertyInsurance);
+  const taxesVal = getMonthlyFromAnnual(ownership.annualPropertyTaxExpense);
+  const insuranceVal = getMonthlyFromAnnual(
+    ownership.annualPropertyInsuranceExpense
+  );
   const vacancyVal = percentOfRentalIncome(
     monthlyIncomeVal,
-    ownership.vacancyPercent
+    ownership.vacancyPercentage
   );
   const maintenanceVal = percentOfRentalIncome(
     monthlyIncomeVal,
-    ownership.maintenancePercent
+    ownership.maintenancePercentage
   );
   const capexVal = percentOfRentalIncome(
     monthlyIncomeVal,
-    ownership.capexPercent
+    ownership.capexPercentage
   );
   const managementVal = percentOfRentalIncome(
     monthlyIncomeVal,
-    ownership.managementPercent
+    ownership.managementPercentage
   );
 
   const fixedExpenseVal = fixedExpense(
@@ -94,10 +96,9 @@ export default function useCalculator({
     : 0;
 
   // AnnualizedAndMortgagePayment props
-  const annualizedReturnValue = !isNaN(
-    annualizedReturn(totalCostVal, totalCostVal * 2, 5)
-  )
-    ? annualizedReturn(totalCostVal, totalCostVal * 2, 5).toFixed(2)
+  const _annualizedReturn = annualizedReturn(totalCostVal, totalCostVal * 2, 5);
+  const annualizedReturnValue = !isNaN(_annualizedReturn)
+    ? _annualizedReturn.toFixed(2)
     : 0;
   const mortgagePaymentValue = !isNaN(mortgageVal) ? mortgageVal.toFixed(2) : 0;
 

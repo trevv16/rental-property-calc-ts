@@ -1,3 +1,4 @@
+import React from "react";
 import useCalculator from "../../hooks/useCalculator";
 import {
   IncomeInput,
@@ -51,6 +52,10 @@ export const Results = ({
         <>
           <PropertyHeader info={info} />
           <Divider />
+          <AnnualizedAndMortgagePayment
+            annualizedReturnValue={calcResult.annualizedReturnValue}
+            mortgagePaymentValue={calcResult.mortgagePaymentValue}
+          />
           <ROI
             calculateAnnualNOI={calcResult.annualNOIVal}
             calculateCocROI={calcResult.cocROIVal}
@@ -71,15 +76,11 @@ export const Results = ({
             calculateMortgage={calcResult.mortgageVal}
             halfPercentRuleCashFlow={calcResult.halfPercentCashFlowVal}
           />
-          <AnnualizedAndMortgagePayment
-            annualizedReturnValue={calcResult.annualizedReturnValue}
-            mortgagePaymentValue={calcResult.mortgagePaymentValue}
-          />
           <MonthlyExpenseBreakdown
             totalMonthlyExpense={calcResult.monthlyExpenseVal}
             calculateMortgage={calcResult.mortgageVal}
-            propertyTaxes={calcResult.taxesVal}
-            propertyInsurance={calcResult.insuranceVal}
+            annualPropertyTaxExpense={calcResult.taxesVal}
+            annualPropertyInsuranceExpense={calcResult.insuranceVal}
             variableExpense={calcResult.variableExpenseVal}
             fixedExpense={calcResult.fixedExpenseVal}
             vacancyMonthlyCost={calcResult.vacancyVal}

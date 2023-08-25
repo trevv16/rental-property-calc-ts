@@ -19,7 +19,7 @@ export default function UtilityForm(props: any) {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="electricityExpense"
+                      htmlFor="monthlyElectricityExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Electricity
@@ -31,8 +31,8 @@ export default function UtilityForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="electricityExpense"
-                        id="electricityExpense"
+                        name="monthlyElectricityExpense"
+                        id="monthlyElectricityExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -42,7 +42,7 @@ export default function UtilityForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="gasExpense"
+                      htmlFor="monthlyGasExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Gas
@@ -54,8 +54,8 @@ export default function UtilityForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="gasExpense"
-                        id="gasExpense"
+                        name="monthlyGasExpense"
+                        id="monthlyGasExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -65,7 +65,7 @@ export default function UtilityForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="waterSewerExpense"
+                      htmlFor="monthlyWaterAndSewerExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       {"Water & Sewer"}
@@ -77,8 +77,8 @@ export default function UtilityForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="waterSewerExpense"
-                        id="waterSewerExpense"
+                        name="monthlyWaterAndSewerExpense"
+                        id="monthlyWaterAndSewerExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -111,7 +111,7 @@ export default function UtilityForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="garbageExpense"
+                      htmlFor="monthlyGarbageExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Garbage
@@ -123,8 +123,8 @@ export default function UtilityForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="garbageExpense"
-                        id="garbageExpense"
+                        name="monthlyGarbageExpense"
+                        id="monthlyGarbageExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -134,7 +134,7 @@ export default function UtilityForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="otherExpense"
+                      htmlFor="monthlyOtherExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Other
@@ -146,8 +146,8 @@ export default function UtilityForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="otherExpense"
-                        id="otherExpense"
+                        name="monthlyOtherExpense"
+                        id="monthlyOtherExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -157,7 +157,7 @@ export default function UtilityForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="annualExpenseGrowth"
+                      htmlFor="annualExpenseGrowthPercent"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Annual Expense Growth
@@ -166,8 +166,8 @@ export default function UtilityForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="annualExpenseGrowth"
-                        id="annualExpenseGrowth"
+                        name="annualExpenseGrowthPercent"
+                        id="annualExpenseGrowthPercent"
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
                       />
                       <span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">

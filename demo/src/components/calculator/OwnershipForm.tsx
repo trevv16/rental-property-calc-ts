@@ -19,7 +19,7 @@ export default function OwnershipForm(props: any) {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="propertyTaxes"
+                      htmlFor="annualPropertyTaxExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Annual Property Taxes
@@ -31,8 +31,8 @@ export default function OwnershipForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="propertyTaxes"
-                        id="propertyTaxes"
+                        name="annualPropertyTaxExpense"
+                        id="annualPropertyTaxExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -42,7 +42,7 @@ export default function OwnershipForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="propertyInsurance"
+                      htmlFor="annualPropertyInsuranceExpense"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Annual Property Insurance
@@ -54,8 +54,8 @@ export default function OwnershipForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="propertyInsurance"
-                        id="propertyInsurance"
+                        name="annualPropertyInsuranceExpense"
+                        id="annualPropertyInsuranceExpense"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -65,7 +65,7 @@ export default function OwnershipForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="maintenancePercent"
+                      htmlFor="maintenancePercentage"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Maintenance
@@ -73,8 +73,8 @@ export default function OwnershipForm(props: any) {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="number"
-                        name="maintenancePercent"
-                        id="maintenancePercent"
+                        name="maintenancePercentage"
+                        id="maintenancePercentage"
                         min="0"
                         step="0.01"
                         required
@@ -88,7 +88,7 @@ export default function OwnershipForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="vacancyPercent"
+                      htmlFor="vacancyPercentage"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Vacancy
@@ -96,8 +96,8 @@ export default function OwnershipForm(props: any) {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="number"
-                        name="vacancyPercent"
-                        id="vacancyPercent"
+                        name="vacancyPercentage"
+                        id="vacancyPercentage"
                         step="0.01"
                         min="0"
                         required
@@ -111,7 +111,7 @@ export default function OwnershipForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="capexPercent"
+                      htmlFor="capexPercentage"
                       className="block text-sm font-medium text-gray-700"
                     >
                       CapEx
@@ -119,8 +119,8 @@ export default function OwnershipForm(props: any) {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="number"
-                        name="capexPercent"
-                        id="capexPercent"
+                        name="capexPercentage"
+                        id="capexPercentage"
                         step="0.01"
                         min="0"
                         required
@@ -134,7 +134,7 @@ export default function OwnershipForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="managementPercent"
+                      htmlFor="managementPercentage"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Management
@@ -142,8 +142,8 @@ export default function OwnershipForm(props: any) {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="number"
-                        name="managementPercent"
-                        id="managementPercent"
+                        name="managementPercentage"
+                        id="managementPercentage"
                         step="0.01"
                         min="0"
                         required

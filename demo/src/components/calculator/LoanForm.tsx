@@ -95,7 +95,7 @@ export default function LoanForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="pointsCharged"
+                      htmlFor="pmi"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Points Charged
@@ -103,8 +103,8 @@ export default function LoanForm(props: any) {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="number"
-                        name="pointsCharged"
-                        id="pointsCharged"
+                        name="pmi"
+                        id="pmi"
                         step="0.01"
                         min="0"
                         required={isCash !== false}

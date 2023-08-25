@@ -1,6 +1,7 @@
 import { IMortgage } from "./mortgage";
 import { getCapRate, halfPercentRuleCashFlow } from "./formulas";
 import { Mortgage } from "./mortgage";
+import { annualizedReturn } from "../utils/calc";
 
 export type Property = {
   nickname: string;
@@ -15,8 +16,8 @@ export type Purchase = {
   purchasePrice: number;
   closingCost: number;
   rehabCost: number;
-  afterRepairValue: number;
-  propertyValueGrowthPercent: number;
+  afterRepairValue?: number;
+  propertyValueGrowthPercent?: number;
 };
 
 export type Loan = {
@@ -34,14 +35,14 @@ export type Income = {
 };
 
 export type OwnersExpense = {
-  annualPropertyTaxPercent: number;
+  annualPropertyTaxExpense: number;
   annualPropertyInsuranceExpense: number;
   monthlyHOAExpense: number;
   maintenancePercentage: number;
   vacancyPercentage: number;
   capexPercentage: number;
   managementPercentage: number;
-  futureSalesExpense: number;
+  futureSalesExpense?: number;
 };
 
 export type UtilityExpense = {
@@ -75,10 +76,13 @@ export interface IDeal {
   ownersExpense: OwnersExpense;
   utilityExpense: UtilityExpense;
 
+  getTotalCost(): number;
   getNOI(units: TimeUnits): number;
   getAnnualCashOnCashROI(annualNOI: number, totalCost: number): number;
   getAnnualProFormaCap(): number;
   getAnnualPurchaseCap(): number;
+  getRentalIncome(units: TimeUnits): number;
+  getOtherIncome(units: TimeUnits): number;
   getIncome(units: TimeUnits): number;
   getExpenses(units: TimeUnits): number;
   getMonthlyHalfPercentCashFlow(): number;
@@ -102,8 +106,9 @@ export interface IDeal {
   getGarbageExpense(units: TimeUnits): number;
   getOtherExpenses(units: TimeUnits): number;
   getUtilityExpense(units: TimeUnits): number;
+  getMortgagePayment(units: TimeUnits): number;
   getExpenses(units: TimeUnits): number;
-  getCashFlowBreakdown(units: TimeUnits): CashFlowBreakdown;
+  getCashFlow(units: TimeUnits): number;
   getIncomeBreakdown(units: TimeUnits): BreakdownItem[];
   getFixedExpenseBreakdown(units: TimeUnits): BreakdownItem[];
   getVariableExpenseBreakdown(units: TimeUnits): BreakdownItem[];
@@ -140,6 +145,14 @@ export class Deal implements IDeal {
     );
   }
 
+  getTotalCost(): number {
+    return (
+      this.purchase.purchasePrice +
+      this.purchase.closingCost +
+      this.purchase.rehabCost
+    );
+  }
+
   getNOI(units: TimeUnits): number {
     return this.getIncome(units) - this.getExpenses(units);
   }
@@ -149,40 +162,41 @@ export class Deal implements IDeal {
   }
 
   getAnnualProFormaCap(): number {
-    return getCapRate(this.getNOI("annual"), this.purchase.afterRepairValue);
+    return getCapRate(
+      this.getNOI("annual"),
+      this.purchase?.afterRepairValue || this.purchase.purchasePrice
+    );
   }
 
   getAnnualPurchaseCap(): number {
     return getCapRate(this.getNOI("annual"), this.purchase.purchasePrice);
   }
 
-  getIncome(units: TimeUnits): number {
+  getRentalIncome(units: TimeUnits = "annual") {
     if (units === "annual") {
-      return (
-        this.income.grossMonthlyRentalIncome +
-        this.income.grossMonthlyOtherIncome
-      );
+      return this.income.grossMonthlyRentalIncome * 12;
     } else {
-      return (
-        (this.income.grossMonthlyRentalIncome +
-          this.income.grossMonthlyOtherIncome) *
-        12
-      );
+      return this.income.grossMonthlyRentalIncome;
     }
+  }
+
+  getOtherIncome(units: TimeUnits = "annual") {
+    if (units === "annual") {
+      return this.income.grossMonthlyOtherIncome * 12;
+    } else {
+      return this.income.grossMonthlyOtherIncome;
+    }
+  }
+
+  getIncome(units: TimeUnits = "annual"): number {
+    return this.getRentalIncome(units) + this.getOtherIncome(units);
   }
 
   getPropertyTaxExpense(units: TimeUnits) {
     if (units === "annual") {
-      return (
-        this.ownersExpense.annualPropertyTaxPercent *
-        this.purchase.purchasePrice
-      );
+      return this.ownersExpense.annualPropertyTaxExpense;
     } else {
-      return (
-        (this.ownersExpense.annualPropertyTaxPercent *
-          this.purchase.purchasePrice) /
-        12
-      );
+      return this.ownersExpense.annualPropertyTaxExpense / 12;
     }
   }
 
@@ -203,19 +217,23 @@ export class Deal implements IDeal {
   }
 
   getMaintenanceExpense(units: TimeUnits) {
-    return this.ownersExpense.maintenancePercentage * this.getIncome(units);
+    return (
+      (this.ownersExpense.maintenancePercentage / 100) * this.getIncome(units)
+    );
   }
 
   getVacanyExpense(units: TimeUnits) {
-    return this.ownersExpense.vacancyPercentage * this.getIncome(units);
+    return (this.ownersExpense.vacancyPercentage / 100) * this.getIncome(units);
   }
 
   getCapexExpense(units: TimeUnits) {
-    return this.ownersExpense.capexPercentage * this.getIncome(units);
+    return (this.ownersExpense.capexPercentage / 100) * this.getIncome(units);
   }
 
   getManagementExpense(units: TimeUnits) {
-    return this.ownersExpense.managementPercentage * this.getIncome(units);
+    return (
+      (this.ownersExpense.managementPercentage / 100) * this.getIncome(units)
+    );
   }
 
   getOwnersExpense(units: TimeUnits) {
@@ -279,45 +297,49 @@ export class Deal implements IDeal {
     );
   }
 
-  getExpenses(units: TimeUnits): number {
+  getMortgagePayment(units: TimeUnits = "annual") {
+    if (units === "annual") {
+      return this.mortgage.getMonthlyMortgagePayment() * 12;
+    } else {
+      return this.mortgage.getMonthlyMortgagePayment();
+    }
+  }
+
+  getExpenses(units: TimeUnits = "annual"): number {
     return (
-      this.mortgage.getMonthlyMortgagePayment() +
+      this.getMortgagePayment(units) +
       this.getOwnersExpense(units) +
       this.getUtilityExpense(units)
     );
   }
 
+  getCashFlow(units: TimeUnits = "annual") {
+    return this.getIncome(units) - this.getExpenses(units);
+  }
+
   getMonthlyHalfPercentCashFlow(): number {
     return halfPercentRuleCashFlow(
       this.getIncome("monthly"),
-      this.mortgage.getMonthlyMortgagePayment()
+      this.getMortgagePayment("monthly")
     );
   }
 
-  getFiveYearAnnualizedReturn(
-    initialValue: number,
-    finalValue: number,
-    years: number
-  ) {
-    const primary: number = finalValue / (initialValue * 1.0);
-    const secondary: number = primary ** (1 / (years * 1.0));
-    const final: number = (secondary - 1) * 100;
-
-    return Math.round(final * 100) / 100;
+  getFiveYearAnnualizedReturn() {
+    return annualizedReturn(this.getTotalCost(), this.getTotalCost() * 2, 5);
   }
 
   getIncomeBreakdown(units: TimeUnits) {
     const income: BreakdownItem[] = [
       {
         name: "Rental Income",
-        amount: this.income.grossMonthlyRentalIncome,
+        amount: this.getRentalIncome(units),
       },
     ];
 
     if (this.income.grossMonthlyOtherIncome > 0) {
       income.push({
         name: "Other Income",
-        amount: this.income.grossMonthlyOtherIncome,
+        amount: this.getOtherIncome(units),
       });
     }
 
@@ -325,36 +347,54 @@ export class Deal implements IDeal {
   }
 
   getFixedExpenseBreakdown(units: TimeUnits) {
-    return [
+    let fixedExpenses: BreakdownItem[] = [
       {
         name: "Mortgage",
-        amount: this.mortgage.getMonthlyMortgagePayment(),
+        amount: this.getMortgagePayment(units),
       },
       {
         name: "Property Tax",
         amount: this.getPropertyTaxExpense(units),
       },
       {
-        name: "Home Insurance",
+        name: "Property Insurance",
         amount: this.getPropertyInsuranceExpense(units),
       },
       {
         name: "HOA",
         amount: this.ownersExpense.monthlyHOAExpense,
       },
-      {
+    ];
+
+    if (this.ownersExpense.maintenancePercentage > 0) {
+      fixedExpenses.push({
         name: "Maintenance",
         amount: this.getMaintenanceExpense(units),
-      },
-      {
-        name: "Vacancy",
-        amount: this.getVacanyExpense(units),
-      },
-      {
+      });
+    }
+
+    if (this.ownersExpense.capexPercentage > 0) {
+      fixedExpenses.push({
         name: "Capex",
         amount: this.getCapexExpense(units),
-      },
-    ] as BreakdownItem[];
+      });
+    }
+
+    if (this.ownersExpense.vacancyPercentage > 0) {
+      fixedExpenses.push({
+        name: "Vacancy",
+        amount: this.getVacanyExpense(units),
+      });
+    }
+
+    if (this.ownersExpense.managementPercentage > 0) {
+      fixedExpenses.push({
+        name: "Management",
+        amount: this.getManagementExpense(units),
+      });
+    }
+
+    return fixedExpenses;
   }
 
   getVariableExpenseBreakdown(units: TimeUnits) {
@@ -369,44 +409,32 @@ export class Deal implements IDeal {
 
     if (this.utilityExpense.monthlyGasExpense > 0) {
       variableExpenses.push({
-        name: "Electricity",
+        name: "Gas",
         amount: this.getGasExpense(units),
       });
     }
 
     if (this.utilityExpense.monthlyWaterAndSewerExpense > 0) {
       variableExpenses.push({
-        name: "Electricity",
+        name: "Water & Sewer",
         amount: this.getWaterSewerExpense(units),
       });
     }
 
     if (this.utilityExpense.monthlyGarbageExpense > 0) {
       variableExpenses.push({
-        name: "Electricity",
+        name: "Garbage",
         amount: this.getGarbageExpense(units),
       });
     }
 
     if (this.utilityExpense.monthlyOtherExpense > 0) {
       variableExpenses.push({
-        name: "Electricity",
+        name: "Other",
         amount: this.getOtherExpenses(units),
       });
     }
 
     return variableExpenses;
-  }
-
-  getCashFlowBreakdown(units: TimeUnits) {
-    const income = this.getIncomeBreakdown(units);
-    const fixed = this.getFixedExpenseBreakdown(units);
-    const variable = this.getVariableExpenseBreakdown(units);
-
-    return {
-      income,
-      fixed,
-      variable,
-    };
   }
 }

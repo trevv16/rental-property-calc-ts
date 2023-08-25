@@ -76,16 +76,9 @@ export class Deal implements IDeal {
 
   getPropertyTaxExpense(units: TimeUnits) {
     if (units === "annual") {
-      return (
-        this.ownersExpense.annualPropertyTaxPercent *
-        this.purchase.purchasePrice
-      );
+      return this.ownersExpense.annualPropertyTaxExpense;
     } else {
-      return (
-        (this.ownersExpense.annualPropertyTaxPercent *
-          this.purchase.purchasePrice) /
-        12
-      );
+      return this.ownersExpense.annualPropertyTaxExpense / 12;
     }
   }
 
@@ -299,17 +292,5 @@ export class Deal implements IDeal {
     }
 
     return variableExpenses;
-  }
-
-  getCashFlowBreakdown(units: TimeUnits) {
-    const income = this.getIncomeBreakdown(units);
-    const fixed = this.getFixedExpenseBreakdown(units);
-    const variable = this.getVariableExpenseBreakdown(units);
-
-    return {
-      income,
-      fixed,
-      variable,
-    };
   }
 }

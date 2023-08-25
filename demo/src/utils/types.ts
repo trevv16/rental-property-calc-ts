@@ -1,10 +1,10 @@
 export type InfoInput = {
   complete: boolean;
-  name: string;
-  streetAddress: string;
+  nickname: string;
+  address: string;
   city: string;
   state: string;
-  zipCode: string;
+  zip: string;
 };
 
 export type PurchaseInput = {
@@ -20,35 +20,35 @@ export type LoanInput = {
   isCashPurchase: boolean;
   loanAmount: number;
   interestRate: number;
-  pointsCharged: number;
+  pmi: number;
   loanTerm: number;
 };
 
 export type IncomeInput = {
   complete: boolean;
   grossMonthlyRentalIncome: number;
-  annualIncomeGrowth: number;
-  otherMonthlyRentalIncome: number;
+  annualIncomeGrowthPercent: number;
+  grossMonthlyOtherIncome: number;
 };
 
 export type OwnershipInput = {
   complete: boolean;
-  propertyTaxes: number;
-  propertyInsurance: number;
-  maintenancePercent: number;
-  vacancyPercent: number;
-  capexPercent: number;
-  managementPercent: number;
+  annualPropertyTaxExpense: number;
+  annualPropertyInsuranceExpense: number;
+  maintenancePercentage: number;
+  vacancyPercentage: number;
+  capexPercentage: number;
+  managementPercentage: number;
 };
 
 export type UtilityInput = {
   complete: boolean;
-  electricityExpense: number;
-  gasExpense: number;
-  waterSewerExpense: number;
+  monthlyElectricityExpense: number;
+  monthlyGasExpense: number;
+  monthlyWaterAndSewerExpense: number;
   hoaExpense: number;
-  garbageExpense: number;
-  otherExpense: number;
-  annualExpenseGrowth: number;
+  monthlyGarbageExpense: number;
+  monthlyOtherExpense: number;
+  annualExpenseGrowthPercent: number;
   futureSalePercent: number;
 };

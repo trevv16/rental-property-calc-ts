@@ -42,7 +42,7 @@ export default function IncomeForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="otherMonthlyRentalIncome"
+                      htmlFor="grossMonthlyOtherIncome"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Other Monthly Rental Income
@@ -54,8 +54,8 @@ export default function IncomeForm(props: any) {
                       <input
                         type="number"
                         step="0.01"
-                        name="otherMonthlyRentalIncome"
-                        id="otherMonthlyRentalIncome"
+                        name="grossMonthlyOtherIncome"
+                        id="grossMonthlyOtherIncome"
                         min="0"
                         required
                         className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -65,7 +65,7 @@ export default function IncomeForm(props: any) {
 
                   <div className="col-span-3 sm:col-span-2">
                     <label
-                      htmlFor="annualIncomeGrowth"
+                      htmlFor="annualIncomeGrowthPercent"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Annual Income Growth
@@ -73,8 +73,8 @@ export default function IncomeForm(props: any) {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="number"
-                        name="annualIncomeGrowth"
-                        id="annualIncomeGrowth"
+                        name="annualIncomeGrowthPercent"
+                        id="annualIncomeGrowthPercent"
                         min="0"
                         step="0.01"
                         required

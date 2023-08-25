@@ -19,15 +19,15 @@ export default function PropertyForm(props: any) {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="name"
+                      htmlFor="nickname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Nickname
                     </label>
                     <input
                       type="text"
-                      name="name"
-                      id="name"
+                      name="nickname"
+                      id="nickname"
                       required
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -35,15 +35,15 @@ export default function PropertyForm(props: any) {
 
                   <div className="col-span-6">
                     <label
-                      htmlFor="streetAddress"
+                      htmlFor="address"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Street address
                     </label>
                     <input
                       type="text"
-                      name="streetAddress"
-                      id="streetAddress"
+                      name="address"
+                      id="address"
                       required
                       autoComplete="street-address"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -82,15 +82,15 @@ export default function PropertyForm(props: any) {
 
                   <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label
-                      htmlFor="zipCode"
+                      htmlFor="zip"
                       className="block text-sm font-medium text-gray-700"
                     >
                       ZIP / Postal
                     </label>
                     <input
                       type="text"
-                      name="zipCode"
-                      id="zipCode"
+                      name="zip"
+                      id="zip"
                       required
                       autoComplete="postal-code"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
