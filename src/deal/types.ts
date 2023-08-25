@@ -13,8 +13,8 @@ export type Purchase = {
   purchasePrice: number;
   closingCost: number;
   rehabCost: number;
-  afterRepairValue: number;
-  propertyValueGrowthPercent: number;
+  afterRepairValue?: number;
+  propertyValueGrowthPercent?: number;
 };
 
 export type Loan = {
@@ -39,7 +39,7 @@ export type OwnersExpense = {
   vacancyPercentage: number;
   capexPercentage: number;
   managementPercentage: number;
-  futureSalesExpense: number;
+  futureSalesExpense?: number;
 };
 
 export type UtilityExpense = {
@@ -58,12 +58,6 @@ export type BreakdownItem = {
   amount: number;
 };
 
-type CashFlowBreakdown = {
-  income: BreakdownItem[];
-  fixed: BreakdownItem[];
-  variable: BreakdownItem[];
-};
-
 export interface IDeal {
   property: Property;
   purchase: Purchase;
@@ -73,10 +67,13 @@ export interface IDeal {
   ownersExpense: OwnersExpense;
   utilityExpense: UtilityExpense;
 
+  getTotalCost(): number;
   getNOI(units: TimeUnits): number;
   getAnnualCashOnCashROI(annualNOI: number, totalCost: number): number;
   getAnnualProFormaCap(): number;
   getAnnualPurchaseCap(): number;
+  getRentalIncome(units: TimeUnits): number;
+  getOtherIncome(units: TimeUnits): number;
   getIncome(units: TimeUnits): number;
   getExpenses(units: TimeUnits): number;
   getMonthlyHalfPercentCashFlow(): number;
@@ -100,7 +97,9 @@ export interface IDeal {
   getGarbageExpense(units: TimeUnits): number;
   getOtherExpenses(units: TimeUnits): number;
   getUtilityExpense(units: TimeUnits): number;
+  getMortgagePayment(units: TimeUnits): number;
   getExpenses(units: TimeUnits): number;
+  getCashFlow(units: TimeUnits): number;
   getIncomeBreakdown(units: TimeUnits): BreakdownItem[];
   getFixedExpenseBreakdown(units: TimeUnits): BreakdownItem[];
   getVariableExpenseBreakdown(units: TimeUnits): BreakdownItem[];

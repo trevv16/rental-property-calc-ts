@@ -61,12 +61,6 @@ export type BreakdownItem = {
   amount: number;
 };
 
-type CashFlowBreakdown = {
-  income: BreakdownItem[];
-  fixed: BreakdownItem[];
-  variable: BreakdownItem[];
-};
-
 export interface IDeal {
   property: Property;
   purchase: Purchase;
