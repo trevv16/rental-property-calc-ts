@@ -28,16 +28,17 @@ export default function CashFlowSection({
         </h5>
         <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
           <ResultCard
-            title="Monthly Cash Flow"
-            value={`$${formatNumberAsCurrency(cleanCashFlow, 2)}`}
-          />
-          <ResultCard
             title="Income"
             value={`$${formatNumberAsCurrency(cleanIncome, 2)}`}
           />
           <ResultCard
             title="Expenses"
             value={`$${formatNumberAsCurrency(cleanExpense, 2)}`}
+          />
+          <ResultCard
+            title="Monthly Cash Flow"
+            value={`$${formatNumberAsCurrency(cleanCashFlow, 2)}`}
+            highlight
           />
         </dl>
       </div>
@@ -61,6 +62,7 @@ export default function CashFlowSection({
           <ResultCard
             title="50% Rule Cash Flow"
             value={`$${formatNumberAsCurrency(halfPercentRuleCashFlow, 2)}`}
+            highlight
           />
         </dl>
       </div>
