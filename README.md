@@ -1,6 +1,6 @@
 # Rental Property Calculator
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/1bdfbb0d-95f1-4d22-b844-bf0f4c370383/deploy-status)](https://app.netlify.com/sites/rental-calc/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/055eea24-a3b7-4038-9310-04e259fe0f61/deploy-status)](https://app.netlify.com/sites/rental-calc/deploys)
 
 This front end project is a rental property calculator.
 This calculator can be used to determine important KPIs for a real estate deal.
