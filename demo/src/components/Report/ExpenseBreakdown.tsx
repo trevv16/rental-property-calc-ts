@@ -143,7 +143,7 @@ export default function ExpenseBreakdown({
                     scope="row"
                     className="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
                   ></th>
-                  <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">
+                  <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-indigo-800 sm:pr-0">
                     {formatNumberAsCurrency(expense.subtotal)}
                   </td>
                 </tr>
@@ -183,7 +183,7 @@ export default function ExpenseBreakdown({
                   scope="row"
                   className="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
                 ></th>
-                <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">
+                <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-indigo-600 sm:pr-0">
                   {formatNumberAsCurrency(expenseTotal)}
                 </td>
               </tr>

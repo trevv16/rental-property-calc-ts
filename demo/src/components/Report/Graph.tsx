@@ -21,7 +21,7 @@ const toolTipFormatter = (value: string) => {
   const formattedMonth = CURRENT_DATE.plus({ months: parseInt(value) });
 
   DateTime.now();
-  return `Month ${parseInt(value)} | ${formattedMonth.toFormat("MMMM y")}`;
+  return `${formattedMonth.toFormat("MMMM y")} | Payment ${parseInt(value)}`;
 };
 
 const Graph: React.FC<IProps> = ({ scheduleSummary }) => {
@@ -35,7 +35,7 @@ const Graph: React.FC<IProps> = ({ scheduleSummary }) => {
           }
         />
         <XAxis dataKey="currentMonth" type="number">
-          <Label position="bottom" value="Months" />
+          <Label position="bottom" value="# of Payments" />
         </XAxis>
         <YAxis
           type="number"

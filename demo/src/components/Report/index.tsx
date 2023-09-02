@@ -87,6 +87,9 @@ export default function Report({ deal }: ReportProps) {
           halfPercentRuleCashFlow={deal.getMonthlyHalfPercentCashFlow()}
         />
         <ExpenseBreakdown deal={deal} units={units} />
+        <h2 className="my-2 text-lg leading-6 font-medium text-gray-900">
+          <strong>Mortgage Ammortization</strong>
+        </h2>
         <Graph scheduleSummary={schedule} />
       </>
     )
