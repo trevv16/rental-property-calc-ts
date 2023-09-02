@@ -14,5 +14,13 @@ export const useAmmortization = (loan: Loan, purchase: Purchase) => {
     [purchase.purchasePrice, loan.loanAmount, loan.loanTerm, loan.interestRate]
   );
 
-  return mortgage.ammortizeMortgage();
+  return mortgage.ammortizeMortgage().map((point) => ({
+    currentMonth: point.currentMonth,
+    interestPaid: parseFloat(point.interestPaid.toFixed(2)),
+    interestPayment: parseFloat(point.interestPayment.toFixed(2)),
+    mortgagePayment: parseFloat(point.mortgagePayment.toFixed(2)),
+    outstandingLoanBalance: parseFloat(point.outstandingLoanBalance.toFixed(2)),
+    principalPaid: parseFloat(point.principalPaid.toFixed(2)),
+    principalPayment: parseFloat(point.principalPayment.toFixed(2)),
+  }));
 };
