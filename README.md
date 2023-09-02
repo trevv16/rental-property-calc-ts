@@ -9,10 +9,6 @@ It can be helpful to quickly plug in the deal's info to get these numbers before
 
 #### Built with [Create React App](https://create-react-app.dev/), [Typescript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), tested with [Jest](https://jestjs.io/) and deployed to [Netlify](https://www.netlify.com/).
 
-TODO
-
-- itemize costs
-
 ### Calculations provided:
 
 - [x] Monthly cash flow
