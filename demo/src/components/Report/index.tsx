@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Switch } from "@headlessui/react";
 import { Deal } from "../../lib/deal";
-import PropertyHeader from "./PropertyHeader";
-import { Divider, Graph } from "..";
-import ROISection from "./ROISection";
-import KPISection from "./KPISection";
 import { useAmmortization } from "../../hooks/useAmmortiziation";
+import { Divider } from "..";
 import CashFlowSection from "./CashFlowSection";
 import ExpenseBreakdown from "./ExpenseBreakdown";
+import Graph from "./Graph";
+import KPISection from "./KPISection";
+import PropertyHeader from "./PropertyHeader";
+import ROISection from "./ROISection";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");

@@ -21,13 +21,5 @@ export { default as ReviewIncome } from "./Review/ReviewIncome";
 export { default as ReviewOwnership } from "./Review/ReviewOwnership";
 export { default as ReviewUtility } from "./Review/ReviewUtility";
 
-export { default as Graph } from "./Results/Graph";
-export { default as ROI } from "./Results/ROI";
-export { default as HalfPercentRule } from "./Results/HalfPercentRule";
-export { default as MonthlyCashFlow } from "./Results/MonthlyCashFlow";
-export { default as MonthlyExpenseBreakdown } from "./Results/MonthlyExpenseBreakdown";
-export { default as PropertyHeader } from "./Results/PropertyHeader";
-export { default as AnnualizedAndMortgagePayment } from "./Results/AnnualizedAndMortgagePayment";
-
 export * from "./common/ResultCard";
 export * from "./common/Divider";
